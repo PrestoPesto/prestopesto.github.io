@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&family=Cousine:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+    --counter-height: 280px;
+}
+
+html {
+   background-color: black;
+   width: 100%;
+   height: 100vh;
+   margin: 0;
+   border: 0;
+   padding: 0;
+   overflow: hidden;
+}
+
+body {
+    width: 100%;
+}
+
+#background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    z-index: -10;
+}
+
+#background::after {
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background-position: 0 0, 10px 10px;
+    background-image: radial-gradient(cyan 0.5px, transparent 1px), radial-gradient(cyan 0.5px, transparent 1px);
+    background-size: 20px 20px;
+    animation: bgSpin 260s linear infinite;
+    mask-image: radial-gradient(circle at center, black 30px, transparent 800px);
+    mask-position: var(--bgX) var(--bgY);
+}
+@keyframes bgSpin {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(180deg);}
+}
+
+#counter, #counterTop, .mugCup, .mugHandle, .mugHandle::after, #menuBorder {
+    position: absolute;
+    overflow: hidden;
+    background: black;
+    border: 1px solid white;
+}
+
+#counter, #counterTop, .mugCup, .mugHandle {
+    filter: contrast(50);
+}
+
+#counter::after, #counterTop::after, .mugCup::after, #menuBorder::after {
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    content: "";
+    position: absolute;
+    z-index: -1;
+}
+
+#counter {
+    bottom: -1px;
+    left: -1px;
+    width: 800px;
+    height: calc(var(--counter-height) - 30px);
+}
+#counter::after {
+    background-position: 0 0, 10px 10px;
+    background-image: radial-gradient(magenta 1px, transparent 4px), radial-gradient(magenta 1px, transparent 4px);
+    background-size: 20px 20px;
+    mask-image: linear-gradient(black, rgb(0 0 0 / 0.4));
+    animation: counterScroll 3s linear infinite;
+}
+
+@keyframes counterScroll {
+    from {background-position: 0 0, 10px 10px;}
+    to {background-position: 0 20px, 10px 30px;}
+}
+
+#counterTop {
+    bottom: calc(var(--counter-height) - 30px);
+    left: -1px;
+    width: 810px;
+    height: 30px;
+    border-radius: 0 8px 4px 0;
+}
+#counterTop::after {
+    background-position: 0 0, 5px 5px;
+    background-image: radial-gradient(magenta 1px, transparent 4px), radial-gradient(magenta 1px, transparent 4px);
+    background-size: 10px 10px; 
+    animation: counterTopScroll 3s linear infinite;  
+    mask-image: linear-gradient(black, rgb(0 0 0 / 0.4));
+}
+
+@keyframes counterTopScroll {
+    from {background-position: 0 0, 5px 5px;}
+    to {background-position: 0 10px, 5px 15px;}
+}
+
+.mug {
+    position: absolute;
+    bottom: calc(var(--counter-height) + 1px);
+    transition: rotate 0.3s ease, translate 0.4s ease;
+}
+
+.mug:hover {
+    rotate: 7deg;
+    translate: 3px -18px;
+}
+
+.mugCup {
+    bottom: 0px;
+    width: 40px;
+    height: 44px;
+    border-radius: 4px 4px 16px 16px;
+}
+
+.mugCup::after {
+    background-position: 0 0, 4.5px 4.5px;
+    background-image: radial-gradient(yellow 1px, transparent 5px), radial-gradient(yellow 1px, transparent 5px);
+    background-size: 9px 9px;   
+    mask-image: linear-gradient(to left, black, rgb(0 0 0 / 0.5));
+    transition: rotate 0.3s ease, translate 0.4s ease;
+    animation: mugScroll 2.4s linear infinite;
+}
+.mugCup:hover::after {
+    rotate: -7deg;
+    translate: -3px 18px;
+}
+
+.mugHandle {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border-radius: 17px;
+    bottom: 9px;
+    left: -16px;
+    z-index: -2;
+    background: black;
+}
+
+.mugHandle::after {
+    border: 1px solid white;
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 7px;
+    right: 8px;
+    border-radius: 8px;
+    background: black;
+}
+
+@keyframes mugScroll {
+    from {background-position: 9px 0, 13.5px 4.5px;}
+    to {background-position: 0 0, 4.5px 4.5px;}
+}
+
+@keyframes mugSlide {
+    from {translate: -800px 0}
+    to {translate: 0 0;}
+}
+
+#menuBlock {
+    position: absolute;
+    left: 810px;
+    width: calc(100% - 810px);
+    height: 100%;
+    top: 0;
+    bottom: 0;
+}
+
+#menuBorder {
+    width: 500px;
+    height: 600px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 10px;
+    z-index: -1;
+}
+
+#menuBorder::after { 
+    background-position: 0 0, 10px 10px;
+    background-image: radial-gradient(yellow 1px, transparent 1px), radial-gradient(yellow 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: menuScroll 6s linear infinite;
+}
+
+@keyframes menuScroll {
+    from {background-position: 0 0, 10px 10px;}
+    to {background-position: 20px 20px, 30px 30px;}
+}
+
+#menu {
+    border-radius: 5px;
+    left: 0;
+    right: 0;
+    width: 470px;
+    height: 570px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: center;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 3px 30px;
+    position: absolute;
+    overflow: hidden;
+    background: black;
+    border: 1px solid white;
+}
+
+h1, h2 {
+    font-family: "Chivo Mono", monospace;
+    color: magenta;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    text-align: center;
+}
+
+h1 {
+    width: 60%;
+    line-height: 1.3em;
+    border-top: 1px solid magenta;
+    border-bottom: 1px solid magenta;
+    border-radius: 6px;
+}
+
+h2 {
+    line-height: 0;
+}
+
+.menuEntry {
+    font-family: "Cousine", monospace;
+    color: white;
+    width: 42%;
+    /* text-align: justify; */
+}
+
+
+#ant {
+    position: absolute;
+    width: 350px;
+    z-index: -2;
+    left: 100px;
+    bottom: calc(var(--counter-height) - 100px);
+}
