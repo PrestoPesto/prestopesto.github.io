@@ -1,0 +1,98 @@
+<!doctype html>
+
+
+<html>
+   <head>
+       <meta charset="utf-8">
+
+
+       <title>Calculator lock</title>
+
+
+       <!-- Load external CSS styles -->
+       <link rel="stylesheet" href="lock.css">
+
+
+   </head>
+
+
+   <body>
+       <button onclick="autoSolve()" id="autoSolver">Preview win animation</button>
+       <div id="container">
+       <p class="line">
+           <table>
+               <tr>
+                   <th><button onclick="move(1, 0, 1)" class="arrow">&lt</button></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th class="row1"></th>
+                   <th><button onclick="move(1, 1, 1)" class="arrow">&gt</button></th>
+               </tr>
+               <tr>
+                   <th><button onclick="move(2, 0, 1)" class="arrow">&lt</button></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th class="row2"></th>
+                   <th><button onclick="move(2, 1, 1)" class="arrow">&gt</button></th>
+               </tr>
+               <tr>
+                   <th><button onclick="move(3, 0, 1)" class="arrow">&lt</button></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th class="row3"></th>
+                   <th><button onclick="move(3, 1, 1)" class="arrow">&gt</button></th>
+               </tr>
+               <tr>
+                   <th><button onclick="move(4, 0, 1)" class="arrow">&lt</button></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th class="row4"></th>
+                   <th><button onclick="move(4, 1, 1)" class="arrow">&gt</button></th>
+               </tr>
+           </table>
+       </p>
+       <div class="hidden" id="win">
+           <img src="https://media.printables.com/media/prints/386968/images/3240015_0fcd3dc4-efbe-437b-abb7-bdee355d73bb/thumbs/cover/320x240/jpg/yippee.webp" alt="Yippee!">
+       </div>
+       </div>
+
+
+       <script src="lock.js"></script>
+   </body>
+</html>
