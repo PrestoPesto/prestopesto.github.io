@@ -41,11 +41,11 @@ const messages = [
     "uhhhhh",
     "uhh",
     "scientists are baffled",
-    "just a week away",
-    "welcome back",
+    "just a week away!",
+    "welcome back!",
     "serving five pebsi",
     "science compels us to explode the sun",
-    "we don't sell clothes",
+    "we don't sell clothes here",
     "mhm?",
     "...",
     "i am violently autistic",
@@ -55,14 +55,44 @@ const messages = [
     "my antennas don't reach out to heaven",
     "how have you been?",
     "great gaze!",
-    "we're almost out of coffee"
+    "we're almost out of coffee",
+    "hi~",
+    "hey there~",
+    "it looks like you're trying to see new dialogue. would you like help?",
+    "good, good, keep clicking",
+    "get me out of this cyberscape"
 ]
 
-function changeText() {
-    speech.innerHTML = messages[Math.floor(Math.random() * messages.length)];
-    speech.classList.replace("transition", "transition");
-}
+const antTalk0 = new Audio("./assets/ant_talk0.mp3");
+const antTalk1 = new Audio("./assets/ant_talk1.mp3");
+const antTalk2 = new Audio("./assets/ant_talk2.mp3");
+const antTalk3 = new Audio("./assets/ant_talk3.mp3");
+let soundIndex = 0;
 
-changeText();
+function changeText() {
+    let message = "";
+    speech.classList.remove("speechAnim");
+    speech.classList.remove("hidden");
+    void speech.offsetWidth;
+    speech.classList.add("speechAnim");
+    let messageIndex = Math.floor(Math.random() * messages.length);
+    soundIndex = Math.floor(Math.random() * 4);
+    if (soundIndex == 0) {
+        antTalk0.play();
+    } else if (soundIndex == 1) {
+        antTalk1.play();
+    } else if (soundIndex == 2) {
+        antTalk2.play();
+    } else {
+        antTalk3.play();
+    }
+
+    for (let i = 0; i < messages[messageIndex].length; i++) {
+        setTimeout(function() { 
+            message += messages[messageIndex].charAt(i);
+            speech.innerHTML = message;
+        }, 20 * i);
+    }
+}
 
 ant.onclick = function() {changeText()};

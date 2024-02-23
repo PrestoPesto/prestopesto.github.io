@@ -235,6 +235,7 @@ h1, h2 {
 h1 {
     width: 60%;
     line-height: 1.3em;
+    font-size: 32px;
     border-top: 1px solid magenta;
     border-bottom: 1px solid magenta;
     border-radius: 6px;
@@ -244,11 +245,20 @@ h2 {
     line-height: 0;
 }
 
+a {
+    color: cyan;
+}
+
 .menuEntry {
     font-family: "Cousine", monospace;
     color: white;
     width: 42%;
-    /* text-align: justify; */
+    font-size: 16px;
+}
+
+.menuText {
+    border-top: 1px solid magenta;
+    padding-top: 8px;
 }
 
 
@@ -276,12 +286,16 @@ h2 {
     border: 1px solid white;
     bottom: calc(var(--counter-height) + 300px);
     left: 400px;
-    transform: scale(0.6) rotate(-40deg);
-    transition: all 0.1s ease-out;
+    transform-origin: bottom left;
 }
 
-#speech.transition {
-    transform: scale(1)  rotate(0);
+.speechAnim {
+    animation: speechAnim 0.1s ease-out;
+}
+
+@keyframes speechAnim {
+    from {transform: scale(0.6) rotate(40deg);}
+    to {transform: scale(1) rotate(0);}
 }
   
 #speech::before, #speech::after {
@@ -307,4 +321,8 @@ h2 {
     border-bottom: 20px solid transparent;
     left: 32px;
     bottom: -32px;
+}
+
+.hidden {
+    display: none;
 }
