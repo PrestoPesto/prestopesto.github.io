@@ -43,7 +43,7 @@ const messages = [
     "scientists are baffled",
     "just a week away!",
     "welcome back!",
-    "serving five pebsi",
+    "serving five pebbsi",
     "science compels us to explode the sun",
     "we don't sell clothes here",
     "mhm?",

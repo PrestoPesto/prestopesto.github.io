@@ -177,6 +177,7 @@ body {
     height: 100%;
     top: 0;
     bottom: 0;
+    z-index: 2;
 }
 
 #menuBorder {
@@ -247,6 +248,7 @@ h2 {
 
 a {
     color: cyan;
+    z-index: 10;
 }
 
 .menuEntry {
