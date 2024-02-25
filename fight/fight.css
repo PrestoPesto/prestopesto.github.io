@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+:root {
+    --max-health: 10%;
+    --current-health: 10%;
+}
+
+body {
+    background-color: black;
+}
+
+.hidden {
+    display: none;
+}
+
+#background {
+    width: 800px;
+    height: 600px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+#background::before {
+    z-index: -1;
+    position: absolute;
+    content: "";
+    background-image: url("./assets/background.png");
+    width: 110%;
+    height: 100%;
+    background-size: 100% auto;
+    animation: backgroundWiggle 6s ease-in-out infinite;
+}
+
+@keyframes backgroundWiggle {
+    0%, 100% {transform: skewX(1deg) skewY(1deg) rotate(-1deg);}
+    50% {transform: skewX(-1deg) skewY(-1deg) rotate(1deg);}
+}
+
+#buttons {
+    width: 100%;
+    height: 23%;
+    position: absolute;
+    bottom: 2%;
+    display: flex;
+    justify-content: center;
+    column-gap: 2%;
+}
+
+.button {
+    background-color: black;
+    width: 22%;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
+}
+
+.button:hover {
+    translate: 0px -10px;
+}
+
+#strike {
+    color: magenta;
+    border: 1px solid magenta;
+}
+#strike:hover {
+    box-shadow: 0px 10px 0px 0px magenta;
+}
+
+#study {
+    color: cyan;
+    border: 1px solid cyan;
+}
+#study:hover {
+    box-shadow: 0px 10px 0px 0px cyan;
+}
+
+#stash {
+    color: yellow;
+    border: 1px solid yellow;
+}
+#stash:hover {
+    box-shadow: 0px 10px 0px 0px yellow;
+}
+
+#scram {
+    color: white;
+    border: 1px solid white;
+}
+#scram:hover {
+    box-shadow: 0px 10px 0px 0px white;
+}
+
+#stats {
+    width: 100%;
+    position: absolute;
+    height: 4%;
+    bottom: 27%;
+    display: flex;
+    justify-content: center;
+    column-gap: 4%;
+}
+
+.stat {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
+    font-size: 18px;
+    width: 35%;
+    height: 100%;
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+}
+
+#healthBar {
+    left: 20%;
+    position: absolute;
+    background-color: white;
+    height: 80%;
+    top: 13%;
+}
+
+#levelBar {
+    left: 59.2%;
+    position: absolute;
+    background-color: white;
+    height: 80%;
+    top: 13%;
+}
+
+#level {
+    text-align: left;
+}
+
+#ant {
+    z-index: 1;
+    background-image: url("./assets/antM.png");
+    width: 100%;
+    height: 100%;
+    background-size: 400px auto;
+    background-position: 50% 30%;
+    background-repeat: no-repeat;
+    animation: antWiggle 2.3s ease-in-out infinite;
+}
+
+@keyframes antWiggle {
+    0%, 100% {transform: scaleX(0.98) scaleY(1.02);}
+    50% {transform: scaleX(1.02) scaleY(0.98);}
+}
+
+#enemyText {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    font-size: 60px;
+    z-index: 1;
+    text-align: center;
+    top: 7%;
+}
+
+.announceAnim {
+    animation: announceAnim 2s ease-in forwards;
+}
+
+@keyframes announceAnim {
+    0% {scale: 50%;}
+    10%, 90% {scale: 100%;}
+    100% {scale: 0;}
+}

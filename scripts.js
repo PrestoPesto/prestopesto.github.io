@@ -60,7 +60,8 @@ const messages = [
     "hey there~",
     "it looks like you're trying to see new dialogue. would you like help?",
     "good, good, keep clicking",
-    "get me out of this cyberscape"
+    "get me out of this cyberscape",
+    "made by bugs, for bugs, with bugs!"
 ]
 
 const antTalk0 = new Audio("./assets/ant_talk0.mp3");
