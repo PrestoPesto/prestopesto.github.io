@@ -1,15 +1,19 @@
+let ant = document.getElementById("ant");
+
 let enemyText = document.getElementById("enemyText");
 let healthText = document.getElementById("health");
 let healthBar = document.getElementById("healthBar");
 let levelText = document.getElementById("level");
 let levelBar = document.getElementById("levelBar");
 
+let studyButton = document.getElementById("study");
+
 let maxHealth = 10;
 let currentHealth = 10;
 let level = 1;
 let xp = 0;
 
-function announceEnemy(color) {
+function spawnEnemy(color) {
     enemyText.classList.remove("announceAnim");
     enemyText.classList.remove("hidden");
     void enemyText.offsetWidth;
@@ -28,17 +32,25 @@ function announceEnemy(color) {
 
 function updateHealth(dmg) {
     currentHealth -= dmg;
-    healthText.innerHTML = currentHealth + "/" + maxHealth;
-    healthBar.style.width = (currentHealth / maxHealth) * 27.6 + "%";
+    healthText.innerHTML = "hp " + currentHealth + "/" + maxHealth;
+    healthBar.style.width = (currentHealth / maxHealth) * 100 + "%";
 }
 
 function updateLevel(xpChange) {
     let xpNeeded = Math.floor(10 * Math.pow(1.2, level));
     xp += xpChange;
     levelText.innerHTML = "lvl " + level;
-    levelBar.style.width = (xp / xpNeeded) * 27.6 + "%";
+    levelBar.style.width = (xp / xpNeeded) * 100 + "%";
 }
 
-announceEnemy("m");
-updateHealth(3);
-updateLevel(5);
+function study() {
+    ant.classList.remove("antSpawnAnim");
+    void ant.offsetWidth;
+    ant.classList.add("antSpawnAnim");
+}
+
+studyButton.onclick = function() {study()};
+
+spawnEnemy("m");
+updateHealth(0);
+updateLevel(0);

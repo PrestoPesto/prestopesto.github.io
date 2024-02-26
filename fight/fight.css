@@ -41,7 +41,7 @@ body {
 
 #buttons {
     width: 100%;
-    height: 23%;
+    height: 16%;
     position: absolute;
     bottom: 2%;
     display: flex;
@@ -58,6 +58,7 @@ body {
     align-items: center;
     font-family: "IBM Plex Mono", monospace;
     font-weight: 400;
+    cursor: pointer;
 }
 
 .button:hover {
@@ -99,58 +100,38 @@ body {
 #stats {
     width: 100%;
     position: absolute;
-    height: 4%;
-    bottom: 27%;
+    height: 1.5%;
+    bottom: 21%;
     display: flex;
     justify-content: center;
-    column-gap: 4%;
+    column-gap: 2%;
 }
 
 .stat {
     font-family: "IBM Plex Mono", monospace;
     font-weight: 400;
-    font-size: 18px;
-    width: 35%;
+    width: calc(22% - 4px);
     height: 100%;
-    background-color: black;
     border: 1px solid white;
-    color: white;
+    padding: 2px;
+    background: black;
 }
 
-#healthBar {
-    left: 20%;
-    position: absolute;
+.statBar {
     background-color: white;
-    height: 80%;
-    top: 13%;
-}
-
-#levelBar {
-    left: 59.2%;
-    position: absolute;
-    background-color: white;
-    height: 80%;
-    top: 13%;
-}
-
-#level {
-    text-align: left;
-}
-
-#ant {
-    z-index: 1;
-    background-image: url("./assets/antM.png");
-    width: 100%;
     height: 100%;
-    background-size: 400px auto;
-    background-position: 50% 30%;
-    background-repeat: no-repeat;
-    animation: antWiggle 2.3s ease-in-out infinite;
 }
 
-@keyframes antWiggle {
-    0%, 100% {transform: scaleX(0.98) scaleY(1.02);}
-    50% {transform: scaleX(1.02) scaleY(0.98);}
+.statText {
+    width: calc(22% - 4px);
+    position: absolute;
+    font-size: 13px;
+    color: white;
+    translate: 0px -130%;
+}
+
+#health {
+    text-align: right;
 }
 
 #enemyText {
@@ -175,4 +156,34 @@ body {
     0% {scale: 50%;}
     10%, 90% {scale: 100%;}
     100% {scale: 0;}
+}
+
+#ant {
+    z-index: 1;
+    background-image: url("./assets/antM.png");
+    width: 100%;
+    height: 100%;
+    background-size: 400px auto;
+    background-position: 50% 30%;
+    background-repeat: no-repeat;
+}
+
+.antIdle {
+    animation: antWiggle 2.3s ease-in-out infinite;
+}
+
+@keyframes antWiggle {
+    0%, 100% {transform: scaleX(0.98) scaleY(1.02);}
+    50% {transform: scaleX(1.02) scaleY(0.98);}
+}
+
+.antSpawnAnim {
+    animation: antSpawn 3s ease-in-out forwards;
+}
+
+@keyframes antSpawn {
+    0%, 100% {transform: scale(1) translate(0, 0) rotate(0);}
+    20%, 80% {transform: scale(0.6) translate(0, 0) rotate(0);}
+    35%, 49.9999999% {transform: scale(0.5) translate(-130%, 0) rotate(-20deg);}
+    50% {transform: scale(0.5) translate(130%, 0) rotate(20deg);}
 }
