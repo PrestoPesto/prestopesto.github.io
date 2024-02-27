@@ -46,6 +46,14 @@ body {
     column-gap: 2%;
 }
 
+#buttonDisable {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: default;
+}
+
 .button {
     background-color: black;
     width: 22%;
@@ -182,4 +190,60 @@ body {
     20%, 80% {transform: scale(0.6) translate(0, 0) rotate(0);}
     35%, 49.9999999% {transform: scale(0.5) translate(-130%, 0) rotate(-20deg);}
     50% {transform: scale(0.5) translate(130%, 0) rotate(20deg);}
+}
+
+#studyText {
+    border: 1px solid cyan;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 80%;
+    position: absolute;
+    padding: 0 10px 0 10px;
+    bottom: 25%;
+    background-color: black;
+    color: white;
+    font-size: min(1.8vw, 19px);
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
+    z-index: 3;
+}
+
+.studyTextOpenAnim {
+    animation: studyTextOpen 0.3s forwards;
+}
+
+.studyTextCloseAnim {
+    animation: studyTextOpen 0.3s reverse forwards;
+}
+
+@keyframes studyTextOpen {
+    from {scale: 0;}
+    to {scale: 1;}
+}
+
+#studyClose {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    cursor: pointer;
+}
+
+#studyCloseBlinker {
+    z-index: 3;
+    position: absolute;
+    right: 3%;
+    bottom: 6%;
+    background-color: cyan;
+    width: 3%;
+    height: 7%;
+    animation: studyCloseBlink 1.2s ease infinite;
+}
+
+@keyframes studyCloseBlink {
+    0%, 100% {opacity: 0}
+    40%, 60% {opacity: 1}
 }
