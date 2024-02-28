@@ -203,7 +203,7 @@ body {
     bottom: 25%;
     background-color: black;
     color: white;
-    font-size: min(1.8vw, 19px);
+    font-size: min(1.8vw, 16px);
     font-family: "IBM Plex Mono", monospace;
     font-weight: 400;
     z-index: 3;

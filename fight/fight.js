@@ -17,25 +17,30 @@ let studyClose = document.getElementById("studyClose");
 let studyName = document.getElementById("studyName");
 let studyClass = document.getElementById("studyClass");
 
-let name = "";
-let food;
-let hate;
-let enjoys;
-let location;
-let loves;
-let misses;
-let word;
-let hunts;
-let fears;
-let excited;
-let wonders;
-
 let maxHealth = 10;
 let currentHealth = 10;
 let level = 1;
 let xp = 0;
 
 let antColor;
+
+updateHealth(0);
+updateLevel(0);
+
+function updateHealth(dmg) {
+    currentHealth -= dmg;
+    healthText.innerHTML = "hp " + currentHealth + "/" + maxHealth;
+    healthBar.style.width = (currentHealth / maxHealth) * 100 + "%";
+}
+
+function updateLevel(xpChange) {
+    let xpNeeded = Math.floor(10 * Math.pow(1.2, level));
+    xp += xpChange;
+    levelText.innerHTML = "lvl " + level;
+    levelBar.style.width = (xp / xpNeeded) * 100 + "%";
+}
+
+spawnEnemy();
 
 function spawnEnemy() {
     ant.classList.remove("antSpawnAnim");
@@ -80,20 +85,7 @@ function spawnEnemy() {
         buttonDisable.classList.add("hidden");
     }, 3000);
 }
-
-function updateHealth(dmg) {
-    currentHealth -= dmg;
-    healthText.innerHTML = "hp " + currentHealth + "/" + maxHealth;
-    healthBar.style.width = (currentHealth / maxHealth) * 100 + "%";
-}
-
-function updateLevel(xpChange) {
-    let xpNeeded = Math.floor(10 * Math.pow(1.2, level));
-    xp += xpChange;
-    levelText.innerHTML = "lvl " + level;
-    levelBar.style.width = (xp / xpNeeded) * 100 + "%";
-}
-
+ 
 function endTurn() {
     //buttonDisable.classList.remove("hidden");
     studyText.classList.add("hidden");
@@ -107,20 +99,20 @@ function study() {
     studyText.classList.add("studyTextOpenAnim");
     studyClose.classList.add("hidden");
     let studyList = [
-        "favorite food: " + food,
+        "favorite food: " + favFood,
         "hates: " + hates,
         "enjoys: " + enjoys,
-        "favorite location: " + location,
+        "favorite location: " + favLocation,
         "loves: " + loves,
         "misses: " + misses,
-        "favorite word: " + word,
+        "favorite word: " + favWord,
         "hunts: " + hunts,
         "fears: " + fears,
         "excited for: " + excited,
         "wonders: " + wonders
-    ]
+    ] 
     let studyLine = document.getElementsByClassName("studyLine");
-    studyName.innerHTML = "name: " + name;
+    studyName.innerHTML = "name: " + antName;
     for (var i = 2; i >= 0; i--) {
         let studyRNG = Math.floor(Math.random() * studyList.length);
         studyLine[i].innerHTML = studyList[studyRNG];
@@ -136,9 +128,18 @@ strikeButton.onclick = function() {spawnEnemy();}
 studyClose.onclick = function() {endTurn();}
 studyButton.onclick = function() {study();}
 
-spawnEnemy();
-updateHealth(0);
-updateLevel(0);
+let antName = "";
+let favFood = "";
+let hates = "";
+let enjoys = "";
+let favLocation = "";
+let loves = "";
+let misses = "";
+let favWord = "";
+let hunts = "";
+let fears = "";
+let excited = "";
+let wonders = "";
 
 let nameList = [
     "maurice",
@@ -289,7 +290,8 @@ let nameList = [
     "spy",
     "angela",
     "jessie",
-    "rob"
+    "rob",
+    "senpai"
 ]
 let foodList = [
     "apples",
@@ -362,7 +364,7 @@ let locationList = [
     "anything vast",
     "anything small",
     "geometric nulls",
-    "θvortexes"
+    "vortexes"
 ]
 let missesList = [
     "the sun",
@@ -392,7 +394,17 @@ let wordList = [
     "yoink",
     "goober",
     "understood",
-    "scrumptious"
+    "scrumptious",
+    "sandy loam",
+    "perplexing",
+    "yaoi",
+    "skrunkle",
+    "sudo",
+    "transgender",
+    "impossibility",
+    "conglomerate",
+    "carbonate",
+    "plasma"
 ]
 let huntsList = [
     "other ants",
@@ -453,18 +465,18 @@ let wondersList = [
     "why it's hunted",
     "nothing at all"
 ]
+
 function generateInfo() {
-    name = nameList[Math.floor(Math.random() * nameList.length)];
-    food = foodList[Math.floor(Math.random() * foodList.length)];
+    antName = nameList[Math.floor(Math.random() * nameList.length)];
+    favFood = foodList[Math.floor(Math.random() * foodList.length)];
     hates = hatesList[Math.floor(Math.random() * hatesList.length)];
     enjoys = enjoysList[Math.floor(Math.random() * enjoysList.length)];
-    location = locationList[Math.floor(Math.random() * locationList.length)];
+    favLocation = locationList[Math.floor(Math.random() * locationList.length)];
     loves = nameList[Math.floor(Math.random() * nameList.length)];
     misses = missesList[Math.floor(Math.random() * missesList.length)];
-    word = wordList[Math.floor(Math.random() * wordList.length)];
+    favWord = wordList[Math.floor(Math.random() * wordList.length)];
     hunts = huntsList[Math.floor(Math.random() * huntsList.length)];
     fears = fearsList[Math.floor(Math.random() * fearsList.length)];
     excited = excitedList[Math.floor(Math.random() * excitedList.length)];
     wonders = wondersList[Math.floor(Math.random() * wondersList.length)];
 }
-
