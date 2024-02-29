@@ -12,7 +12,8 @@
     <body>
         <div id="background">
             <div id="enemyText" class="hidden"></div>
-            <div id="ant" class=""></div>
+            <div id="ant"></div>
+            <div id="attackEffects"></div>
 
             <div id="stats">
                 <div class="stat">
@@ -89,9 +90,12 @@
         </div>
         
         <div id="testing">
-            <button onclick="spawnEnemy()">Spawn ant</button>
-            <button onclick="updateHealth(2)">-2 health</button>
-            <button onclick="updateLevel(10)">+10 XP</button>
+            <div>
+                <button onclick="spawnEnemy()">Spawn ant</button>
+                <button onclick="updateHealth(2)">-2 health</button>
+                <button onclick="updateLevel(10)">+10 XP</button>
+            </div>
+            <div id="enemyStatsTesting" style="color: white;">Woh</div>
         </div>
         <script src="./fight.js"></script>
         
