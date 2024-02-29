@@ -23,6 +23,7 @@ let stab = document.getElementById("stab");
 let accDisplay = document.getElementsByClassName("acc");
 let dmgDisplay = document.getElementsByClassName("dmg");
 let effDisplay = document.getElementsByClassName("eff");
+let attackEffects = document.getElementById("attackEffects");
 
 let studyWarningButton = document.getElementById("studyWarning");
 let studyYes = document.getElementById("studyYes");
@@ -38,10 +39,8 @@ let level = 1;
 let xp = 0;
 let turn = 0;
 
-let accuracy = 0;
-let damage = 0;
-
 let antColor;
+let antHealth = 10;
 
 updateHealth(0);
 updateLevel(0);
@@ -160,9 +159,13 @@ function openButtons() {
         buttons[i].style.borderStyle = "solid";
         buttons[i].classList.add("buttonsOpenAnim");
     }
+    setTimeout(function() {
+        buttonDisable.classList.add("hidden");
+    }, 300);
 }
 
 function closeButtons() {
+    buttonDisable.classList.remove("hidden");
     for (let i = 0; i < 4; i++) {
         buttons[i].classList.remove("buttonsOpenAnim");
         void buttons[i].offsetWidth;
@@ -171,9 +174,55 @@ function closeButtons() {
     }
 }
 
+let accuracy = 1;
+let damage = 1;
+let critChance = 20;
+
+function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
+    strikeClose();
+    setTimeout(function() {
+        let hitRNG = Math.floor(Math.random() * 100) + 1;
+        let crit;
+        if (canCrit && Math.floor(Math.random() * 100) + 1 <= critChance) {
+            crit = true;
+        }
+        if (hitChance >= hitRNG) {
+            if (crit) {
+                antHealth -= hitDamage * 2;
+                enemyStatsTesting.innerHTML = antHealth + " Crit!";
+            } else {
+                antHealth -= hitDamage;
+                enemyStatsTesting.innerHTML = antHealth;
+            }
+            ant.classList.remove("antIdle");
+            ant.classList.add("antHitAnim");
+            attackEffects.classList.remove("slashAnim");
+            void attackEffects.offsetWidth;
+            attackEffects.classList.add("slashAnim");
+            setTimeout(function() {
+                ant.classList.remove("antHitAnim");
+                void ant.offsetWidth;
+                ant.classList.add("antIdle");
+            }, 400);
+        } /* else {
+            miss();
+        } */
+    }, 200);
+}
+
+swing.onclick = function() {
+    attack(
+        90 * accuracy,
+        4 * damage,
+        "none",
+        true,
+        false,
+        "swing"
+    );
+}
+
 function strike() {
     closeButtons();
-    buttonDisable.classList.remove("hidden");
     strikeMenu.classList.remove("hidden");
     strikeMenu.classList.remove("menuCloseAnim");
     void strikeMenu.offsetWidth;
@@ -185,10 +234,6 @@ function strikeClose() {
     void strikeMenu.offsetWidth;
     strikeMenu.classList.add("menuCloseAnim");
     openButtons();
-    setTimeout(function() {
-        buttonDisable.classList.add("hidden");
-        strikeMenu.classList.add("hidden");
-    }, 300);
 }
 
 function studyWarning() {
@@ -206,7 +251,6 @@ function studyWarningClose() {
     studyWarningButton.classList.add("menuCloseAnim");
     openButtons();
     setTimeout(function() {
-        buttonDisable.classList.add("hidden");
         studyWarningButton.classList.add("hidden");
     }, 300);
 }
@@ -216,7 +260,6 @@ function study() {
     studyWarningButton.classList.remove("menuOpenAnim");
     void studyWarningButton.offsetWidth;
     studyWarningButton.classList.add("menuCloseAnim");
-    buttonDisable.classList.remove("hidden");
     studyText.classList.remove("hidden");
     studyText.classList.remove("menuCloseAnim");
     void studyText.offsetWidth;
@@ -281,6 +324,9 @@ function generateInfo() {
     wonders = wondersList[Math.floor(Math.random() * wondersList.length)];
     favNumber = Math.floor(Math.random() * 1000);
 }
+
+let enemyStatsTesting = document.getElementById("enemyStatsTesting");
+enemyStatsTesting.innerHTML = antHealth;
 
 let antName;
 let favFood;
