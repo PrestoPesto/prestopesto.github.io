@@ -45,6 +45,7 @@ let antColor;
 
 updateHealth(0);
 updateLevel(0);
+spawnEnemy();
 
 function updateHealth(dmg) {
     if (dmg > 0) {
@@ -78,8 +79,6 @@ function updateLevel(xpChange) {
     levelText.innerHTML = "lvl " + level + " (" + xp + "/" + xpNeeded + ")";
     levelBar.style.width = (xp / xpNeeded) * 100 + "%";
 }
-
-spawnEnemy();
 
 function spawnEnemy() {
     let nameColor;
@@ -124,20 +123,6 @@ function spawnEnemy() {
     }, 3000);
 }
 
-function generateInfo() {
-    antName = nameList[Math.floor(Math.random() * nameList.length)];
-    favFood = foodList[Math.floor(Math.random() * foodList.length)];
-    hates = hatesList[Math.floor(Math.random() * hatesList.length)];
-    enjoys = enjoysList[Math.floor(Math.random() * enjoysList.length)];
-    favLocation = locationList[Math.floor(Math.random() * locationList.length)];
-    loves = nameList[Math.floor(Math.random() * nameList.length)];
-    misses = missesList[Math.floor(Math.random() * missesList.length)];
-    favWord = wordList[Math.floor(Math.random() * wordList.length)];
-    hunts = huntsList[Math.floor(Math.random() * huntsList.length)];
-    fears = fearsList[Math.floor(Math.random() * fearsList.length)];
-    excited = excitedList[Math.floor(Math.random() * excitedList.length)];
-    wonders = wondersList[Math.floor(Math.random() * wondersList.length)];
-}
  
 function endTurn() {
     setTimeout(function() {
@@ -247,7 +232,8 @@ function study() {
         "hunts: " + hunts,
         "fears: " + fears,
         "excited for: " + excited,
-        "wonders: " + wonders
+        "wonders: " + wonders,
+        "favorite number: " + favNumber
     ]
     let studyLine = document.getElementsByClassName("studyLine");
     studyName.innerHTML = "name: " + antName;
@@ -280,18 +266,35 @@ studyCloseButton.onclick = function() {studyClose();}
 //stashButton.onclick = function() {updateLevel(10);}
 //scramButton.onclick = function() {updateHealth(2);}
 
-let antName = "";
-let favFood = "";
-let hates = "";
-let enjoys = "";
-let favLocation = "";
-let loves = "";
-let misses = "";
-let favWord = "";
-let hunts = "";
-let fears = "";
-let excited = "";
-let wonders = "";
+function generateInfo() {
+    antName = nameList[Math.floor(Math.random() * nameList.length)];
+    favFood = foodList[Math.floor(Math.random() * foodList.length)];
+    hates = hatesList[Math.floor(Math.random() * hatesList.length)];
+    enjoys = enjoysList[Math.floor(Math.random() * enjoysList.length)];
+    favLocation = locationList[Math.floor(Math.random() * locationList.length)];
+    loves = nameList[Math.floor(Math.random() * nameList.length)];
+    misses = missesList[Math.floor(Math.random() * missesList.length)];
+    favWord = wordList[Math.floor(Math.random() * wordList.length)];
+    hunts = huntsList[Math.floor(Math.random() * huntsList.length)];
+    fears = fearsList[Math.floor(Math.random() * fearsList.length)];
+    excited = excitedList[Math.floor(Math.random() * excitedList.length)];
+    wonders = wondersList[Math.floor(Math.random() * wondersList.length)];
+    favNumber = Math.floor(Math.random() * 1000);
+}
+
+let antName;
+let favFood;
+let hates;
+let enjoys;
+let favLocation;
+let loves;
+let misses;
+let favWord;
+let hunts;
+let fears;
+let excited;
+let wonders;
+let favNumber;
 
 let nameList = [
     "maurice",
