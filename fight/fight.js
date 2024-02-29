@@ -8,23 +8,27 @@ let healthBar = document.getElementById("healthBar");
 let levelText = document.getElementById("levelText");
 let levelBar = document.getElementById("levelBar");
 
+let buttons = document.getElementsByClassName("button");
 let strikeButton = document.getElementById("strike");
 let studyButton = document.getElementById("study");
 let stashButton = document.getElementById("stash");
 let scramButton = document.getElementById("scram");
 let buttonDisable = document.getElementById("buttonDisable");
 
-/* let strikeMenu = document.getElementById("strikeMenu");
-let strikeClose = document.getElementById("strikeClose");
+let strikeMenu = document.getElementById("strikeMenu");
+let strikeCloseButton = document.getElementById("strikeClose");
 let swing = document.getElementById("swing");
 let slash = document.getElementById("slash");
 let stab = document.getElementById("stab");
 let accDisplay = document.getElementsByClassName("acc");
 let dmgDisplay = document.getElementsByClassName("dmg");
-let effDisplay = document.getElementsByClassName("eff"); */
+let effDisplay = document.getElementsByClassName("eff");
 
+let studyWarningButton = document.getElementById("studyWarning");
+let studyYes = document.getElementById("studyYes");
+let studyNo = document.getElementById("studyNo");
 let studyText = document.getElementById("studyText");
-let studyClose = document.getElementById("studyClose");
+let studyCloseButton = document.getElementById("studyClose");
 let studyName = document.getElementById("studyName");
 let studyClass = document.getElementById("studyClass");
 
@@ -119,6 +123,21 @@ function spawnEnemy() {
         buttonDisable.classList.add("hidden");
     }, 3000);
 }
+
+function generateInfo() {
+    antName = nameList[Math.floor(Math.random() * nameList.length)];
+    favFood = foodList[Math.floor(Math.random() * foodList.length)];
+    hates = hatesList[Math.floor(Math.random() * hatesList.length)];
+    enjoys = enjoysList[Math.floor(Math.random() * enjoysList.length)];
+    favLocation = locationList[Math.floor(Math.random() * locationList.length)];
+    loves = nameList[Math.floor(Math.random() * nameList.length)];
+    misses = missesList[Math.floor(Math.random() * missesList.length)];
+    favWord = wordList[Math.floor(Math.random() * wordList.length)];
+    hunts = huntsList[Math.floor(Math.random() * huntsList.length)];
+    fears = fearsList[Math.floor(Math.random() * fearsList.length)];
+    excited = excitedList[Math.floor(Math.random() * excitedList.length)];
+    wonders = wondersList[Math.floor(Math.random() * wondersList.length)];
+}
  
 function endTurn() {
     setTimeout(function() {
@@ -149,7 +168,26 @@ function screenshake() {
     }, 100);
 }
 
-/* function strike() {
+function openButtons() {
+    for (let i = 0; i < 4; i++) {
+        buttons[i].classList.remove("buttonsCloseAnim");
+        void buttons[i].offsetWidth;
+        buttons[i].style.borderStyle = "solid";
+        buttons[i].classList.add("buttonsOpenAnim");
+    }
+}
+
+function closeButtons() {
+    for (let i = 0; i < 4; i++) {
+        buttons[i].classList.remove("buttonsOpenAnim");
+        void buttons[i].offsetWidth;
+        buttons[i].style.borderStyle = "dashed";
+        buttons[i].classList.add("buttonsCloseAnim");
+    }
+}
+
+function strike() {
+    closeButtons();
     buttonDisable.classList.remove("hidden");
     strikeMenu.classList.remove("hidden");
     strikeMenu.classList.remove("menuCloseAnim");
@@ -157,23 +195,47 @@ function screenshake() {
     strikeMenu.classList.add("menuOpenAnim");
 }
 
-function strikeCLose() {
+function strikeClose() {
     strikeMenu.classList.remove("menuOpenAnim");
     void strikeMenu.offsetWidth;
     strikeMenu.classList.add("menuCloseAnim");
+    openButtons();
     setTimeout(function() {
         buttonDisable.classList.add("hidden");
         strikeMenu.classList.add("hidden");
     }, 300);
-} */
+}
+
+function studyWarning() {
+    closeButtons();
+    buttonDisable.classList.remove("hidden");
+    studyWarningButton.classList.remove("hidden");
+    studyWarningButton.classList.remove("menuCloseAnim");
+    void studyWarningButton.offsetWidth;
+    studyWarningButton.classList.add("menuOpenAnim");
+}
+
+function studyWarningClose() {
+    studyWarningButton.classList.remove("menuOpenAnim");
+    void studyWarningButton.offsetWidth;
+    studyWarningButton.classList.add("menuCloseAnim");
+    openButtons();
+    setTimeout(function() {
+        buttonDisable.classList.add("hidden");
+        studyWarningButton.classList.add("hidden");
+    }, 300);
+}
 
 function study() {
+    closeButtons();
+    studyWarningButton.classList.remove("menuOpenAnim");
+    void studyWarningButton.offsetWidth;
+    studyWarningButton.classList.add("menuCloseAnim");
     buttonDisable.classList.remove("hidden");
     studyText.classList.remove("hidden");
     studyText.classList.remove("menuCloseAnim");
     void studyText.offsetWidth;
     studyText.classList.add("menuOpenAnim");
-    studyClose.classList.add("hidden");
     let studyList = [
         "favorite food: " + favFood,
         "hates: " + hates,
@@ -196,12 +258,11 @@ function study() {
     }
     setTimeout(function() {
         studyText.classList.remove("menuOpenAnim");
-        studyClose.classList.remove("hidden");
     }, 1800);
 }
 
 function studyClose() {
-    //studyText.classList.remove("menuOpenAnim");
+    studyText.classList.remove("menuOpenAnim");
     void studyText.offsetWidth;
     studyText.classList.add("menuCloseAnim");
     setTimeout(function() {
@@ -210,10 +271,12 @@ function studyClose() {
     endTurn();
 }
 
-//strikeButton.onclick = function() {strike();}
-//strikeClose.onclick = function() {strikeClose();}
-studyButton.onclick = function() {study();}
-studyClose.onclick = function() {studyClose();}
+strikeButton.onclick = function() {strike();}
+strikeCloseButton.onclick = function() {strikeClose();}
+studyButton.onclick = function() {studyWarning();}
+studyYes.onclick = function() {study();}
+studyNo.onclick = function() {studyWarningClose();}
+studyCloseButton.onclick = function() {studyClose();}
 //stashButton.onclick = function() {updateLevel(10);}
 //scramButton.onclick = function() {updateHealth(2);}
 
@@ -554,18 +617,3 @@ let wondersList = [
     "why it's hunted",
     "nothing at all"
 ]
-
-function generateInfo() {
-    antName = nameList[Math.floor(Math.random() * nameList.length)];
-    favFood = foodList[Math.floor(Math.random() * foodList.length)];
-    hates = hatesList[Math.floor(Math.random() * hatesList.length)];
-    enjoys = enjoysList[Math.floor(Math.random() * enjoysList.length)];
-    favLocation = locationList[Math.floor(Math.random() * locationList.length)];
-    loves = nameList[Math.floor(Math.random() * nameList.length)];
-    misses = missesList[Math.floor(Math.random() * missesList.length)];
-    favWord = wordList[Math.floor(Math.random() * wordList.length)];
-    hunts = huntsList[Math.floor(Math.random() * huntsList.length)];
-    fears = fearsList[Math.floor(Math.random() * fearsList.length)];
-    excited = excitedList[Math.floor(Math.random() * excitedList.length)];
-    wonders = wondersList[Math.floor(Math.random() * wondersList.length)];
-}

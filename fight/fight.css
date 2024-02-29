@@ -23,6 +23,7 @@ body {
 }
 
 #background::before {
+    display: none;
     z-index: -1;
     position: absolute;
     content: "";
@@ -64,6 +65,7 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .button:hover {
@@ -100,6 +102,19 @@ body {
 }
 #scram:hover {
     box-shadow: 0 0.4em 0 0 white;
+}
+
+.buttonsOpenAnim {
+    animation: buttonsOpen 0.3s ease forwards;
+}
+
+.buttonsCloseAnim {
+    animation: buttonsOpen 0.3s ease-in reverse forwards;
+}
+
+@keyframes buttonsOpen {
+    from {scale: 0.7; rotate: 2deg;}
+    to {scale: 1; rotate: 0;}
 }
 
 #stats {
@@ -199,6 +214,7 @@ body {
 }
 
 .closeButton {
+    z-index: 5;
     position: absolute;
     right: 1%;
     font-size: min(2.6vw, 25px);
@@ -207,6 +223,7 @@ body {
     text-align: center;
     cursor: pointer;
     background: black;
+    margin-top: 1%;
 }
 
 #strikeMenu {
@@ -216,8 +233,8 @@ body {
     right: 0;
     width: 60%;
     position: absolute;
-    padding: 0.5% 0 1.5% 0;
-    bottom: 25%;
+    padding: 0 0 1.5% 0;
+    bottom: 27%;
     background-color: black;
     color: white;
     z-index: 3;
@@ -225,6 +242,7 @@ body {
 
 #strikeClose {
     border: 1px solid magenta;
+    transition: all 0.2s ease;
 }
 
 #strikeClose:hover {
@@ -240,7 +258,7 @@ body {
 }
 
 #strikeTop {
-    line-height: 0.3em;
+    line-height: 0.8em;
     width: 100%;
     text-align: center;
     font-size: min(1.8vw, 16px);
@@ -257,6 +275,7 @@ body {
     padding: 1% 4% 1% 4%;
     min-width: 20%;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .attackButton:hover {
@@ -276,6 +295,39 @@ body {
     color: cyan;
 }
 
+#studyWarning {
+    border: 1px solid cyan;
+    left: 25.2%;
+    width: 25%;
+    height: 7%;
+    position: absolute;
+    padding: 0 10px 0 10px;
+    bottom: 18%;
+    background-color: black;
+    color: white;
+    font-size: min(1.8vw, 16px);
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    column-gap: 4%;
+    padding: 1% 0 1% 0;
+}
+
+.studyOption {
+    border: 1px solid cyan;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.studyOption:hover {
+    translate: 0 -0.34em;
+    box-shadow: 0 0.34em 0 0 cyan;
+}
+
 #studyText {
     border: 1px solid cyan;
     margin: auto;
@@ -284,7 +336,7 @@ body {
     width: 60%;
     position: absolute;
     padding: 0 10px 0 10px;
-    bottom: 25%;
+    bottom: 27%;
     background-color: black;
     color: white;
     font-size: min(1.8vw, 16px);
@@ -306,6 +358,7 @@ body {
 
 #studyClose {
     border: 1px solid cyan;
+    transition: all 0.2s ease;
 }
 
 #studyClose:hover {
