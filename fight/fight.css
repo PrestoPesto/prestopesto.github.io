@@ -2,6 +2,8 @@
 
 body {
     background-color: black;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
 }
 
 .hidden {
@@ -61,13 +63,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "IBM Plex Mono", monospace;
-    font-weight: 400;
     cursor: pointer;
 }
 
 .button:hover {
-    translate: 0px -10px;
+    translate: 0 -0.4em;
 }
 
 #strike {
@@ -75,7 +75,7 @@ body {
     border: 1px solid magenta;
 }
 #strike:hover {
-    box-shadow: 0px 10px 0px 0px magenta;
+    box-shadow: 0 0.4em 0 0 magenta;
 }
 
 #study {
@@ -83,7 +83,7 @@ body {
     border: 1px solid cyan;
 }
 #study:hover {
-    box-shadow: 0px 10px 0px 0px cyan;
+    box-shadow: 0 0.4em 0 0 cyan;
 }
 
 #stash {
@@ -91,7 +91,7 @@ body {
     border: 1px solid yellow;
 }
 #stash:hover {
-    box-shadow: 0px 10px 0px 0px yellow;
+    box-shadow: 0 0.4em 0 0 yellow;
 }
 
 #scram {
@@ -99,7 +99,7 @@ body {
     border: 1px solid white;
 }
 #scram:hover {
-    box-shadow: 0px 10px 0px 0px white;
+    box-shadow: 0 0.4em 0 0 white;
 }
 
 #stats {
@@ -113,8 +113,6 @@ body {
 }
 
 .stat {
-    font-family: "IBM Plex Mono", monospace;
-    font-weight: 400;
     width: calc(22% - 4px);
     height: 100%;
     border: 1px solid white;
@@ -130,7 +128,7 @@ body {
 .statText {
     width: calc(22% - 4px);
     position: absolute;
-    font-size: min(2vw, 13px);
+    font-size: min(1.5vw, 15px);
     color: white;
     translate: 0px -130%;
 }
@@ -140,8 +138,6 @@ body {
 }
 
 #enemyText {
-    font-family: "IBM Plex Mono", monospace;
-    font-weight: 400;
     position: absolute;
     margin: auto;
     left: 0;
@@ -161,6 +157,16 @@ body {
     0% {scale: 50%;}
     10%, 90% {scale: 100%;}
     100% {scale: 0;}
+}
+
+.screenshake {
+    animation: screenshake 0.1s ease-out;
+}
+
+@keyframes screenshake {
+  0% {transform: translate(1px, 1px) rotate(-1deg);}
+  50% {transform: translate(-1px, 2px) rotate(1deg);}
+  100% {transform: translate(-3px, -1px) rotate(0deg);}
 }
 
 #ant {
@@ -192,58 +198,139 @@ body {
     50% {transform: scale(0.5) translate(130%, 0) rotate(20deg);}
 }
 
+.closeButton {
+    position: absolute;
+    right: 1%;
+    font-size: min(2.6vw, 25px);
+    width: 1.6em;
+    line-height: 1.3em;
+    text-align: center;
+    cursor: pointer;
+    background: black;
+}
+
+#strikeMenu {
+    border: 1px solid magenta;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 60%;
+    position: absolute;
+    padding: 0.5% 0 1.5% 0;
+    bottom: 25%;
+    background-color: black;
+    color: white;
+    z-index: 3;
+}
+
+#strikeClose {
+    border: 1px solid magenta;
+}
+
+#strikeClose:hover {
+    translate: 0 -0.15em;
+    box-shadow: 0 0.15em 0 0 magenta;
+}
+
+#strikeFlex {
+    display: flex;
+    justify-content: center;
+    line-height: 0.3em;
+    column-gap: 4%
+}
+
+#strikeTop {
+    line-height: 0.3em;
+    width: 100%;
+    text-align: center;
+    font-size: min(1.8vw, 16px);
+}
+
+#critChance {
+    color: cyan;
+}
+
+.attackButton {
+    background: black;
+    font-size: min(1.8vw, 16px);
+    border: 1px solid magenta;
+    padding: 1% 4% 1% 4%;
+    min-width: 20%;
+    cursor: pointer;
+}
+
+.attackButton:hover {
+    translate: 0 -0.4em;
+    box-shadow: 0 0.4em 0 0 magenta;
+}
+
+.attackTitle {
+    color: magenta;
+    text-align: center;
+    width: 100%;
+    font-size: min(2.6vw, 25px);
+    line-height: 1.2em;
+}
+
+.attackStat {
+    color: cyan;
+}
+
 #studyText {
     border: 1px solid cyan;
     margin: auto;
     left: 0;
     right: 0;
-    width: 80%;
+    width: 60%;
     position: absolute;
     padding: 0 10px 0 10px;
     bottom: 25%;
     background-color: black;
     color: white;
     font-size: min(1.8vw, 16px);
-    font-family: "IBM Plex Mono", monospace;
-    font-weight: 400;
     z-index: 3;
 }
 
-.studyTextOpenAnim {
-    animation: studyTextOpen 0.3s forwards;
+.menuOpenAnim {
+    animation: menuOpen 0.3s forwards;
 }
 
-.studyTextCloseAnim {
-    animation: studyTextOpen 0.3s reverse forwards;
+.menuCloseAnim {
+    animation: menuOpen 0.3s reverse forwards;
 }
 
-@keyframes studyTextOpen {
+@keyframes menuOpen {
     from {scale: 0;}
     to {scale: 1;}
 }
 
 #studyClose {
+    border: 1px solid cyan;
+}
+
+#studyClose:hover {
+    translate: 0 -0.15em;
+    box-shadow: 0 0.15em 0 0 cyan;
+}
+
+
+
+
+#testing {
+    z-index: -100;
+    position: absolute; 
+    max-width: 800px;
+    width: 80%;
+    margin: auto;
     position: absolute;
-    top: 0;
+    padding-top: calc(min(60%, 600px) + 10px);
     left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-    cursor: pointer;
-}
-
-#studyCloseBlinker {
-    z-index: 3;
-    position: absolute;
-    right: 3%;
-    bottom: 6%;
-    background-color: cyan;
-    width: 3%;
-    height: 7%;
-    animation: studyCloseBlink 1.2s ease infinite;
-}
-
-@keyframes studyCloseBlink {
-    0%, 100% {opacity: 0}
-    40%, 60% {opacity: 1}
+    right: 0;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: center;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 3px 30px;
 }

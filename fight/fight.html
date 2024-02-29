@@ -16,11 +16,17 @@
 
             <div id="stats">
                 <div class="stat">
-                    <div id="health" class="statText"></div>
+                    <div id="health" class="statText">
+                        <span id="healthText"></span>
+                        <span class="statDesc"></span>
+                    </div>
                     <div id="healthBar" class="statBar"></div>
                 </div>
                 <div class="stat">
-                    <div id="level" class="statText"></div>
+                    <div id="level" class="statText">
+                        <span id="levelText"></span>
+                        <span class="statDesc"></span>
+                    </div>
                     <div id="levelBar" class="statBar"></div>
                 </div>
             </div>
@@ -41,17 +47,45 @@
                 </div>
             </div>
           
-            <div id="studyText" class="hidden">
+            <div id="strikeMenu" class="hidden">
+              <div id="strikeClose" class="closeButton">X</div>
+                <p id="strikeTop"><span id="critChance">20%</span> crit chance</p>
+                <div id="strikeFlex">
+                    <div id="swing" class="attackButton">
+                        <div class="attackTitle">swing</div>
+                        <p><span class="attackStat acc">90%</span> hit</p>
+                        <p><span class="attackStat dmg">4</span> dmg</p>
+                    </div>
+                    <div id="slash" class="attackButton">
+                        <div class="attackTitle">slash</div>
+                        <p><span class="attackStat acc">65%</span> hit</p>
+                        <p><span class="attackStat dmg">5</span> dmg</p>
+                        <p><span class="attackStat eff">1</span> stn</p>
+                    </div>
+                    <div id="stab" class="attackButton">
+                        <div class="attackTitle">stab</div>
+                        <p><span class="attackStat acc">70%</span> hit</p>
+                        <p><span class="attackStat dmg">3</span> dmg</p>
+                        <p><span class="attackStat eff">3</span> bld</p>
+                    </div>
+                </div>
+            </div>
+          
+            <div id="studyText" class="">
+                <div id="studyClose" class="closeButton">X</div>
                 <p id="studyName">name</p>
                 <p >species: ant</p>
                 <p id="studyClass">class</p>
                 <p id="test" class="studyLine">one</p>
                 <p class="studyLine">two</p>
                 <p class="studyLine">three</p>
-                <div id="studyClose">
-                  <div id="studyCloseBlinker"></div>
-                </div>
             </div>
+        </div>
+        
+        <div id="testing">
+            <button onclick="spawnEnemy()">Spawn ant</button>
+            <button onclick="updateHealth(2)">-2 health</button>
+            <button onclick="updateLevel(10)">+10 XP</button>
         </div>
         <script src="./fight.js"></script>
         

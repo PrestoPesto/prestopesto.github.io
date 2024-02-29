@@ -1,9 +1,11 @@
+let background = document.getElementById("background");
+
 let ant = document.getElementById("ant");
 
 let enemyText = document.getElementById("enemyText");
-let healthText = document.getElementById("health");
+let healthText = document.getElementById("healthText");
 let healthBar = document.getElementById("healthBar");
-let levelText = document.getElementById("level");
+let levelText = document.getElementById("levelText");
 let levelBar = document.getElementById("levelBar");
 
 let strikeButton = document.getElementById("strike");
@@ -11,6 +13,15 @@ let studyButton = document.getElementById("study");
 let stashButton = document.getElementById("stash");
 let scramButton = document.getElementById("scram");
 let buttonDisable = document.getElementById("buttonDisable");
+
+/* let strikeMenu = document.getElementById("strikeMenu");
+let strikeClose = document.getElementById("strikeClose");
+let swing = document.getElementById("swing");
+let slash = document.getElementById("slash");
+let stab = document.getElementById("stab");
+let accDisplay = document.getElementsByClassName("acc");
+let dmgDisplay = document.getElementsByClassName("dmg");
+let effDisplay = document.getElementsByClassName("eff"); */
 
 let studyText = document.getElementById("studyText");
 let studyClose = document.getElementById("studyClose");
@@ -21,6 +32,10 @@ let maxHealth = 10;
 let currentHealth = 10;
 let level = 1;
 let xp = 0;
+let turn = 0;
+
+let accuracy = 0;
+let damage = 0;
 
 let antColor;
 
@@ -28,21 +43,43 @@ updateHealth(0);
 updateLevel(0);
 
 function updateHealth(dmg) {
+    if (dmg > 0) {
+        screenshake();
+    }
     currentHealth -= dmg;
+    if (currentHealth <= 0) {
+      currentHealth = 10;
+    }
     healthText.innerHTML = "hp " + currentHealth + "/" + maxHealth;
+    if (currentHealth / maxHealth < 0.25) {
+        healthText.insertAdjacentHTML("beforeend", " (bloodied)");
+    } else if (currentHealth / maxHealth < 0.5) {
+        healthText.insertAdjacentHTML("beforeend", " (beaten)");
+    } else if (currentHealth / maxHealth < 0.75) {
+        healthText.insertAdjacentHTML("beforeend", " (bruised)");
+    } else {
+        healthText.insertAdjacentHTML("beforeend", " (bright)");
+    }
     healthBar.style.width = (currentHealth / maxHealth) * 100 + "%";
 }
 
 function updateLevel(xpChange) {
     let xpNeeded = Math.floor(10 * Math.pow(1.2, level));
     xp += xpChange;
-    levelText.innerHTML = "lvl " + level;
+    if (xp >= xpNeeded) {
+        level++;
+        xp -= xpNeeded;
+        xpNeeded = Math.floor(10 * Math.pow(1.2, level));
+    }
+    levelText.innerHTML = "lvl " + level + " (" + xp + "/" + xpNeeded + ")";
     levelBar.style.width = (xp / xpNeeded) * 100 + "%";
 }
 
 spawnEnemy();
 
 function spawnEnemy() {
+    let nameColor;
+    let nameText;
     ant.classList.remove("antSpawnAnim");
     void ant.offsetWidth;
     ant.classList.add("antSpawnAnim");
@@ -56,27 +93,24 @@ function spawnEnemy() {
         if (antTypeRNG == 0) { 
             antColor = 0;
             ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true)";
-            enemyText.style.color = "cyan";
-            enemyText.innerHTML = "antC attacks!"
+            nameColor = "cyan";
+            nameText = "antC attacks!"
             studyClass.innerHTML = "class: <span style='color: cyan'>cyan</span>";
         } else if (antTypeRNG == 1) {
             antColor = 1;
             ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
-            enemyText.style.color = "magenta";
-            enemyText.innerHTML = "antM attacks!"
+            nameColor = "magenta";
+            nameText = "antM attacks!"
             studyClass.innerHTML = "class: <span style='color: magenta'>magenta</span>";
         } else if (antTypeRNG == 2) {
             antColor = 2;
             ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
-            enemyText.style.color = "yellow";
-            enemyText.innerHTML = "antY attacks!"
+            nameColor = "yellow";
+            nameText = "antY attacks!"
             studyClass.innerHTML = "class: <span style='color: yellow'>yellow</span>";
         }
         setTimeout(function() { 
-            enemyText.classList.remove("announceAnim");
-            enemyText.classList.remove("hidden");
-            void enemyText.offsetWidth;
-            enemyText.classList.add("announceAnim");
+            announceText(nameText, nameColor);
         }, 1460);
     }, 1000);
     setTimeout(function() {
@@ -87,16 +121,58 @@ function spawnEnemy() {
 }
  
 function endTurn() {
-    //buttonDisable.classList.remove("hidden");
-    studyText.classList.add("hidden");
-    //antTurn();
-    buttonDisable.classList.add("hidden");
+    setTimeout(function() {
+        antTurn();
+    }, 1200);
 }
+
+function antTurn() {
+    announceText("ant's turn!", "white");
+}
+
+function announceText(aText, aColor) {
+    enemyText.classList.remove("announceAnim");
+    enemyText.classList.remove("hidden");
+    void enemyText.offsetWidth;
+    enemyText.classList.add("announceAnim");
+    enemyText.style.color = aColor;
+    enemyText.innerHTML = aText;
+    setTimeout(function() {
+        enemyText.classList.add("hidden");
+    }, 2000);
+}
+
+function screenshake() {
+    background.classList.add("screenshake");
+    setTimeout(function() {
+        background.classList.remove("screenshake");
+    }, 100);
+}
+
+/* function strike() {
+    buttonDisable.classList.remove("hidden");
+    strikeMenu.classList.remove("hidden");
+    strikeMenu.classList.remove("menuCloseAnim");
+    void strikeMenu.offsetWidth;
+    strikeMenu.classList.add("menuOpenAnim");
+}
+
+function strikeCLose() {
+    strikeMenu.classList.remove("menuOpenAnim");
+    void strikeMenu.offsetWidth;
+    strikeMenu.classList.add("menuCloseAnim");
+    setTimeout(function() {
+        buttonDisable.classList.add("hidden");
+        strikeMenu.classList.add("hidden");
+    }, 300);
+} */
 
 function study() {
     buttonDisable.classList.remove("hidden");
     studyText.classList.remove("hidden");
-    studyText.classList.add("studyTextOpenAnim");
+    studyText.classList.remove("menuCloseAnim");
+    void studyText.offsetWidth;
+    studyText.classList.add("menuOpenAnim");
     studyClose.classList.add("hidden");
     let studyList = [
         "favorite food: " + favFood,
@@ -110,7 +186,7 @@ function study() {
         "fears: " + fears,
         "excited for: " + excited,
         "wonders: " + wonders
-    ] 
+    ]
     let studyLine = document.getElementsByClassName("studyLine");
     studyName.innerHTML = "name: " + antName;
     for (var i = 2; i >= 0; i--) {
@@ -119,14 +195,27 @@ function study() {
         studyList.splice(studyRNG, 1);
     }
     setTimeout(function() {
-        studyText.classList.remove("studyTextOpenAnim");
+        studyText.classList.remove("menuOpenAnim");
         studyClose.classList.remove("hidden");
     }, 1800);
 }
 
-strikeButton.onclick = function() {spawnEnemy();}
-studyClose.onclick = function() {endTurn();}
+function studyClose() {
+    //studyText.classList.remove("menuOpenAnim");
+    void studyText.offsetWidth;
+    studyText.classList.add("menuCloseAnim");
+    setTimeout(function() {
+        studyText.classList.add("hidden");
+    }, 300);
+    endTurn();
+}
+
+//strikeButton.onclick = function() {strike();}
+//strikeClose.onclick = function() {strikeClose();}
 studyButton.onclick = function() {study();}
+studyClose.onclick = function() {studyClose();}
+//stashButton.onclick = function() {updateLevel(10);}
+//scramButton.onclick = function() {updateHealth(2);}
 
 let antName = "";
 let favFood = "";
@@ -404,7 +493,7 @@ let wordList = [
     "impossibility",
     "conglomerate",
     "carbonate",
-    "plasma"
+    "plasmoid"
 ]
 let huntsList = [
     "other ants",
