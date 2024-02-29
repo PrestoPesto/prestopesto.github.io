@@ -212,6 +212,15 @@ body {
     50% {transform: scale(0.5) translate(130%, 0) rotate(20deg);}
 }
 
+.antHitAnim {
+    animation: antHit 0.4s ease-out forwards;
+}
+
+@keyframes antHit {
+    from {transform: translate(2%, -7%) scale(0.8) rotate(13deg);}
+    to {transform: translate(0, 0) scaleX(0.98) scaleY(1.02) rotate(0);}
+}
+
 .closeButton {
     z-index: 5;
     position: absolute;
@@ -292,6 +301,28 @@ body {
 
 .attackStat {
     color: cyan;
+}
+
+#attackEffects {
+    z-index: 2;
+    top: 16%;
+    width: 36%;
+    height: 45%;
+    position: absolute;
+    background-size: 100% 100%;
+    background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true");
+}
+
+.slashAnim {
+    background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true");
+    animation: slash 0.27s linear forwards;
+}
+
+@keyframes slash {
+    0% {transform: translate(20%, 0) scale(0)}
+    20% {transform: translate(40%, 0) scale(0.8)}
+    80% {transform: translate(140%, 0) scale(1)}
+    100% {transform: translate(160%, 0) scale(0)}
 }
 
 #studyWarning {
