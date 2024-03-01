@@ -1,720 +1,444 @@
-let background = document.getElementById("background");
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-let ant = document.getElementById("ant");
-
-let enemyText = document.getElementById("enemyText");
-let healthText = document.getElementById("healthText");
-let healthBar = document.getElementById("healthBar");
-let levelText = document.getElementById("levelText");
-let levelBar = document.getElementById("levelBar");
-
-let buttons = document.getElementsByClassName("button");
-let strikeButton = document.getElementById("strike");
-let studyButton = document.getElementById("study");
-let stashButton = document.getElementById("stash");
-let scramButton = document.getElementById("scram");
-let buttonDisable = document.getElementById("buttonDisable");
-
-let strikeMenu = document.getElementById("strikeMenu");
-let strikeCloseButton = document.getElementById("strikeClose");
-let swing = document.getElementById("swing");
-let slash = document.getElementById("slash");
-let stab = document.getElementById("stab");
-let accDisplay = document.getElementsByClassName("acc");
-let dmgDisplay = document.getElementsByClassName("dmg");
-let effDisplay = document.getElementsByClassName("eff");
-let attackEffects = document.getElementById("attackEffects");
-
-let studyWarningButton = document.getElementById("studyWarning");
-let studyYes = document.getElementById("studyYes");
-let studyNo = document.getElementById("studyNo");
-let studyText = document.getElementById("studyText");
-let studyCloseButton = document.getElementById("studyClose");
-let studyName = document.getElementById("studyName");
-let studyClass = document.getElementById("studyClass");
-
-let maxHealth = 10;
-let currentHealth = 10;
-let level = 1;
-let xp = 0;
-let turn = 0;
-
-let antColor;
-let antLevel = 1;
-let antMaxHealth;
-let antHealth;
-
-updateHealth(0);
-updateLevel(0);
-spawnEnemy();
-
-function updateHealth(dmg) {
-    if (dmg > 0) {
-        screenshake(1);
-    }
-    currentHealth -= dmg;
-    if (currentHealth <= 0) {
-      currentHealth = 10;
-    }
-    healthText.innerHTML = "hp " + currentHealth + "/" + maxHealth;
-    if (currentHealth / maxHealth < 0.25) {
-        healthText.insertAdjacentHTML("beforeend", " (bloodied)");
-    } else if (currentHealth / maxHealth < 0.5) {
-        healthText.insertAdjacentHTML("beforeend", " (beaten)");
-    } else if (currentHealth / maxHealth < 0.75) {
-        healthText.insertAdjacentHTML("beforeend", " (bruised)");
-    } else {
-        healthText.insertAdjacentHTML("beforeend", " (bright)");
-    }
-    healthBar.style.width = (currentHealth / maxHealth) * 100 + "%";
+body {
+    background-color: black;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
 }
 
-function updateLevel(xpChange) {
-    let xpNeeded = Math.floor(10 * Math.pow(1.2, level));
-    xp += xpChange;
-    if (xp >= xpNeeded) {
-        level++;
-        xp -= xpNeeded;
-        xpNeeded = Math.floor(10 * Math.pow(1.2, level));
-    }
-    levelText.innerHTML = "lvl " + level + " (" + xp + "/" + xpNeeded + ")";
-    levelBar.style.width = (xp / xpNeeded) * 100 + "%";
+.hidden {
+    display: none;
 }
 
-function spawnEnemy() {
-    let nameColor;
-    let nameText;
-    ant.classList.remove("antSpawnAnim");
-    void ant.offsetWidth;
-    ant.classList.add("antSpawnAnim");
-    setTimeout(function() {
-        antHealth = 10;
-        enemyStatsTesting.innerHTML = antHealth;
-        generateInfo();
-        let antTypeRNG;
-        do {
-            antTypeRNG = Math.floor(Math.random() * 3);
-        } while (antTypeRNG == antColor);
-      
-        if (antTypeRNG == 0) { 
-            antColor = 0;
-            ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true)";
-            nameColor = "cyan";
-            nameText = "antC attacks!"
-            studyClass.innerHTML = "class: <span style='color: cyan'>cyan</span>";
-        } else if (antTypeRNG == 1) {
-            antColor = 1;
-            ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
-            nameColor = "magenta";
-            nameText = "antM attacks!"
-            studyClass.innerHTML = "class: <span style='color: magenta'>magenta</span>";
-        } else if (antTypeRNG == 2) {
-            antColor = 2;
-            ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
-            nameColor = "yellow";
-            nameText = "antY attacks!"
-            studyClass.innerHTML = "class: <span style='color: yellow'>yellow</span>";
-        }
-        setTimeout(function() { 
-            announceText(nameText, nameColor);
-        }, 1460);
-    }, 1000);
-    setTimeout(function() {
-        ant.classList.remove("antSpawnAnim");
-        ant.classList.add("antIdle");
-        buttonDisable.classList.add("hidden");
-    }, 3000);
+#background {
+    max-width: 800px;
+    width: 80%;
+    aspect-ratio: 4 / 3;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    border: 1px solid white;
+    --shakeAmount: 1;
 }
 
- 
-function endTurn() {
-    setTimeout(function() {
-        antTurn();
-    }, 1200);
+#background::before {
+    z-index: -1;
+    position: absolute;
+    content: "";
+    background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/background.png?raw=true");
+    width: 110%;
+    height: 100%;
+    background-size: 100% auto;
+    animation: backgroundWiggle 6s ease-in-out infinite;
 }
 
-function antTurn() {
-    announceText("ant's turn!", "white");
-    if (Math.floor(Math.random()) <= 0.7) {
-        updateHealth(3);
-    }
-    openButtons();
+@keyframes backgroundWiggle {
+    0%, 100% {transform: skewX(1deg) skewY(1deg) rotate(-1deg) translate(-5%, 0);}
+    50% {transform: skewX(-1deg) skewY(-1deg) rotate(1deg) translate(-5%, 0);}
 }
 
-function announceText(aText, aColor) {
-    enemyText.classList.remove("announceAnim");
-    enemyText.classList.remove("hidden");
-    void enemyText.offsetWidth;
-    enemyText.classList.add("announceAnim");
-    enemyText.style.color = aColor;
-    enemyText.innerHTML = aText;
-    setTimeout(function() {
-        enemyText.classList.add("hidden");
-    }, 2000);
+#buttons {
+    width: 100%;
+    height: 16%;
+    position: absolute;
+    bottom: 2%;
+    display: flex;
+    justify-content: center;
+    column-gap: 2%;
 }
 
-function screenshake(amount) {
-    background.classList.add("screenshake");
-    background.style.setProperty('--shakeAmount', amount);
-    setTimeout(function() {
-        background.classList.remove("screenshake");
-    }, 100);
+#buttonDisable {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: default;
 }
 
-function openButtons() {
-    for (let i = 0; i < 4; i++) {
-        buttons[i].classList.remove("buttonsCloseAnim");
-        void buttons[i].offsetWidth;
-        buttons[i].style.borderStyle = "solid";
-        buttons[i].classList.add("buttonsOpenAnim");
-    }
-    setTimeout(function() {
-        buttonDisable.classList.add("hidden");
-    }, 300);
+.button {
+    background-color: black;
+    width: 22%;
+    font-size: min(3.4vw, 32px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-function closeButtons() {
-    buttonDisable.classList.remove("hidden");
-    for (let i = 0; i < 4; i++) {
-        buttons[i].classList.remove("buttonsOpenAnim");
-        void buttons[i].offsetWidth;
-        buttons[i].style.borderStyle = "dashed";
-        buttons[i].classList.add("buttonsCloseAnim");
-    }
+.button:hover {
+    translate: 0 -0.4em;
 }
 
-let accuracy = 1;
-let damage = 1;
-let critChance = 20;
-
-function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
-    strikeClose();
-    let hitRNG = Math.floor(Math.random() * 100) + 1;
-    let crit;
-    setTimeout(function() {
-        if (canCrit && Math.floor(Math.random() * 100) + 1 <= critChance) {
-            crit = true;
-        }
-        if (hitChance >= hitRNG) {
-            if (crit) {
-                antHealth -= hitDamage * 2;
-                enemyStatsTesting.innerHTML = antHealth + " Crit!";
-                screenshake(3);
-            } else {
-                antHealth -= hitDamage;
-                enemyStatsTesting.innerHTML = antHealth;
-                screenshake(0.5);
-            }
-            ant.classList.remove("antIdle");
-            ant.classList.add("antHitAnim");
-            setTimeout(function() {
-                ant.classList.remove("antHitAnim");
-                void ant.offsetWidth;
-                ant.classList.add("antIdle");
-            }, 400);
-        } /* else {
-            miss();
-        } */
-        attackEffects.classList.remove("hidden");
-            void attackEffects.offsetWidth;
-            if (hitType == "slash") {
-                attackEffects.classList.add("slashAnim");
-            } else if (hitType == "stab") {
-                attackEffects.classList.add("stabAnim");
-            } else {
-                attackEffects.classList.add("swingAnim");
-            }
-            setTimeout(function() {
-                if (hitType == "slash") {
-                    attackEffects.classList.remove("slashAnim");
-                } else if (hitType == "stab") {
-                    attackEffects.classList.remove("stabAnim");
-                } else {
-                    attackEffects.classList.remove("swingAnim");
-                }
-                attackEffects.classList.add("hidden");
-            }, 270);
-    }, 200);
+#strike {
+    color: magenta;
+    border: 1px solid magenta;
+}
+#strike:hover {
+    box-shadow: 0 0.4em 0 0 magenta;
 }
 
-swing.onclick = function() {
-    attack(
-        90 * accuracy,
-        4 * damage,
-        "none",
-        true,
-        false,
-        "swing"
-    );
+#study {
+    color: cyan;
+    border: 1px solid cyan;
 }
-slash.onclick = function() {
-    attack(
-        65 * accuracy,
-        5 * damage,
-        "stn",
-        true,
-        true,
-        "slash"
-    );
-}
-stab.onclick = function() {
-    attack(
-        75 * accuracy,
-        3 * damage,
-        "bld",
-        true,
-        true,
-        "stab"
-    );
+#study:hover {
+    box-shadow: 0 0.4em 0 0 cyan;
 }
 
-function strike() {
-    closeButtons();
-    strikeMenu.classList.remove("hidden");
-    strikeMenu.classList.remove("menuCloseAnim");
-    void strikeMenu.offsetWidth;
-    strikeMenu.classList.add("menuOpenAnim");
+#stash {
+    color: yellow;
+    border: 1px solid yellow;
+}
+#stash:hover {
+    box-shadow: 0 0.4em 0 0 yellow;
 }
 
-function strikeClose() {
-    strikeMenu.classList.remove("menuOpenAnim");
-    void strikeMenu.offsetWidth;
-    strikeMenu.classList.add("menuCloseAnim");
-    openButtons();
+#scram {
+    color: white;
+    border: 1px solid white;
+}
+#scram:hover {
+    box-shadow: 0 0.4em 0 0 white;
 }
 
-function studyWarning() {
-    closeButtons();
-    buttonDisable.classList.remove("hidden");
-    studyWarningButton.classList.remove("hidden");
-    studyWarningButton.classList.remove("menuCloseAnim");
-    void studyWarningButton.offsetWidth;
-    studyWarningButton.classList.add("menuOpenAnim");
+.buttonsOpenAnim {
+    animation: buttonsOpen 0.3s ease forwards;
 }
 
-function studyWarningClose() {
-    studyWarningButton.classList.remove("menuOpenAnim");
-    void studyWarningButton.offsetWidth;
-    studyWarningButton.classList.add("menuCloseAnim");
-    openButtons();
-    setTimeout(function() {
-        studyWarningButton.classList.add("hidden");
-    }, 300);
+.buttonsCloseAnim {
+    animation: buttonsOpen 0.3s ease-in reverse forwards;
 }
 
-function study() {
-    closeButtons();
-    studyWarningButton.classList.remove("menuOpenAnim");
-    void studyWarningButton.offsetWidth;
-    studyWarningButton.classList.add("menuCloseAnim");
-    studyText.classList.remove("hidden");
-    studyText.classList.remove("menuCloseAnim");
-    void studyText.offsetWidth;
-    studyText.classList.add("menuOpenAnim");
-    let studyList = [
-        "favorite food: " + favFood,
-        "hates: " + hates,
-        "enjoys: " + enjoys,
-        "favorite location: " + favLocation,
-        "loves: " + loves,
-        "misses: " + misses,
-        "favorite word: " + favWord,
-        "hunts: " + hunts,
-        "fears: " + fears,
-        "excited for: " + excited,
-        "wonders: " + wonders,
-        "favorite number: " + favNumber
-    ]
-    let studyLine = document.getElementsByClassName("studyLine");
-    studyName.innerHTML = "name: " + antName;
-    for (var i = 2; i >= 0; i--) {
-        let studyRNG = Math.floor(Math.random() * studyList.length);
-        studyLine[i].innerHTML = studyList[studyRNG];
-        studyList.splice(studyRNG, 1);
-    }
-    setTimeout(function() {
-        studyText.classList.remove("menuOpenAnim");
-    }, 1800);
+@keyframes buttonsOpen {
+    from {scale: 0.7; rotate: 2deg;}
+    to {scale: 1; rotate: 0;}
 }
 
-function studyClose() {
-    studyText.classList.remove("menuOpenAnim");
-    void studyText.offsetWidth;
-    studyText.classList.add("menuCloseAnim");
-    setTimeout(function() {
-        studyText.classList.add("hidden");
-    }, 300);
-    endTurn();
+#stats {
+    width: 100%;
+    position: absolute;
+    height: 1.5%;
+    bottom: 21%;
+    display: flex;
+    justify-content: center;
+    column-gap: 2%;
 }
 
-strikeButton.onclick = function() {strike();}
-strikeCloseButton.onclick = function() {strikeClose();}
-studyButton.onclick = function() {studyWarning();}
-studyYes.onclick = function() {study();}
-studyNo.onclick = function() {studyWarningClose();}
-studyCloseButton.onclick = function() {studyClose();}
-//stashButton.onclick = function() {updateLevel(10);}
-//scramButton.onclick = function() {updateHealth(2);}
-
-function generateInfo() {
-    antName = nameList[Math.floor(Math.random() * nameList.length)];
-    favFood = foodList[Math.floor(Math.random() * foodList.length)];
-    hates = hatesList[Math.floor(Math.random() * hatesList.length)];
-    enjoys = enjoysList[Math.floor(Math.random() * enjoysList.length)];
-    favLocation = locationList[Math.floor(Math.random() * locationList.length)];
-    loves = nameList[Math.floor(Math.random() * nameList.length)];
-    misses = missesList[Math.floor(Math.random() * missesList.length)];
-    favWord = wordList[Math.floor(Math.random() * wordList.length)];
-    hunts = huntsList[Math.floor(Math.random() * huntsList.length)];
-    fears = fearsList[Math.floor(Math.random() * fearsList.length)];
-    excited = excitedList[Math.floor(Math.random() * excitedList.length)];
-    wonders = wondersList[Math.floor(Math.random() * wondersList.length)];
-    favNumber = Math.floor(Math.random() * 1000);
+.stat {
+    width: calc(22% - 4px);
+    height: 100%;
+    border: 1px solid white;
+    padding: 2px;
+    background: black;
 }
 
-let enemyStatsTesting = document.getElementById("enemyStatsTesting");
-enemyStatsTesting.innerHTML = antHealth;
+.statBar {
+    background-color: white;
+    height: 100%;
+}
 
-let antName;
-let favFood;
-let hates;
-let enjoys;
-let favLocation;
-let loves;
-let misses;
-let favWord;
-let hunts;
-let fears;
-let excited;
-let wonders;
-let favNumber;
+.statText {
+    width: calc(22% - 4px);
+    position: absolute;
+    font-size: min(1.5vw, 15px);
+    color: white;
+    translate: 0px -130%;
+}
 
-let nameList = [
-    "maurice",
-    "gabriel",
-    "michael",
-    "gilgamesh",
-    "zuk",
-    "gneep",
-    "holo",
-    "minos",
-    "sisyphus",
-    "daedalus",
-    "pebble",
-    "river",
-    "sam",
-    "greg",
-    "tim",
-    "luke",
-    "samantha",
-    "monarch",
-    "em",
-    "zi",
-    "spec",
-    "dot",
-    "ti",
-    "astra",
-    "zip",
-    "zap",
-    "rowan",
-    "sebastian",
-    "yuri",
-    "club",
-    "james",
-    "andrew",
-    "ash",
-    "geo",
-    "nat",
-    "abigail",
-    "leola",
-    "mose",
-    "florence",
-    "levi",
-    "ola",
-    "gree",
-    "binar",
-    "octa",
-    "hexi",
-    "deci",
-    "fox",
-    "faux",
-    "emma",
-    "long",
-    "short",
-    "boyde",
-    "boyd",
-    "percy",
-    "odin",
-    "leon",
-    "rhykard",
-    "ranni",
-    "corni",
-    "gak",
-    "kaz",
-    "kay",
-    "bean",
-    "marcus",
-    "abigail",
-    "rose",
-    "thorn",
-    "wade",
-    "deep",
-    "depth",
-    "ant",
-    "luna",
-    "moth",
-    "space",
-    "star",
-    "uno",
-    "tres",
-    "eight",
-    "eye",
-    "honey",
-    "maddie",
-    "xan",
-    "x",
-    "sil",
-    "virgil",
-    "why",
-    "ravin",
-    "crow",
-    "kai",
-    "ctho",
-    "alast",
-    "ship",
-    "sea",
-    "storm",
-    "gone",
-    "forget",
-    "leave",
-    "sun",
-    "moon",
-    "fate",
-    "strings",
-    "hands",
-    "mil",
-    "nano",
-    "ex",
-    "metto",
-    "ot",
-    "haze",
-    "britney",
-    "oil",
-    "under",
-    "fly",
-    "joseph",
-    "calvin",
-    "school",
-    "fan",
-    "robbie",
-    "chase",
-    "pursuit",
-    "rend",
-    "sample",
-    "paul",
-    "zoe",
-    "gale",
-    "birds",
-    "heaven",
-    "sky",
-    "rhodes",
-    "hughes",
-    "bart",
-    "alice",
-    "assume",
-    "bretta",
-    "clark",
-    "mai",
-    "olivia",
-    "august",
-    "twice",
-    "abby",
-    "kim",
-    "harry",
-    "queer",
-    "mino",
-    "milo",
-    "your",
-    "spy",
-    "angela",
-    "jessie",
-    "rob",
-    "senpai"
-]
-let foodList = [
-    "apples",
-    "pasta",
-    "thoughts",
-    "memories",
-    "energy",
-    "data",
-    "bytes",
-    "pizza",
-    "ramen",
-    "itself",
-    "stone",
-    "anything cyan",
-    "anything magenta",
-    "anything yellow",
-    "salad",
-    "molecules",
-    "quarks",
-    "cheese",
-    "water",
-    "moisture"
-]
-let hatesList = [
-    "light",
-    "shadow",
-    "you",
-    "you",
-    "you",
-    "math",
-    "cells",
-    "biology",
-    "the laws of robotics",
-    "plastic",
-    "earth",
-    "plants",
-    "voids",
-    "chasms",
-    "ceilings",
-    "bricks"
-]
-let enjoysList = [
-    "running",
-    "falling",
-    "lounging",
-    "eating",
-    "hunting",
-    "fighting",
-    "reading",
-    "mining",
-    "jumping around",
-    "sleeping",
-    "pondering",
-    "exploring",
-    "climbing",
-    "discovering"
-]
-let locationList = [
-    "vector planes",
-    "cubic cliffs",
-    "the plazas",
-    "the walls",
-    "the spires",
-    "caves",
-    "acute angles",
-    "hyperbolic spots",
-    "bore tunnels",
-    "bridges",
-    "dens",
-    "anything vast",
-    "anything small",
-    "geometric nulls",
-    "vortexes"
-]
-let missesList = [
-    "the sun",
-    "the stars",
-    "love",
-    "emotion",
-    "friends",
-    "hope",
-    "control",
-    "freedom",
-    "familiarity",
-    "understanding",
-    "warmth",
-    "life",
-    "family"
-]
-let wordList = [
-    "discombobulation",
-    "icosahedron",
-    "palindrome",
-    "consecution",
-    "osmium",
-    "pulchritude",
-    "schadenfreude",
-    "kerfuffle",
-    "wallop",
-    "yoink",
-    "goober",
-    "understood",
-    "scrumptious",
-    "sandy loam",
-    "perplexing",
-    "yaoi",
-    "skrunkle",
-    "sudo",
-    "transgender",
-    "impossibility",
-    "conglomerate",
-    "carbonate",
-    "plasmoid"
-]
-let huntsList = [
-    "other ants",
-    "you",
-    "humans",
-    "lesser beings",
-    "mites",
-    "borers",
-    "gnawers",
-    "angels",
-    "divinity",
-    "souls",
-    "the truth",
-    "answers",
-    "the weak",
-    "n/a",
-    "bees",
-    "mosquitos"
-]
-let fearsList = [
-    "wasps",
-    "mantises",
-    "webs",
-    "death",
-    "the end",
-    "aphids",
-    "assassin bugs",
-    "scorpions",
-    "centipedes",
-    "titans",
-    "walking stones"
-]
-let excitedList = [
-    "answers",
-    "food",
-    "a meal",
-    "the truth",
-    "a home",
-    "living another day",
-    "meeting new bugs",
-    "new sights",
-    "travel",
-    "new code",
-    "new words",
-    "new food",
-    "victory"
-]
-let wondersList = [
-    "where we are",
-    "who you are",
-    "what it is",
-    "what anything is",
-    "what it all means",
-    "who anyone is",
-    "what this place is",
-    "where the wind blows",
-    "when it can be free again",
-    "why it's hunted",
-    "nothing at all"
-]
+#health {
+    text-align: right;
+}
+
+#enemyText {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    font-size: min(6vw, 60px);
+    z-index: 1;
+    text-align: center;
+    top: 7%;
+}
+
+.announceAnim {
+    animation: announceAnim 2s ease-in forwards;
+}
+
+@keyframes announceAnim {
+    0% {scale: 50%;}
+    10%, 90% {scale: 100%;}
+    100% {scale: 0;}
+}
+
+.screenshake {
+    animation: screenshake calc(0.1s * var(--shakeAmount)) ease-out;
+}
+
+@keyframes screenshake {
+  0% {transform: translate(calc(1px *  var(--shakeAmount)), calc(1px *  var(--shakeAmount))) rotate(calc(-1deg *  var(--shakeAmount)));}
+  50% {transform: translate(calc(-1px *  var(--shakeAmount)), 2px) rotate(calc(1deg *  var(--shakeAmount)));}
+  100% {transform: translate(calc(-3px *  var(--shakeAmount)), calc(-1px *  var(--shakeAmount))) rotate(0);}
+}
+
+#ant {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-size: 50% auto;
+    background-position: 50% 30%;
+    background-repeat: no-repeat;
+}
+
+.antIdle {
+    animation: antWiggle 2.3s ease-in-out infinite;
+}
+
+@keyframes antWiggle {
+    0%, 100% {transform: scaleX(0.98) scaleY(1.02);}
+    50% {transform: scaleX(1.02) scaleY(0.98);}
+}
+
+.antSpawnAnim {
+    animation: antSpawn 3s ease-in-out forwards;
+}
+
+@keyframes antSpawn {
+    0%, 100% {transform: scaleX(0.98) scaleY(1.02) translate(0, 0) rotate(0);}
+    20%, 80% {transform: scale(0.6) translate(0, 0) rotate(0);}
+    35%, 49.9999999% {transform: scale(0.5) translate(-130%, 0) rotate(-20deg);}
+    50% {transform: scale(0.5) translate(130%, 0) rotate(20deg);}
+}
+
+.antHitAnim {
+    animation: antHit 0.4s ease-out forwards;
+}
+
+@keyframes antHit {
+    from {transform: translate(2%, -7%) scale(0.8) rotate(13deg);}
+    to {transform: translate(0, 0) scaleX(0.98) scaleY(1.02) rotate(0);}
+}
+
+.closeButton {
+    z-index: 5;
+    position: absolute;
+    right: 1%;
+    font-size: min(2.6vw, 25px);
+    width: 1.6em;
+    line-height: 1.3em;
+    text-align: center;
+    cursor: pointer;
+    background: black;
+    margin-top: 1%;
+}
+
+#strikeMenu {
+    border: 1px solid magenta;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 60%;
+    position: absolute;
+    padding: 0 0 1.5% 0;
+    bottom: 27%;
+    background-color: black;
+    color: white;
+    z-index: 3;
+}
+
+#strikeClose {
+    border: 1px solid magenta;
+    transition: all 0.2s ease;
+}
+
+#strikeClose:hover {
+    translate: 0 -0.15em;
+    box-shadow: 0 0.15em 0 0 magenta;
+}
+
+#strikeFlex {
+    display: flex;
+    justify-content: center;
+    line-height: 0.3em;
+    column-gap: 4%
+}
+
+#strikeTop {
+    line-height: 0.8em;
+    width: 100%;
+    text-align: center;
+    font-size: min(1.8vw, 16px);
+}
+
+#critChance {
+    color: cyan;
+}
+
+.attackButton {
+    background: black;
+    font-size: min(1.8vw, 16px);
+    border: 1px solid magenta;
+    padding: 1% 4% 1% 4%;
+    min-width: 20%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.attackButton:hover {
+    translate: 0 -0.4em;
+    box-shadow: 0 0.4em 0 0 magenta;
+}
+
+.attackTitle {
+    color: magenta;
+    text-align: center;
+    width: 100%;
+    font-size: min(2.6vw, 25px);
+    line-height: 1.2em;
+}
+
+.attackStat {
+    color: cyan;
+}
+
+#attackEffects {
+    z-index: 2;
+    top: 16%;
+    width: 36%;
+    height: 45%;
+    position: absolute;
+    background-size: 100% 100%;
+    transform: translate(0, 0) scale(1) rotate(0);
+}
+
+.swingAnim {
+    animation: swing 0.27s ease-out forwards;
+    background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true");
+}
+
+@keyframes swing {
+    from {transform: translate(76%, 3%) scale(1.4) rotate(-10deg)}
+    to {transform: translate(76%, 3%) scale(0) rotate(20deg)}
+}
+
+.slashAnim {
+    animation: slash 0.27s linear forwards;
+    background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true");
+}
+
+@keyframes slash {
+    0% {transform: translate(0, 0) scale(0, 0)}
+    20% {transform: translate(20%, 0) scale(0.5, 0.5)}
+    80% {transform: translate(120%, 0) scale(1.5, 0.5)}
+    100% {transform: translate(185%, 0) scale(0, 0.3)}
+}
+
+.stabAnim {
+    animation: stab 0.27s ease-out forwards;
+    background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/stab.png?raw=true");
+}
+
+@keyframes stab {
+    0% {transform: translate(40%, 30%) scale(0.5)}
+    40% {transform: translate(90%, -20%) scale(0.8)}
+    80%, 100% {transform: translate(120%, -50%) scale(0)}
+}
+
+#studyWarning {
+    border: 1px solid cyan;
+    left: 25.2%;
+    width: 25%;
+    height: 7%;
+    position: absolute;
+    padding: 1% 1% 1% 1%;
+    bottom: 18%;
+    background-color: black;
+    color: white;
+    font-size: min(1.8vw, 16px);
+    z-index: 3;
+}
+
+#studyWarningFlex {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    column-gap: 4%;
+}
+
+.studyOption {
+    border: 1px solid cyan;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.studyOption:hover {
+    translate: 0 -0.34em;
+    box-shadow: 0 0.34em 0 0 cyan;
+}
+
+#studyText {
+    border: 1px solid cyan;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 60%;
+    position: absolute;
+    padding: 0 10px 0 10px;
+    bottom: 27%;
+    background-color: black;
+    color: white;
+    font-size: min(1.8vw, 16px);
+    z-index: 3;
+}
+
+.menuOpenAnim {
+    animation: menuOpen 0.3s forwards;
+}
+
+.menuCloseAnim {
+    animation: menuOpen 0.3s reverse forwards;
+}
+
+@keyframes menuOpen {
+    from {scale: 0;}
+    to {scale: 1;}
+}
+
+#studyClose {
+    border: 1px solid cyan;
+    transition: all 0.2s ease;
+}
+
+#studyClose:hover {
+    translate: 0 -0.15em;
+    box-shadow: 0 0.15em 0 0 cyan;
+}
 
 
-document.getElementById("testSpawnAnt").onclick = function() {spawnEnemy();}
-document.getElementById("testDamage").onclick = function() {updateHealth(2);}
-document.getElementById("testXP").onclick = function() {updateLevel(10);}
+
+
+#testing {
+    z-index: -100;
+    position: absolute; 
+    max-width: 800px;
+    width: 80%;
+    margin: auto;
+    position: absolute;
+    padding-top: calc(min(60%, 600px) + 10px);
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: center;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 3px 30px;
+}
