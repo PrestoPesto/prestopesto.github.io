@@ -48,7 +48,7 @@ spawnEnemy();
 
 function updateHealth(dmg) {
     if (dmg > 0) {
-        screenshake();
+        screenshake(1);
     }
     currentHealth -= dmg;
     if (currentHealth <= 0) {
@@ -145,8 +145,9 @@ function announceText(aText, aColor) {
     }, 2000);
 }
 
-function screenshake() {
+function screenshake(amount) {
     background.classList.add("screenshake");
+    background.style.setProperty('--shakeAmount', amount);
     setTimeout(function() {
         background.classList.remove("screenshake");
     }, 100);
@@ -190,15 +191,17 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
             if (crit) {
                 antHealth -= hitDamage * 2;
                 enemyStatsTesting.innerHTML = antHealth + " Crit!";
+                screenshake(3);
             } else {
                 antHealth -= hitDamage;
                 enemyStatsTesting.innerHTML = antHealth;
+                screenshake(0.5);
             }
             ant.classList.remove("antIdle");
             ant.classList.add("antHitAnim");
-            attackEffects.classList.remove("slashAnim");
+            attackEffects.classList.remove("swingAnim");
             void attackEffects.offsetWidth;
-            attackEffects.classList.add("slashAnim");
+            attackEffects.classList.add("swingAnim");
             setTimeout(function() {
                 ant.classList.remove("antHitAnim");
                 void ant.offsetWidth;
@@ -666,3 +669,8 @@ let wondersList = [
     "why it's hunted",
     "nothing at all"
 ]
+
+
+document.getElementById("testSpawnAnt").onclick = function() {spawnEnemy();}
+document.getElementById("testDamage").onclick = function() {updateHealth(2);}
+document.getElementById("testXP").onclick = function() {updateLevel(10);}
