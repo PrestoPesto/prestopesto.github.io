@@ -199,10 +199,12 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
             }
             ant.classList.remove("antIdle");
             ant.classList.add("antHitAnim");
-            attackEffects.classList.remove("swingAnim");
             void attackEffects.offsetWidth;
+            attackEffects.classList.remove("hidden");
             attackEffects.classList.add("swingAnim");
             setTimeout(function() {
+                attackEffects.classList.add("hidden");
+                attackEffects.classList.remove("swingAnim");
                 ant.classList.remove("antHitAnim");
                 void ant.offsetWidth;
                 ant.classList.add("antIdle");

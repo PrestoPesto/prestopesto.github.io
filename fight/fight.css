@@ -319,8 +319,8 @@ body {
 }
 
 @keyframes swing {
-    from {transform: scale(1) rotate(-10deg)}
-    to {transform: scale(0) rotate(20deg)}
+    from {transform: translate(76%, 3%) scale(1.8) rotate(-10deg)}
+    to {transform: translate(76%, 3%) scale(0) rotate(20deg)}
 }
 
 .slashAnim {
