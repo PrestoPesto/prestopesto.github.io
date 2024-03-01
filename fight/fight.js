@@ -40,7 +40,9 @@ let xp = 0;
 let turn = 0;
 
 let antColor;
-let antHealth = 10;
+let antLevel = 1;
+let antMaxHealth;
+let antHealth;
 
 updateHealth(0);
 updateLevel(0);
@@ -86,6 +88,8 @@ function spawnEnemy() {
     void ant.offsetWidth;
     ant.classList.add("antSpawnAnim");
     setTimeout(function() {
+        antHealth = 10;
+        enemyStatsTesting.innerHTML = antHealth;
         generateInfo();
         let antTypeRNG;
         do {
@@ -131,6 +135,10 @@ function endTurn() {
 
 function antTurn() {
     announceText("ant's turn!", "white");
+    if (Math.floor(Math.random()) <= 0.7) {
+        updateHealth(3);
+    }
+    openButtons();
 }
 
 function announceText(aText, aColor) {
@@ -181,9 +189,9 @@ let critChance = 20;
 
 function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
     strikeClose();
+    let hitRNG = Math.floor(Math.random() * 100) + 1;
+    let crit;
     setTimeout(function() {
-        let hitRNG = Math.floor(Math.random() * 100) + 1;
-        let crit;
         if (canCrit && Math.floor(Math.random() * 100) + 1 <= critChance) {
             crit = true;
         }
@@ -199,12 +207,7 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
             }
             ant.classList.remove("antIdle");
             ant.classList.add("antHitAnim");
-            void attackEffects.offsetWidth;
-            attackEffects.classList.remove("hidden");
-            attackEffects.classList.add("swingAnim");
             setTimeout(function() {
-                attackEffects.classList.add("hidden");
-                attackEffects.classList.remove("swingAnim");
                 ant.classList.remove("antHitAnim");
                 void ant.offsetWidth;
                 ant.classList.add("antIdle");
@@ -212,6 +215,25 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
         } /* else {
             miss();
         } */
+        attackEffects.classList.remove("hidden");
+            void attackEffects.offsetWidth;
+            if (hitType == "slash") {
+                attackEffects.classList.add("slashAnim");
+            } else if (hitType == "stab") {
+                attackEffects.classList.add("stabAnim");
+            } else {
+                attackEffects.classList.add("swingAnim");
+            }
+            setTimeout(function() {
+                if (hitType == "slash") {
+                    attackEffects.classList.remove("slashAnim");
+                } else if (hitType == "stab") {
+                    attackEffects.classList.remove("stabAnim");
+                } else {
+                    attackEffects.classList.remove("swingAnim");
+                }
+                attackEffects.classList.add("hidden");
+            }, 270);
     }, 200);
 }
 
@@ -223,6 +245,26 @@ swing.onclick = function() {
         true,
         false,
         "swing"
+    );
+}
+slash.onclick = function() {
+    attack(
+        65 * accuracy,
+        5 * damage,
+        "stn",
+        true,
+        true,
+        "slash"
+    );
+}
+stab.onclick = function() {
+    attack(
+        75 * accuracy,
+        3 * damage,
+        "bld",
+        true,
+        true,
+        "stab"
     );
 }
 
