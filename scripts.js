@@ -70,7 +70,6 @@ const antTalk3 = new Audio("./assets/ant_talk3.mp3");
 let soundIndex = 0;
 
 function changeText() {
-    ant.src = "./assets/ant_" + messages[messageIndex + 1] + ".png";
     ant.classList.remove("antAnim");
     void ant.offsetWidth;
     ant.classList.add("antAnim");
@@ -90,6 +89,8 @@ function changeText() {
     } else {
         antTalk3.play();
     }
+
+    ant.src = "./assets/ant_" + messages[messageIndex + 1] + ".png";
 
     for (let i = 0; i < messages[messageIndex].length; i++) {
         setTimeout(function() { 
