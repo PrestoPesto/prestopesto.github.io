@@ -13,7 +13,87 @@
         <div id="background">
             <div id="enemyText" class="hidden"></div>
             <div id="ant"></div>
-            <div id="attackEffects" class="swingAnim"></div>
+            <div id="attackEffects" class="hidden"></div>
+          
+            <div id="playerEffects" class="effectsList hidden">
+                <p>you</p>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X bld</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X bli</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X cor</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X dis</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X reg</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X stn</span>
+                    </div>
+                </div>
+            </div>
+          
+            <div id="antEffects" class="effectsList hidden">
+                <p>ant</p>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X bld</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X bli</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X cor</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X dis</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X reg</span>
+                    </div>
+                </div>
+                <div class="effectBlock hidden">
+                    <div class="effectIcon">
+                        <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+                        <span>X stn</span>
+                    </div>
+                </div>
+            </div>
 
             <div id="stats">
                 <div class="stat">
@@ -48,29 +128,29 @@
                 </div>
             </div>
 
-            <div id="spoilsMenu">
+            <div id="spoilsMenu" class="hidden">
                 <p>victory!</p>
             </div>
           
             <div id="strikeMenu" class="hidden">
               <div id="strikeClose" class="closeButton">X</div>
-                <p id="strikeTop"><span id="critChance">20%</span> crit chance</p>
+                <p id="strikeTop"><span id="critChance"></span> crit chance</p>
                 <div id="strikeFlex">
                     <div id="swing" class="attackButton">
                         <div class="attackTitle">swing</div>
-                        <p><span class="attackStat acc">90%</span> hit</p>
-                        <p><span class="attackStat dmg">4</span> dmg</p>
+                        <p><span class="attackStat acc"></span> hit</p>
+                        <p><span class="attackStat dmg"></span> dmg</p>
                     </div>
                     <div id="slash" class="attackButton">
                         <div class="attackTitle">slash</div>
-                        <p><span class="attackStat acc">65%</span> hit</p>
-                        <p><span class="attackStat dmg">5</span> dmg</p>
+                        <p><span class="attackStat acc"></span> hit</p>
+                        <p><span class="attackStat dmg"></span> dmg</p>
                         <p><span class="attackStat eff">1</span> stn</p>
                     </div>
                     <div id="stab" class="attackButton">
                         <div class="attackTitle">stab</div>
-                        <p><span class="attackStat acc">70%</span> hit</p>
-                        <p><span class="attackStat dmg">3</span> dmg</p>
+                        <p><span class="attackStat acc"></span> hit</p>
+                        <p><span class="attackStat dmg"></span> dmg</p>
                         <p><span class="attackStat eff">1</span> bld</p>
                     </div>
                 </div>
@@ -90,6 +170,27 @@
                 <p id="test" class="studyLine">one</p>
                 <p class="studyLine">two</p>
                 <p class="studyLine">three</p>
+            </div>
+          
+            <div id="stashMenu">
+                <div id="stashFlex">
+                    <div id="iceCubes" class="itemIcon">
+                      <p class="itemTitle">ice cube</p>
+                      <img class="itemImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/ice_cube.png?raw=true">
+                      <p class="itemText">+2 hp</p>
+                      <p class="itemText">does not end turn</p>
+                    </div>
+                    <div id="lemonade" class="itemIcon">
+                      <p class="itemTitle">lemonade</p>
+                      <img class="itemImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/lemonade.png?raw=true">
+                      <p class="itemText">+6 hp</p>
+                    </div>
+                    <div id="lemonPie" class="itemIcon">
+                      <p class="itemTitle">lemon pie</p>
+                      <img class="itemImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/lemon_pie.png?raw=true">
+                      <p class="itemText">full hp</p>
+                    </div>
+                </div>
             </div>
         </div>
         
