@@ -38,6 +38,8 @@ let studyCloseButton = document.getElementById("studyClose");
 let studyName = document.getElementById("studyName");
 let studyClass = document.getElementById("studyClass");
 
+let stashMenu = document.getElementById("stashMenu");
+
 let maxHealth = 15;
 let currentHealth = maxHealth;
 let level = 1;
@@ -285,11 +287,13 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
                 enemyStatsTesting.innerHTML = antHealth;
                 screenshake(0.5);
             }
-            if (hitEffect == "bld") {
-                if (!antEffects.includes("bld")) {
-                    antEffectsList.classList.remove("hidden");
-                    effectIcons[6].classList.remove("hidden");
-                    antEffects.push("bld");
+            if ((crit && critDep) || !critDep) {
+                if (hitEffect == "bld") {
+                    if (!antEffects.includes("bld")) {
+                        antEffectsList.classList.remove("hidden");
+                        effectIcons[6].classList.remove("hidden");
+                        antEffects.push("bld");
+                    }
                 }
             }
             if (antHealth > 0) {
@@ -445,13 +449,21 @@ function studyClose() {
     endTurn();
 }
 
+function stash() {
+    closeButtons();
+    stashMenu.classList.remove("hidden");
+    stashMenu.classList.remove("menuCloseAnim");
+    void stashMenu.offsetWidth;
+    stashMenu.classList.add("menuOpenAnim");
+}
+
 strikeButton.onclick = function() {strike();}
 strikeCloseButton.onclick = function() {strikeClose(true);}
 studyButton.onclick = function() {studyWarning();}
 studyYes.onclick = function() {study();}
 studyNo.onclick = function() {studyWarningClose();}
 studyCloseButton.onclick = function() {studyClose();}
-//stashButton.onclick = function() {updateLevel(10);}
+stashButton.onclick = function() {stash();}
 //scramButton.onclick = function() {updateHealth(2);}
 
 function generateInfo() {

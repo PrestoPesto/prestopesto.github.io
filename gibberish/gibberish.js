@@ -12,7 +12,8 @@ let collections = [
   " numerous different",
   " multiple"
 ]
-let adjectives = [
+
+let adjectivesOrig = [
   " subinfitacious",
   " hydrostoic",
   " hypocerebral",
@@ -41,7 +42,9 @@ let adjectives = [
   " executive",
   " synthetic"
 ]
-let nounsPlural = [
+let adjectives = adjectivesOrig;
+
+let nounsPluralOrig = [
   "particles",
   "fluctuations",
   "hypotheses",
@@ -78,7 +81,9 @@ let nounsPlural = [
   "genders",
   "phylia"
 ]
-let nounsSingle = [
+let nounsPlural = nounsPluralOrig;
+
+let nounsSingleOrig = [
   "particle",
   "fluctuation",
   "hypothesis",
@@ -115,6 +120,8 @@ let nounsSingle = [
   "gender",
   "phylium"
 ]
+let nounsSingle = nounsSingleOrig;
+
 let verbs = [
   " create",
   " generate",
@@ -134,6 +141,7 @@ let verbs = [
   " dehydrate",
   " simulate"
 ]
+
 let prefixes = [
   "sub-",
   "quantum ",
@@ -183,6 +191,9 @@ function randomPrefix() {
 //Random adjective
 //If "chance" is true, it only has a random chance of including one
 function randomAdj(chance) {
+  if (adjectives.length < 1) {
+    adjectives = adjectivesOrig;
+  }
   let random = Math.floor(Math.random()*adjectives.length);
   let word = adjectives[random];
   if (chance) {
@@ -200,6 +211,9 @@ function randomAdj(chance) {
 
 //Random singular noun
 function randomNounSingle() {
+  if (nounsSingle.length < 1) {
+    nounsSingle = nounsSingleOrig;
+  }
   let random = Math.floor(Math.random()*nounsSingle.length);
   let word = " ";
   if (Math.random() <= 0.4) {
@@ -213,6 +227,9 @@ function randomNounSingle() {
 
 //Random plural noun
 function randomNounPlural() {
+  if (nounsPlural.length < 1) {
+    nounsPlural = nounsPluralOrig;
+  }
   let random = Math.floor(Math.random()*nounsPlural.length);
   let word = " ";
   if (Math.random() <= 0.2) {
@@ -327,7 +344,7 @@ function buildSentence() {
 function buildParagraph() {
   let paragraph = "";
   paragraph += "Hidden Spaces is a" + randomAdj(false) + randomNounSingle() + ".";
-  let maxSentences = 8 + Math.floor(Math.random() * 3); //Maximum sentences in a paragraph
+  let maxSentences = 50 + Math.floor(Math.random() * 3); //Maximum sentences in a paragraph
   
   for (let i = 0; i < maxSentences; i++) {
     paragraph += buildSentence();

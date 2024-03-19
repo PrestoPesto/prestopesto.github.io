@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    font-family: "Reenie Beanie", cursive;
+    color: hsl(0, 0%, 100%, 90%);
+}
+
+#stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#stars::before {
+    z-index: -3;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: auto 100%;
+    content: "";
+    background-image: url("./assets/dante/stars.png");
+    opacity: 0.4;
+    animation: bgFade 10s ease-in-out infinite;
+}
+
+@keyframes bgFade {
+    0%, 100% {opacity: 0.4;}
+    50% {opacity: 0.3}
+}
+
+#background {
+    overflow: hidden;
+    z-index: -2;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    background-size: auto 100%;
+    background-image: url("./assets/dante/bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.centered {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+
+#bug {
+    position: absolute;
+    height: 35%;
+    top: -7%;
+}
+
+#guns {
+    position: absolute;
+    height: 50%;
+    top: 5%;
+    z-index: -1;
+    opacity: 0.65;
+    animation: gunSpin 70s linear infinite, gunShrink 5s ease-in-out infinite;
+}
+
+@keyframes gunSpin {
+    0% {rotate: 0;}
+    50% {rotate: 180deg;}
+    100% {rotate: 360deg;}
+}
+
+@keyframes gunShrink {
+    0%, 100% {scale: 1; opacity: 0.65;}
+    50% {scale: 0.9; opacity: 0.95;}
+}
+
+#goober1 {
+    position: absolute;
+    width: 600px;
+    top: 5%;
+}
+
+#angel {
+    position: absolute;
+    height: 22%;
+    top: 38%;
+    left: 50%;
+    rotate: 15deg;
+}
+
+#goober2 {
+    position: absolute;
+    width: 27%;
+    bottom: 0;
+    right: 3%;
+}
+
+#musicBox {
+    position: absolute;
+    width: 12%;
+    bottom: 25%;
+    left: 13%;
+    cursor: pointer;
+}
+
+#musicBox:hover {
+    filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+}
+ 
+#musicText {
+    position: absolute;
+    width: 95%;
+    height: 26%;
+    background-color: hsl(0, 0%, 37%, 50%);
+    top: 85%;
+    line-height: 190%;
+    font-size: 2em;
+    text-align: center;
+}
+
+#fly1 {
+    width: 23%;
+    top: -7%;
+    z-index: 1;
+    left: -23%;
+    position: absolute;
+    transform: scaleY(-1) rotate(-100deg);
+}
+
+#fly2 {
+    width: 20%;
+    top: -2%;
+    z-index: 1;
+    right: -24%;
+    position: absolute;
+    rotate: 0;
+}
+
+.textBox {
+    background-color: hsla(338, 100%, 39%, 0.3);
+}
+
+#text1 {
+    text-align: center;
+    z-index: 3;
+    font-size: 2.5em;
+    position: absolute;
+    padding: 0.5%;
+    width: 7%;
+    height: 4%;
+    right: 15%;
+    top: 19%;
+}
+
+#text2 {
+    text-align: center;
+    z-index: 3;
+    font-size: 2.5em;
+    position: absolute;
+    padding: 0.5%;
+    width: 6%;
+    height: 15%;
+    left: 16.5%;
+    top: 24%;
+}
+
+#text3 {
+    text-align: center;
+    z-index: 3;
+    font-size: 2.5em;
+    position: absolute;
+    padding: 0.5%;
+    width: 6%;
+    height: 18%;
+    right: 15%;
+    top: 42%;
+}

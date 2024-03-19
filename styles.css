@@ -2,6 +2,7 @@
 
 :root {
     --counter-height: 280px;
+    --mugSize: 40px;
 }
 
 html {
@@ -90,7 +91,7 @@ body {
     bottom: calc(var(--counter-height) - 30px);
     left: -1px;
     width: 810px;
-    height: 30px;
+    height: calc(var(--counter-height) * 0.107);
     border-radius: 0 8px 4px 0;
 }
 #counterTop::after {
@@ -108,8 +109,8 @@ body {
 
 .mug {
     position: absolute;
-    bottom: calc(var(--counter-height) + 1px);
-    transition: rotate 0.3s ease, translate 0.4s ease;
+    bottom: calc(var(--counter-height) - 29px + calc(calc(var(--counter-height) * 0.107)));
+    transition: rotate 0.3s ease, translate 0.4s ease-in-out;
 }
 
 .mug:hover {
@@ -119,17 +120,17 @@ body {
 
 .mugCup {
     bottom: 0px;
-    width: 40px;
-    height: 44px;
-    border-radius: 4px 4px 16px 16px;
+    width: var(--mugSize);
+    height: calc(var(--mugSize) * 1.1);
+    border-radius: calc(var(--mugSize) * 0.1) calc(var(--mugSize) * 0.1) calc(var(--mugSize) * 0.4) calc(var(--mugSize) * 0.4);
 }
 
 .mugCup::after {
     background-position: 0 0, 4.5px 4.5px;
-    background-image: radial-gradient(yellow 1px, transparent 5px), radial-gradient(yellow 1px, transparent 5px);
+    background-image: radial-gradient(yellow 1px, transparent 3px), radial-gradient(yellow 1px, transparent 3px);
     background-size: 9px 9px;   
     mask-image: linear-gradient(to left, black, rgb(0 0 0 / 0.5));
-    transition: rotate 0.3s ease, translate 0.4s ease;
+    transition: rotate 0.3s ease, translate 0.4s ease-in-out;
     animation: mugScroll 2.4s linear infinite;
 }
 .mugCup:hover::after {
@@ -139,9 +140,9 @@ body {
 
 .mugHandle {
     position: absolute;
-    width: 34px;
-    height: 34px;
-    border-radius: 17px;
+    width: calc(var(--mugSize) * 0.85);
+    height: calc(var(--mugSize) * 0.85);
+    border-radius: calc(var(--mugSize) * 0.425);
     bottom: 9px;
     left: -16px;
     z-index: -2;
@@ -181,8 +182,9 @@ body {
 }
 
 #menuBorder {
-    width: 500px;
-    height: 600px;
+    --menuSize : 500px;
+    width: var(--menuSize);
+    height: calc(var(--menuSize) * 1.2);
     left: 0;
     right: 0;
     top: 0;
@@ -208,8 +210,8 @@ body {
     border-radius: 5px;
     left: 0;
     right: 0;
-    width: 470px;
-    height: 570px;
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
     top: 0;
     bottom: 0;
     margin: auto;
@@ -266,10 +268,10 @@ a {
 
 #ant {
     position: absolute;
-    width: 500px;
     z-index: -3;
+    height: calc(var(--counter-height) * 1.7857);
     left: 80px;
-    bottom: calc(var(--counter-height) - 96px);
+    bottom: calc(var(--counter-height) * 0.65714);
     cursor: pointer;
 }
 
@@ -337,4 +339,79 @@ a {
 
 .hidden {
     display: none;
+}
+
+#snence {
+    padding-top: -1em;
+    width: 2em;
+    animation: snence 0.6s ease infinite;
+}
+
+@keyframes snence {
+    0%, 100% {transform: scaleX(1) translateY(0);}
+    25% {transform: scaleX(1) translateY(3px);}
+    49% {transform: scaleX(1) translateY(0);}
+    50% {transform: scaleX(-1) translateY(0);}
+    75% {transform: scaleX(-1) translateY(3px);}
+    99% {transform: scaleX(-1) translateY(0);}
+}
+
+@media only screen and (max-width: 768px) {
+    :root {
+        --counter-height: 120px;
+        --mugSize: 24px;
+    }
+
+    #counter {
+        width: 90%;
+    }
+
+    #counterTop {
+        width: calc(90% + 10px);
+    }
+
+    #ant {
+        height: calc(var(--counter-height) * 2.3);
+        bottom: calc(var(--counter-height) * 0.65714 - 20px);
+    }
+
+    #menuBlock {
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: -10;
+    }
+    
+    #menuBorder {
+        width: 80%;
+        height: min(60%, 600px);
+        aspect-ratio: 0.8333 / 1;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        border-radius: 10px;
+        z-index: -1;
+        margin-top: 5%
+    }
+
+    #menu {
+        width: 94%;
+    }
+
+    .menuEntry {
+        font-size: 14px;
+    }
+
+    #speech {
+        bottom: calc(var(--counter-height) * 1.6);
+        left: 310px;
+        font-size: 13px;
+        line-height: 24px;
+        max-width: 200px;
+        min-width: 70px;
+        padding: 11px;
+    }
 }

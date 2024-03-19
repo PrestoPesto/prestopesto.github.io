@@ -2,6 +2,7 @@ let speech = document.getElementById("speech");
 let ant = document.getElementById("ant");
 
 const messages = [
+    "why is there a % in my text box", "serious",
     "but what exactly *is* money?", "question",
     "welcome!", "wave0",
     "heya!", "wave1",
@@ -78,7 +79,10 @@ function changeText() {
     speech.classList.remove("hidden");
     void speech.offsetWidth;
     speech.classList.add("speechAnim");
+
     let messageIndex = Math.floor(Math.random() * messages.length /2) * 2;
+    ant.src = "./assets/ant_" + messages[messageIndex + 1] + ".png";
+    
     soundIndex = Math.floor(Math.random() * 4);
     if (soundIndex == 0) {
         antTalk0.play();
@@ -90,11 +94,10 @@ function changeText() {
         antTalk3.play();
     }
 
-    ant.src = "./assets/ant_" + messages[messageIndex + 1] + ".png";
-
     for (let i = 0; i < messages[messageIndex].length; i++) {
         setTimeout(function() { 
             message += messages[messageIndex].charAt(i);
+            message = message.replace("%", '<img id="snence" src="./assets/snence.png">');
             speech.innerHTML = message;
         }, 20 * i);
     }
