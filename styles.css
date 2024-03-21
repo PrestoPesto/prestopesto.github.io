@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&family=Cousine:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
-    --counter-height: 280px;
+    --counter-height: 30%;
     --mugSize: 40px;
 }
 
@@ -143,8 +143,8 @@ body {
     width: calc(var(--mugSize) * 0.85);
     height: calc(var(--mugSize) * 0.85);
     border-radius: calc(var(--mugSize) * 0.425);
-    bottom: 9px;
-    left: -16px;
+    bottom: calc(var(--mugSize) * 0.225);
+    left: calc(var(--mugSize) * -0.4);
     z-index: -2;
     background: black;
 }
@@ -153,11 +153,11 @@ body {
     border: 1px solid white;
     content: "";
     position: absolute;
-    width: 18px;
-    height: 18px;
-    top: 7px;
-    right: 8px;
-    border-radius: 8px;
+    width: calc(var(--mugSize) * 0.45);
+    height: calc(var(--mugSize) * 0.45);
+    top: calc(var(--mugSize) * 0.175);
+    right: calc(var(--mugSize) * 0.2);
+    border-radius: calc(var(--mugSize) * 0.2);
     background: black;
 }
 
@@ -169,6 +169,19 @@ body {
 @keyframes mugSlide {
     from {translate: -800px 0}
     to {translate: 0 0;}
+}
+
+#mug1 {
+    left: 520px; 
+    animation: mugSlide 1.9s cubic-bezier(0,.12,.54,1) 1.2s backwards;
+}
+#mug2 {
+    left: 610px; 
+    animation: mugSlide 1.9s cubic-bezier(0,.12,.54,1) 0.8s backwards;
+}
+#mug3 {
+    left: 700px;
+    animation: mugSlide 1.9s cubic-bezier(0,.12,.54,1) 0.4s backwards;
 }
 
 #menuBlock {
@@ -370,9 +383,20 @@ a {
         width: calc(90% + 10px);
     }
 
+    #mug1 {
+        left: 60%; 
+    }
+    #mug2 {
+        left: 70%; 
+    }
+    #mug3 {
+        left: 80%;
+    }
+
     #ant {
+        left: 40px;
         height: calc(var(--counter-height) * 2.3);
-        bottom: calc(var(--counter-height) * 0.65714 - 20px);
+        bottom: calc(var(--counter-height) * 0.65714 - 30px);
     }
 
     #menuBlock {
@@ -385,8 +409,8 @@ a {
     }
     
     #menuBorder {
-        width: 80%;
-        height: min(60%, 600px);
+        width: 70%;
+        height: min(50%, 500px);
         aspect-ratio: 0.8333 / 1;
         left: 0;
         right: 0;
@@ -402,16 +426,17 @@ a {
     }
 
     .menuEntry {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     #speech {
-        bottom: calc(var(--counter-height) * 1.6);
-        left: 310px;
+        bottom: calc(var(--counter-height) * 2.3);
+        left: 230px;
         font-size: 13px;
         line-height: 24px;
         max-width: 200px;
         min-width: 70px;
         padding: 11px;
+        scale: 0.8;
     }
 }
