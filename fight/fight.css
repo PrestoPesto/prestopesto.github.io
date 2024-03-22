@@ -31,8 +31,8 @@ body {
   z-index: -1;
   position: absolute;
   content: "";
-  /* background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/background.png?raw=true"); */
-  background-image: url("./assets/background.png");
+  background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/background.png?raw=true");
+  /* background-image: url("./assets/background.png"); */
   width: 110%;
   height: 100%;
   background-size: 100% auto;
@@ -56,6 +56,7 @@ body {
   padding: 1% 0 2% 1%;
   translate: -87% 0;
   transition: all 0.3s ease;
+  font-size: min(1.8vw, 18px);
 }
 
 #settingsOpen {
@@ -73,7 +74,7 @@ body {
 }
 
 .settingsDesc {
-  font-size: min(1.6vw, 12px);
+  font-size: min(1.1vw, 12px);
 }
 
 .settingsSlider {
@@ -300,6 +301,7 @@ body {
   position: absolute;
   right: 4%;
   top: 8%;
+  transition: all 0.3s ease;
 }
 
 .effectIcon {
@@ -314,7 +316,8 @@ body {
   box-shadow: 0 0.15em 0 0 white;
   display: flex;
   align-items: center;
-  margin-bottom: 10%
+  margin-bottom: 10%;
+  transition: all 0.3s ease;
 }
 
 .effectImg {
@@ -474,6 +477,10 @@ body {
 #scramWarning {
   border: 1px solid white;
   right: 0%;
+  height: 13%;
+  line-height: 0;
+  padding: 0 1% 1% 1%;
+  text-align: center;
 }
 
 .scramWarningOption {
@@ -483,6 +490,14 @@ body {
 .scramWarningOption:hover {
   translate: 0 -0.34em;
   box-shadow: 0 0.34em 0 0 white;
+}
+
+#scramWarningFlex {
+  height: 55%;
+}
+
+#scramChance {
+  color: cyan;
 }
 
 .warning {
@@ -698,4 +713,3 @@ body {
   align-content: flex-start;
   gap: 3px 30px;
 }
-
