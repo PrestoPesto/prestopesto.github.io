@@ -55,6 +55,12 @@
         <div class="effectBlock hidden">
           <div class="effectIcon">
             <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+            <span><span class="effectAmount">X</span> foc</span>
+          </div>
+        </div>
+        <div class="effectBlock hidden">
+          <div class="effectIcon">
+            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
             <span><span class="effectAmount">X</span> reg</span>
           </div>
         </div>
@@ -90,6 +96,12 @@
           <div class="effectIcon">
             <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
             <span><span class="effectAmount">X</span> dis</span>
+          </div>
+        </div>
+        <div class="effectBlock hidden">
+          <div class="effectIcon">
+            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
+            <span><span class="effectAmount">X</span> foc</span>
           </div>
         </div>
         <div class="effectBlock hidden">
@@ -143,7 +155,7 @@
 
       <div id="spoilsMenu" class="hidden">
         <div id="spoilsClose" class="closeButton">X</div>
-        <p>victory!</p>
+        <p id="spoilsTitle"></p>
         <p class="victoryText" id="xpCount">+X xp</p>
         <p class="victoryText victoryItem">+item</p>
         <p class="victoryText victoryItem">+item</p>
@@ -219,7 +231,8 @@
         </div>
       </div>
       <div id="scramWarning" class="warning hidden">
-        <div class="warningFlex">
+        <p id="scramChanceDisplay"><span id="scramChance">X%</span> chance</p>
+        <div id="scramWarningFlex" class="warningFlex">
           <div id="scramYes" class="warningOption scramWarningOption">scram!</div>
           <div id="scramNo" class="warningOption scramWarningOption">nvm</div>
         </div>
@@ -228,7 +241,7 @@
     
     <div id="testing">
       <div>
-        <button id="testSpawnAnt">Kill ant</button>
+        <button id="testSpawnAnt">Debug</button>
         <button id="testDamage">-2 health</button>
         <button id="testXP">+10 XP</button>
       </div>
@@ -240,4 +253,3 @@
   </body>
 
 </html>
-
