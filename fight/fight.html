@@ -5,18 +5,22 @@
     <meta charset="utf-8">
 
     <title>Ant Fight!!</title>
-    <!-- <link rel="stylesheet" href="./fight.css"> -->
+    <link rel="stylesheet" href="./fight.css">
 
   </head>
 
   <body>
     <div id="background">
       <div id="settings">
+        <div id="settingsOpen">
+          <p id="settingsArrow">></p>
+        </div>
+        <p class="settingsDesc">sfx volume</p>
+        <input id="volumeSlider" class="settingsSlider" type="range" step="0.05" min="0" max="1" value="0.7">
+        <span id="volumeDisplay" class="settingsDisplay">x0.75</span>
+        <p class="settingsDesc">animation speed</p>
         <input id="gameSpeedSlider" class="settingsSlider" type="range" step="0.25" min="0.25" max="3" value="1">
         <span id="gameSpeedDisplay" class="settingsDisplay">x1.00</span>
-        
-        <input id="volumeSlider" class="settingsSlider" type="range" step="0.25" min="0.25" max="3" value="1">
-        <span id="volumeDisplay" class="settingsDisplay">x1.00</span>
       </div>
       <div id="enemyText" class="hidden"></div>
       <div id="ant"></div>
@@ -231,7 +235,7 @@
       <div id="enemyStatsTesting" style="color: white;">Woh</div>
     </div>
     
-    <!-- <script src="./fight.js"></script> -->
+    <script src="./fight.js"></script>
     
   </body>
 

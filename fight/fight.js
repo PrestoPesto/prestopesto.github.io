@@ -69,6 +69,25 @@ let antMaxHealth;
 let antHealth;
 let antEffects = [];
 
+let settings = document.getElementById("settings");
+let settingsOpen = document.getElementById("settingsOpen");
+let settingsArrow = document.getElementById("settingsArrow");
+let settingsIsOpen = false;
+
+settingsOpen.onclick = function() {
+  if (settingsIsOpen) {
+    settings.style.animation = "none";
+    settings.style.translate = "-87% 0";
+    settingsIsOpen = false;
+    settingsArrow.innerHTML = ">";
+  } else {
+    settings.style.animation = "none";
+    settings.style.translate = "0 0";
+    settingsIsOpen = true;
+    settingsArrow.innerHTML = "<";
+  }
+}
+
 let gameSpeedSlider = document.getElementById("gameSpeedSlider");
 let gameSpeedDisplay = document.getElementById("gameSpeedDisplay");
 let root = document.querySelector(":root");
@@ -79,13 +98,36 @@ gameSpeedSlider.oninput = function() {
   gameSpeedDisplay.innerHTML = "x" + (Math.round(this.value * 100) / 100).toFixed(2) + "";
 }
 
+let volumeSlider = document.getElementById("volumeSlider");
+let volumeDisplay = document.getElementById("volumeDisplay");
+let volume = 0.7;
+volumeSlider.oninput = function() {
+  volume = this.value;
+  audio.volume = volume;
+  volumeDisplay.innerHTML = "x" + (Math.round(volume * 100) / 100).toFixed(2);
+}
+
+/* const antHit = new Audio("./assets/sounds/ant_hit.wav");
+const antBleed = new Audio("./assets/sounds/ant_bleed.wav");
+const antCrit = new Audio("./assets/sounds/ant_crit.wav");
+const antMiss = new Audio("./assets/sounds/ant_miss.wav"); */
+
+let audio = new Audio();
+let sounds = [
+  "./assets/sounds/ant_hit.wav", 
+  "./assets/sounds/ant_bleed.wav", 
+  "./assets/sounds/ant_crit.wav", 
+  "./assets/sounds/ant_miss.wav"
+]
+audio.volume = volume;
+
 updateHealth(0);
 updateLevel(0);
 spawnEnemy();
 closeButtons();
 
 function loadImages() {
-  let images = [
+  /* let images = [
   "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/background.png?raw=true",
   "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true",
   "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true",
@@ -93,6 +135,15 @@ function loadImages() {
   "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true",
   "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true",
   "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true"
+  ] */
+  let images = [
+    "./assets/background.png",
+    "./assets/swing.png",
+    "./assets/slash.png",
+    "./assets/stab.png",
+    "./assets/antC.png",
+    "./assets/antM.png",
+    "./assets/antY.png"
   ]
   for (let i = 0; i < images.length; i++) {
     new Image().src = images[i];
@@ -136,7 +187,7 @@ function updateLevel(xpChange) {
     maxHealth++;
     updateHealth(-1);
     xp -= xpNeeded;
-    xpNeeded = Math.floor(10 * Math.pow(1.2, level));
+    xpNeeded = Math.floor(10 * Math.pow(1.3, level));
   }
   levelText.innerHTML = "lvl " + level + " (" + xp + "/" + xpNeeded + ")";
   levelBar.style.width = (xp / xpNeeded) * 100 + "%";
@@ -191,19 +242,22 @@ function spawnEnemy() {
     
     if (antTypeRNG == 0) { 
       antColor = 0;
-      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true)";
+      //ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true)";
+      ant.style.backgroundImage = "url(./assets/antC.png)";
       nameColor = "cyan";
       nameText = "antC attacks!"
       studyClass.innerHTML = "class: <span style='color: cyan'>cyan</span>";
     } else if (antTypeRNG == 1) {
       antColor = 1;
-      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
+      //ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
+      ant.style.backgroundImage = "url(./assets/antM.png)";
       nameColor = "magenta";
       nameText = "antM attacks!"
       studyClass.innerHTML = "class: <span style='color: magenta'>magenta</span>";
     } else if (antTypeRNG == 2) {
       antColor = 2;
-      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
+      //ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
+      ant.style.backgroundImage = "url(./assets/antY.png)";
       nameColor = "yellow";
       nameText = "antY attacks!"
       studyClass.innerHTML = "class: <span style='color: yellow'>yellow</span>";
@@ -260,12 +314,12 @@ function antTurn() {
 function announceText(aText, aColor) {
   enemyText.classList.remove("hidden");
   void enemyText.offsetWidth;
-  enemyText.style.animation = "announceAnim calc(1s * var(--animSpeed)) ease-in forwards";
+  enemyText.style.animation = "announceAnim calc(1.6s * var(--animSpeed)) ease-in forwards";
   enemyText.style.color = aColor;
   enemyText.innerHTML = aText;
   setTimeout(function() {
     enemyText.classList.add("hidden");
-  }, 1000 * animSpeed);
+  }, 1600 * animSpeed);
 }
 
 function screenshake(amount) {
@@ -328,10 +382,14 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
         antHealth -= Math.floor(hitDamage * 1.5);
         enemyStatsTesting.innerHTML = antHealth + " Crit!";
         screenshake(3);
+        audio.src = sounds[2];
+        audio.play();
       } else {
         antHealth -= hitDamage;
         enemyStatsTesting.innerHTML = antHealth;
         screenshake(0.5);
+        audio.src = sounds[0];
+        audio.play();
       }
       if ((crit && critDep) || !critDep) {
         if (hitEffect == "bld") {
@@ -352,19 +410,23 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
       } else {
         removeEnemy(true);
       }
-    } /* else {
-      miss();
-    } */
+    }  else {
+      audio.src = sounds[3];
+      audio.play();
+    }
     attackEffects.classList.remove("hidden");
       void attackEffects.offsetWidth;
       if (hitType == "slash") {
-        attackEffects.style.backgroundImage = 'url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true")';
+        //attackEffects.style.backgroundImage = 'url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true")';
+        attackEffects.style.backgroundImage = 'url("./assets/slash.png")';
         attackEffects.style.animation = "slash calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
       } else if (hitType == "stab") {
-        attackEffects.style.backgroundImage = 'url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/stab.png?raw=true")';
+        //attackEffects.style.backgroundImage = 'url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/stab.png?raw=true")';
+        attackEffects.style.backgroundImage = 'url("./assets/stab.png")';
         attackEffects.style.animation = "stab calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
       } else {
-        attackEffects.style.backgroundImage = 'url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true")';
+        //attackEffects.style.backgroundImage = 'url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true")';
+        attackEffects.style.backgroundImage = 'url("./assets/swing.png")';
         attackEffects.style.animation = "swing calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
       }
       setTimeout(function() {
@@ -380,6 +442,8 @@ function bleed(who, dmg) {
     antHealth -= dmg;
     enemyStatsTesting.innerHTML = antHealth;
     screenshake(0.5);
+    audio.src = sounds[1];
+    audio.play();
   }
 }
 
