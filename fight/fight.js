@@ -20,7 +20,9 @@ let menuDisable = document.getElementById("menuDisable");
 let spoilsMenu = document.getElementById("spoilsMenu");
 let spoilsCloseButton = document.getElementById("spoilsClose");
 let spoilsXp = document.getElementById("xpCount");
+let victoryText = document.getElementsByClassName("victoryText");
 let victoryItems = document.getElementsByClassName("victoryItem");
+let spoilsTitle = document.getElementById("spoilsTitle");
 
 let strikeMenu = document.getElementById("strikeMenu");
 let strikeCloseButton = document.getElementById("strikeClose");
@@ -36,7 +38,7 @@ let attackEffects = document.getElementById("attackEffects");
 let playerEffectsList = document.getElementById("playerEffects");
 let antEffectsList = document.getElementById("antEffects");
 let effectIcons = document.getElementsByClassName("effectBlock");
-let effectAmounts = document.getElementsByClassName("effectAmount");
+let effectAmountsDisplay = document.getElementsByClassName("effectAmount");
 
 let studyWarningButton = document.getElementById("studyWarning");
 let studyYes = document.getElementById("studyYes");
@@ -55,19 +57,20 @@ let itemCounts = [5, 3, 2];
 let scramWarningButton = document.getElementById("scramWarning");
 let scramYes = document.getElementById("scramYes");
 let scramNo = document.getElementById("scramNo");
+let scramChanceDisplay = document.getElementById("scramChance");
 
 let maxHealth = 15;
 let currentHealth = maxHealth;
 let level = 1;
 let xp = 0;
 let turn = 0;
-let playerEffects = [];
+let playerEffects = [0, 0, 0, 0, 0, 0, 0];
 
 let antColor;
 let antLevel = 1;
 let antMaxHealth;
 let antHealth;
-let antEffects = [];
+let antEffects = [0, 0, 0, 0, 0, 0, 0];
 
 let settings = document.getElementById("settings");
 let settingsOpen = document.getElementById("settingsOpen");
@@ -127,16 +130,16 @@ spawnEnemy();
 closeButtons();
 
 function loadImages() {
-  /* let images = [
-  "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/background.png?raw=true",
-  "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true",
-  "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true",
-  "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/stab.png?raw=true",
-  "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true",
-  "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true",
-  "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true"
-  ] */
   let images = [
+    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/background.png?raw=true",
+    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true",
+    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true",
+    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/stab.png?raw=true",
+    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true",
+    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true",
+    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true"
+  ]
+  /* let images = [
     "./assets/background.png",
     "./assets/swing.png",
     "./assets/slash.png",
@@ -144,7 +147,7 @@ function loadImages() {
     "./assets/antC.png",
     "./assets/antM.png",
     "./assets/antY.png"
-  ]
+  ] */
   for (let i = 0; i < images.length; i++) {
     new Image().src = images[i];
   }
@@ -206,6 +209,21 @@ function removeEnemy(kill) {
       spoilsMenu.classList.remove("menuCloseAnim");
       void spoilsMenu.offsetWidth;
       spoilsMenu.classList.add("menuOpenAnim");
+      spoilsTitle.innerHTML = "victory!";
+      for (let i = 0; i < 4; i++) {
+        victoryText[i].classList.remove("hidden");
+      }
+    } else {
+      antLevel += 0.6;
+      menuDisable.classList.add("hidden");
+      spoilsMenu.classList.remove("hidden");
+      spoilsMenu.classList.remove("menuCloseAnim");
+      void spoilsMenu.offsetWidth;
+      spoilsMenu.classList.add("menuOpenAnim");
+      spoilsTitle.innerHTML = "escaped...";
+      for (let i = 0; i < 4; i++) {
+        victoryText[i].classList.add("hidden");
+      }
     }
   }, 800 * animSpeed);
 }
@@ -221,10 +239,11 @@ function spoilsClose() {
 }
 
 function spawnEnemy() {
-  antEffects = [];
+  antEffects = [0, 0, 0, 0, 0, 0, 0];
   antEffectsList.classList.add("hidden");
-  for (let i = 0; i < effectIcons.length; i++) {
+  for (let i = 0; i < antEffectsList.length; i++) {
     effectIcons[i].classList.add("hidden");
+    effectIcons[i].style.scale = 0;
   }
   let nameColor;
   let nameText;
@@ -242,22 +261,22 @@ function spawnEnemy() {
     
     if (antTypeRNG == 0) { 
       antColor = 0;
-      //ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true)";
-      ant.style.backgroundImage = "url(./assets/antC.png)";
+      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true)";
+      //ant.style.backgroundImage = "url(./assets/antC.png)";
       nameColor = "cyan";
       nameText = "antC attacks!"
       studyClass.innerHTML = "class: <span style='color: cyan'>cyan</span>";
     } else if (antTypeRNG == 1) {
-      antColor = 1;
-      //ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
-      ant.style.backgroundImage = "url(./assets/antM.png)";
+      //antColor = 1;
+      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
+      //ant.style.backgroundImage = "url(./assets/antM.png)";
       nameColor = "magenta";
       nameText = "antM attacks!"
       studyClass.innerHTML = "class: <span style='color: magenta'>magenta</span>";
     } else if (antTypeRNG == 2) {
       antColor = 2;
-      //ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
-      ant.style.backgroundImage = "url(./assets/antY.png)";
+      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
+      //ant.style.backgroundImage = "url(./assets/antY.png)";
       nameColor = "yellow";
       nameText = "antY attacks!"
       studyClass.innerHTML = "class: <span style='color: yellow'>yellow</span>";
@@ -285,7 +304,7 @@ function endTurn() {
 function antTurn() {
   announceText("ant's turn!", "white");
   setTimeout(function() {
-    if (antEffects.includes("bld")) {
+    if (antEffects[0] > 0) {
       bleed(1, 1);
       if (antHealth > 0) {
         ant.style.animation = "antHit calc(0.4s * var(--animSpeed)) ease-out forwards";
@@ -297,6 +316,20 @@ function antTurn() {
     }
     if (antHealth < 1) {
       removeEnemy(true);
+    } else if (antEffects[6] > 0) {
+      antEffects[6]--;
+      if (antEffects[0] == 0) {
+        effectIcons[13].style.scale = 0;
+        setTimeout(function() {
+          effectIcons[13].classList.add("hidden");
+        }, 300);
+      }
+      setTimeout(function() {
+        announceText("your turn!", "white");
+        setTimeout(function() { 
+          openButtons();
+        }, 1500 * animSpeed);
+      }, 1400 * animSpeed);
     } else {
       setTimeout(function() {
         if (Math.random() <= 0.7) {
@@ -364,9 +397,9 @@ function updateAttackStats() {
   dmgDisplay[2].innerHTML = 2 + damage + "";
 }
 
-let accuracy = 0;
+let accuracy = 40;
 let damage = 0;
-let critChance = 33;
+let critChance = 100;
 
 function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
   menuDisable.classList.remove("hidden");
@@ -393,12 +426,18 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
       }
       if ((crit && critDep) || !critDep) {
         if (hitEffect == "bld") {
-          if (!antEffects.includes("bld")) {
-            antEffectsList.classList.remove("hidden");
-            effectIcons[6].classList.remove("hidden");
-            effectAmounts[6].innerHTML = "1";
-            antEffects.push("bld");
-          }
+          effectIcons[7].classList.remove("hidden");
+          antEffectsList.classList.remove("hidden");
+          effectIcons[7].style.scale = 1;
+          antEffects[0]++;
+          effectAmountsDisplay[7].innerHTML = antEffects[0] + "";
+        }
+        if (hitEffect == "stn") {
+          effectIcons[13].classList.remove("hidden");
+          antEffects[6]++;
+          antEffectsList.classList.remove("hidden");
+          effectIcons[13].style.scale = 1;
+          effectAmountsDisplay[13].innerHTML = antEffects[0] + 1 + "";
         }
       }
       if (antHealth > 0) {
@@ -437,9 +476,9 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
   }, 200 * animSpeed);
 }
 
-function bleed(who, dmg) {
-  if (who = 1) {
-    antHealth -= dmg;
+function bleed(who) {
+  if (who == 1) {
+    antHealth -= antEffects[0];
     enemyStatsTesting.innerHTML = antHealth;
     screenshake(0.5);
     audio.src = sounds[1];
@@ -637,6 +676,8 @@ itemButtons[2].onclick = function() {
   }
 }
 
+let scramChance = 60 + accuracy;
+
 function scramWarning() {
   closeButtons();
   buttonDisable.classList.remove("hidden");
@@ -644,16 +685,31 @@ function scramWarning() {
   scramWarningButton.classList.remove("menuCloseAnim");
   void scramWarningButton.offsetWidth;
   scramWarningButton.classList.add("menuOpenAnim");
+  scramChance = 60 + accuracy * 10;
+  scramChanceDisplay.innerHTML = scramChance + "%";
+  
 }
 
-function scramWarningClose() {
+function scramWarningClose(reOpen) {
   scramWarningButton.classList.remove("menuOpenAnim");
   void scramWarningButton.offsetWidth;
   scramWarningButton.classList.add("menuCloseAnim");
-  openButtons();
-  scramTimeout(function() {
+  if (reOpen) {
+    openButtons();
+  }
+  setTimeout(function() {
     scramWarningButton.classList.add("hidden");
   }, 300);
+}
+
+function scram() {
+  if (Math.floor(Math.random() * 100 ) <= scramChance) {
+    scramWarningClose(false);
+    removeEnemy(false);
+  } else {
+    scramWarningClose(false);
+    endTurn();
+  }
 }
 
 spoilsCloseButton.onclick = function() {spoilsClose();}
@@ -666,9 +722,8 @@ studyCloseButton.onclick = function() {studyClose();}
 stashButton.onclick = function() {stash();}
 stashCloseButton.onclick = function() {stashClose(true);}
 scramButton.onclick = function() {scramWarning();}
-//scramYes.onclick = function() {scram();}
-scramNo.onclick = function() {scramWarningClose();}
-//scramCloseButton.onclick = function() {scramClose();}
+scramYes.onclick = function() {scram();}
+scramNo.onclick = function() {scramWarningClose(true);}
 
 function generateInfo() {
   antName = nameList[Math.floor(Math.random() * nameList.length)];
@@ -1032,4 +1087,3 @@ let wondersList = [
 document.getElementById("testSpawnAnt").onclick = function() {removeEnemy(true);}
 document.getElementById("testDamage").onclick = function() {updateHealth(2);}
 document.getElementById("testXP").onclick = function() {updateLevel(10);}
-
