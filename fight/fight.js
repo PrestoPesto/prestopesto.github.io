@@ -261,22 +261,22 @@ function spawnEnemy() {
     
     if (antTypeRNG == 0) { 
       antColor = 0;
-      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true)";
-      //ant.style.backgroundImage = "url(./assets/antC.png)";
+      //ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true)";
+      ant.style.backgroundImage = "url(./assets/antC.png)";
       nameColor = "cyan";
       nameText = "antC attacks!"
       studyClass.innerHTML = "class: <span style='color: cyan'>cyan</span>";
     } else if (antTypeRNG == 1) {
       //antColor = 1;
-      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
-      //ant.style.backgroundImage = "url(./assets/antM.png)";
+      //ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
+      ant.style.backgroundImage = "url(./assets/antM.png)";
       nameColor = "magenta";
       nameText = "antM attacks!"
       studyClass.innerHTML = "class: <span style='color: magenta'>magenta</span>";
     } else if (antTypeRNG == 2) {
       antColor = 2;
-      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
-      //ant.style.backgroundImage = "url(./assets/antY.png)";
+      //ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
+      ant.style.backgroundImage = "url(./assets/antY.png)";
       nameColor = "yellow";
       nameText = "antY attacks!"
       studyClass.innerHTML = "class: <span style='color: yellow'>yellow</span>";
@@ -397,9 +397,9 @@ function updateAttackStats() {
   dmgDisplay[2].innerHTML = 2 + damage + "";
 }
 
-let accuracy = 40;
+let accuracy = 0;
 let damage = 0;
-let critChance = 100;
+let critChance = 33;
 
 function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
   menuDisable.classList.remove("hidden");
