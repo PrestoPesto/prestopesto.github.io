@@ -420,7 +420,7 @@ a {
   
   #menuBorder {
     width: 70%;
-    height: min(60%, 600px);
+    height: 60%;
     aspect-ratio: 0.8333 / 1;
     left: 0;
     right: 0;
