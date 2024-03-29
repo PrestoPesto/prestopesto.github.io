@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&family=Cousine:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  font-family: "Chivo Mono", monospace;
+}
+
+body::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 200;
+  background: linear-gradient(transparent 10%, #ffff8815 30%, #ffff8815 50%, transparent 70%);
+  background-size: 10px 10px;
+  pointer-events: none;
+  animation: scanlines 3s linear infinite;
+  left: 0;
+  top: -10px;
+}
+
+@keyframes scanlines {
+  from {transform: translateY(0)}
+  to {transform: translateY(10px)}
+}
+
+#window {
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #d4d0c5;
+  border-top: 6px solid #fafeff;
+  border-left: 6px solid #fafeff;
+  border-right: 6px solid #41403e;
+  border-bottom: 6px solid #41403e;
+}
+
+.topBar {
+  background: #aa00dd;
+  background: linear-gradient(to right, #aa00dd 0%, #d4d0c5 110%);
+  width: 100%;
+  height: 2em;
+}
+
+.topTitle {
+  color: white;
+  font-size: 1.7em;
+  line-height: 1.1em;
+  margin-left: 0.5em;
+  text-decoration: none;
+}
+
+.topButton {
+  background-color: #d4d0c5;
+  width: 1.2em;
+  height: 1.2em;
+  float: right;
+  border-top: 3px solid #fafeff;
+  border-left: 3px solid #fafeff;
+  border-right: 3px solid #817d7a;
+  border-bottom: 3px solid #817d7a;
+  text-align: center;
+  padding: 2px;
+  margin: 2px;
+  line-height: 1em;
+  cursor: pointer;
+  color: #41403e;
+}
+
+.topButton:hover {
+  border-bottom: 3px solid #fafeff;
+  border-right: 3px solid #fafeff;
+  border-left: 3px solid #817d7a;
+  border-top: 3px solid #817d7a;
+}
+
+#topMenu {
+  color: #41403e;
+  margin-left: 15px;
+  line-height: 0.7em;
+  font-family: monospace;
+}
+
+.topMenuButton {
+  margin-right: 0.8em;
+  cursor: pointer;
+}
+
+nav ul {
+	padding: 0;
+  margin: 0;
+	list-style: none;
+	position: relative;
+	}
+	
+nav ul li {
+	display:inline-block;
+	background-color: #E64A19;
+	}
+
+nav a {
+	display:block;
+	padding:0 10px;	
+	color:#FFF;
+	font-size:20px;
+	line-height: 60px;
+	text-decoration:none;
+}
+
+nav a:hover { 
+	background-color: #000000; 
+}
+
+/* Hide Dropdowns by Default */
+nav ul ul {
+	display: none;
+	position: absolute; 
+	top: 60px; /* the height of the main nav */
+}
+	
+/* Display Dropdowns on Hover */
+nav ul li:hover > ul {
+	display:inherit;
+}
+	
+/* Fisrt Tier Dropdown */
+nav ul ul li {
+	width:170px;
+	float:none;
+	display:list-item;
+	position: relative;
+}
+
+#mainBody {
+  margin-top: 16px;
+  margin-bottom: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  top: 2.8em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  border-right: 4px solid #fafeff;
+  border-bottom: 4px solid #fafeff;
+  border-left: 4px solid #817d7a;
+  border-top: 4px solid #817d7a;
+  overflow: hidden;
+  background-color: black;
+}
+
+#mainBg {
+  width: 600%;
+  height: 200%;
+  bottom: 0;
+  transform-origin: bottom center;
+  position: absolute;
+  left: -250%;
+  background-color: black;
+  --gradient: transparent, cyan 10px, cyan 11px, transparent 19px; /* Just to not have to re-type it */
+  background-image: linear-gradient(black, transparent 130%), linear-gradient(var(--gradient)), linear-gradient(to right, var(--gradient));
+  background-size: 100% 100%, 120px 120px, 120px 120px;
+  transform: perspective(20em) rotateX(35deg);
+  animation: flicker 10s linear infinite, bgScroll 6s linear infinite;
+}
+
+@keyframes bgScroll {
+  from {transform: perspective(20em) rotateX(35deg) translateY(0)}
+  to {transform: perspective(20em) rotateX(35deg) translateY(120px)}
+}
+
+@keyframes flicker {
+	0%, 19.5%, 21.5%, 52.5%, 53.5%, 64.5%, 65.5%, 68.5%, 69.5%, 89.5%, 94.5%, 100% {
+		opacity: 0.99;
+  }
+	20%, 21%, 53%, 65%, 69%, 90% {
+		opacity: 0.8;
+	}
+}
+
+#popups {
+  position: absolute;
+  left: 10%;
+  bottom: 10%;
+  background-color: #d4d0c5;
+  border-top: 4px solid #fafeff;
+  border-left: 4px solid #fafeff;
+  border-right: 4px solid #41403e;
+  border-bottom: 4px solid #41403e;
+  scale: 0.8;
+}
+
+#popupImg {
+  bottom: 0;
+  width: 300px;
+  height: 150px;
+  border-right: 3px solid #fafeff;
+  border-bottom: 3px solid #fafeff;
+  border-left: 3px solid #817d7a;
+  border-top: 3px solid #817d7a;
+  background-size: 100%;
+  background-image: url("./ads/ascension.png");
+  margin-top: 3px;
+  image-rendering: pixelated;
+}

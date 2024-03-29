@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+body {
+  --bg-color: #faefde;
+  --dot-color: #e6d1b5;
+  background: var(--bg-color);
+  background-position: 0 0, 60px 0, 60px 60px, 0 60px;
+  background-image: radial-gradient(var(--dot-color) 2px, transparent 2px), radial-gradient(var(--dot-color) 1.4px, transparent 1.4px), radial-gradient(var(--dot-color) 2px, transparent 2px), radial-gradient(var(--dot-color) 1.4px, transparent 1.4px);
+  background-size: 120px 120px;
+  animation: bgScroll 45s linear infinite;
+}
+
+@keyframes bgScroll {
+  from {background-position: 0 0, 60px 0, 60px 60px, 0 60px;}
+  to {background-position: 120px 120px, 180px 120px, 180px 180px, 120px 180px;}
+}
+
+.buttonBase {
+  width: 20em;
+  height: 18em;
+  position: absolute;
+  background: #a5adb8;
+  border-radius: 20%;
+  border: 0.3em solid #8e919c;
+  box-shadow: 0 2.6em 0 0 #8e919c, 0 3.1em 0 0 #595d6b;
+  top: 6%;
+  margin: auto;
+  left: 0;
+  right: 0;
+  transform: perspective(400px) rotateX(0.5deg);
+}
+
+.buttonSide {
+  position: absolute;
+  cursor: pointer;
+  top: 7%;
+  width: 80%;
+  height: 80%;
+  margin: auto;
+  left: 0;
+  right: 0;
+  background: #82b7e8;
+  border-radius: 20%;
+  border: 0.6em solid #9a9ead;
+}
+
+.button {
+  box-sizing: border-box;
+  position: absolute;
+  cursor: pointer;
+  top: -1%;
+  width: 80%;
+  height: 80%;
+  margin: auto;
+  left: 0;
+  right: 0;
+  background: #8ed2ff;
+  border: 0.3em solid #82b7e8;
+  border-radius: 20%;
+  transition: all 0.2s ease;
+}
+
+#textBox {
+  position: absolute;
+  font-family: "Zilla Slab", serif;
+  color: #73615a;
+  font-size: 2.5em;
+  margin: auto;
+  left: 0;
+  right: 0;
+  width: min(90%, 15em);
+  text-align: center;
+  top: 11em;
+  white-space: pre-wrap;
+}
