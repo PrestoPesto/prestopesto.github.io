@@ -38,7 +38,7 @@ body {
   background-position: 0 0, 10px 10px;
   background-image: radial-gradient(cyan 0.5px, transparent 1px), radial-gradient(cyan 0.5px, transparent 1px);
   background-size: 20px 20px;
-  animation: bgSpin 260s linear infinite;
+  animation: bgSpin 560s linear infinite;
   -moz-mask-image: radial-gradient(circle at center, black 30px, transparent 800px);
   -webkit-mask-image: radial-gradient(circle at center, black 30px, transparent 800px);
   mask-image: radial-gradient(circle at center, black 30px, transparent 800px);
@@ -84,7 +84,7 @@ body {
   -moz-mask-image: linear-gradient(black, rgb(0 0 0 / 0.4));
   -webkit-mask-image: linear-gradient(black, rgb(0 0 0 / 0.4));
   mask-image: linear-gradient(black, rgb(0 0 0 / 0.4));
-  animation: counterScroll 3s linear infinite;
+  animation: counterScroll 5s linear infinite;
 }
 
 @keyframes counterScroll {
@@ -103,7 +103,7 @@ body {
   background-position: 0 0, 5px 5px;
   background-image: radial-gradient(magenta 1px, transparent 4px), radial-gradient(magenta 1px, transparent 4px);
   background-size: 10px 10px; 
-  animation: counterTopScroll 3s linear infinite;  
+  animation: counterTopScroll 5s linear infinite;  
   -moz-mask-image: linear-gradient(black, rgb(0 0 0 / 0.4));
   -webkit-mask-image: linear-gradient(black, rgb(0 0 0 / 0.4));
   mask-image: linear-gradient(black, rgb(0 0 0 / 0.4));
@@ -294,7 +294,7 @@ a {
   z-index: -3;
   height: calc(var(--counter-height) * 1.7857);
   left: 80px;
-  bottom: calc(var(--counter-height) * 0.65714);
+  bottom: calc(var(--counter-height) * 0.634);
   cursor: pointer;
 }
 
