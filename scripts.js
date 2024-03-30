@@ -152,7 +152,7 @@ const messages = [
   "we'll never know when we reach the end", "cloth1",
   "existence is terrifying. have a glass", "wave1",
   "yeah", "cloth0",
-  "hugs are free, coffee's not",
+  "hugs are free, coffee's not", "cloth1",
   "you can shine as bright as the sun", "wave0",
   "you are loved", "cloth1"
 ]
