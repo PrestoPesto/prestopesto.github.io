@@ -1,0 +1,92 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>pesto's cafe</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0;">
+    <link rel="shortcut icon" type="image/png" href="./assets/favicon.png"/>
+
+    <!-- Too lazy to make a separate file tbh -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&family=Cousine:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+      html {
+        background-color: black;
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        font-family: "Chivo Mono", monospace;
+      }
+
+      body::after {
+        width: 300%;
+        height: 300%;
+        top: -100%;
+        left: -100%;
+        content: "";
+        position: absolute;
+        z-index: -1;
+        background-position: 0 0, 10px 10px;
+        background-image: radial-gradient(cyan 0.5px, transparent 1px), radial-gradient(cyan 0.5px, transparent 1px);
+        background-size: 20px 20px;
+        animation: bgSpin 560s linear infinite;
+        -moz-mask-image: radial-gradient(circle at center, transparent 10px, black 600px);
+        -webkit-mask-image: radial-gradient(circle at center, transparent 10px, black 600px);
+        mask-image: radial-gradient(circle at center, transparent 10px, black 600px);
+        mask-position: var(--bgX) var(--bgY);
+      }
+      @keyframes bgSpin {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(180deg);}
+      }
+
+      #container {
+        position: absolute;
+        width: 100%;
+        top: 15%;
+        text-align: center;
+        color: white;
+      }
+
+      h1 {
+        font-size: 200px;
+        margin-bottom: 0;
+      }
+
+      p {
+        font-size: 18px;
+      }
+
+      a {
+        color: cyan;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <h1>
+        <span style="color: cyan">4</span><span style="color: magenta">0</span><span style="color: yellow">4</span>
+      </h1>
+
+      <p>
+        well shit, you broke the matrix. congrats.
+      </p>
+
+      <p>
+        <a href="/">return!</a>
+      </p>
+    </div>
+    
+  </body>
+
+</html>
