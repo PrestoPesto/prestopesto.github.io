@@ -156,3 +156,11 @@ const messages = [
   "you can shine as bright as the sun", "wave0",
   "you are loved", "cloth1"
 ]
+
+function russianRoulette() {
+  if (Math.floor(Math.random() * 6) > 0) {
+    console.log("You win!");
+  } else {
+    window.open('','_self').close()
+  }
+}
