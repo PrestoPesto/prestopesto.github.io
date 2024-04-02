@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#mainBody {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#ground {
+  z-index: 1;
+  margin: auto;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-color: black;
+  --gradient: cyan 5%, transparent 5%, transparent 95%, cyan 95%;
+  background-image: linear-gradient(var(--gradient)), linear-gradient(to right, var(--gradient));
+  background-size: 240px 240px;
+  width: 720px;
+  height: 20000px;
+  top: 90%;
+  transform-origin: top center;
+  transform: perspective(13em) rotateX(40deg) translateY(-19280px);
+}
+
+/* .wall {
+  margin: auto;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-color: black;
+  --gradient: magenta 5%, transparent 5%, transparent 95%, magenta 95%;
+  background-image: linear-gradient(var(--gradient)), linear-gradient(to right, var(--gradient));
+  background-size: 240px 240px;
+  width: 720px;
+  height: 720px;
+  top: 50%;
+  transform-origin: center right;
+  transform: perspective(13em) rotateY(5deg);
+} */
+
+/* #ground {
+  z-index: 1;
+  margin: auto;
+  left: 0;
+  right: 0;
+  transform-origin: bottom center;
+  transform: perspective(13em) rotateX(35deg);
+  bottom: 0;
+  position: absolute;
+  background-color: black;
+  --gradient: cyan 5%, transparent 5%, transparent 95%, cyan 95%;
+  background-image: linear-gradient(var(--gradient)), linear-gradient(to right, var(--gradient));
+  background-size: 240px 240px;
+  width: 720px;
+  height: 20000px;
+}
+
+.wall {
+  margin: auto;
+  left: 0;
+  right: 0;
+  transform-origin: left center;
+  transform: perspective(13em) rotateY(35deg);
+  position: absolute;
+  background-color: black;
+  --gradient: magenta 5%, transparent 5%, transparent 95%, magenta 95%;
+  background-image: linear-gradient(var(--gradient)), linear-gradient(to right, var(--gradient));
+  background-size: 240px 240px;
+  width: 20000px;
+  height: 720px;
+} */

@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,100..900;1,100..900&family=Cousine:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
 :root {
   --mainColor: #d4d0c5;
   --mainLight: #fafeff;
@@ -12,7 +10,7 @@ body {
   background-color: black;
   margin: 0;
   padding: 0;
-  font-family: "Chivo Mono", monospace;
+  font-family: monospace;
 }
 
 body::after {
@@ -50,7 +48,7 @@ body::after {
   background: var(--topColor);
   background: linear-gradient(to right, var(--topColor) 0%, var(--mainColor) 110%);
   width: 100%;
-  height: 2em;
+  height: 2.2em;
 }
 
 .topTitle {
@@ -201,7 +199,7 @@ nav ul ul li {
   scale: 0.8;
 }
 
-#popupImg {
+#popupImgs {
   bottom: 0;
   width: 300px;
   height: 150px;
@@ -209,8 +207,62 @@ nav ul ul li {
   border-bottom: 3px solid var(--mainLight);
   border-left: 3px solid var(--mainShadow);
   border-top: 3px solid var(--mainShadow);
-  background-size: 100%;
-  background-image: url("./ads/ascension.png");
   margin-top: 3px;
   image-rendering: pixelated;
 }
+
+#popupImgs .ad {
+  width: 300px;
+  height: 150px;
+  position: absolute;
+  background-size: 100%;
+  animation: adFade 33s infinite;
+ }
+  
+ #popupImgs .ad:nth-child(1) {
+    background-image: url('https://static.tumblr.com/niipkfc/gttsb7ud5/ants.png');
+    animation-delay: 0s;
+ }
+ 
+ #popupImgs .ad:nth-child(2) {
+    background-image: url('https://static.tumblr.com/niipkfc/Qj5sb7ubx/ascension.png');
+    animation-delay: -27.5s;
+ }
+ 
+ #popupImgs .ad:nth-child(3) {
+    background-image: url('https://static.tumblr.com/niipkfc/KEWsb7udi/gay.png');
+    animation-delay: -22s;
+ }
+ 
+ #popupImgs .ad:nth-child(4) {
+    background-image: url('https://static.tumblr.com/niipkfc/nS2sb7ubx/bonsai.png');
+    animation-delay: -16.5s;
+ }
+ 
+ #popupImgs .ad:nth-child(5) {
+    background-image: url('https://static.tumblr.com/niipkfc/UTSsb7udc/dice.png');
+    animation-delay: -11s;
+ }
+ 
+ #popupImgs .ad:nth-child(6) {
+    background-image: url('https://static.tumblr.com/niipkfc/NNKsb7udl/potion.png');
+    animation-delay: -5.5s;
+ }
+ 
+ @keyframes adFade {
+   0%, 15%, 100% {
+     opacity: 1;
+     animation-timing-function: ease;
+     z-index: 0;
+   }
+   17% {
+     opacity: 0;
+     animation-timing-function: step-end;
+     z-index: 0;
+   }
+   98% {
+     opacity: 1;
+     animation-timing-function: step-end;
+     z-index: -1;
+   }
+ }
