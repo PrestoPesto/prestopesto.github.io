@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
     <title>Ant Fight!!</title>
-    <link rel="stylesheet" href="../fight/fight.css">
+    <link rel="stylesheet" href="./fight.css">
 
   </head>
 
@@ -15,96 +15,44 @@
         <div id="settingsOpen">
           <p id="settingsArrow">></p>
         </div>
-        <p class="settingsDesc">sfx volume</p>
+        <p class="settingsDesc">sfx volume <span id="volumeDisplay">x0.75</span></p>
         <input id="volumeSlider" class="settingsSlider" type="range" step="0.05" min="0" max="1" value="0.7">
-        <span id="volumeDisplay" class="settingsDisplay">x0.75</span>
-        <p class="settingsDesc">animation speed</p>
+        <p class="settingsDesc">animation speed <span id="gameSpeedDisplay">x1.00</span></p>
         <input id="gameSpeedSlider" class="settingsSlider" type="range" step="0.25" min="0.25" max="3" value="1">
-        <span id="gameSpeedDisplay" class="settingsDisplay">x1.00</span>
       </div>
       <div id="enemyText" class="hidden"></div>
       <div id="ant"></div>
       <div id="attackEffects" class="hidden"></div>
       
-      <div id="playerEffects" class="effectsList hidden">
-        <p>you</p>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> bld</span>
-          </div>
+      <div id="antStats" class="stat">
+        <div id="antHealth" class="statText">
+          <span id="antHealthText"></span>
+          <span id="antDesc" class="statDesc"> ant</span>
         </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> bli</span>
-          </div>
-        </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> cor</span>
-          </div>
-        </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> dis</span>
-          </div>
-        </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> reg</span>
-          </div>
-        </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> stn</span>
-          </div>
-        </div>
+        <div id="antHealthBar" class="statBar"></div>
       </div>
       
-      <div id="antEffects" class="effectsList hidden">
-        <p>ant</p>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> bld</span>
-          </div>
-        </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> bli</span>
-          </div>
-        </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> cor</span>
-          </div>
-        </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> dis</span>
-          </div>
-        </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> reg</span>
-          </div>
-        </div>
-        <div class="effectBlock hidden">
-          <div class="effectIcon">
-            <img class="effectImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true">
-            <span><span class="effectAmount">X</span> stn</span>
-          </div>
-        </div>
+      <div class="effectsList" id="antEffects">
+        <div class="effect"><span class="effectAmount">X</span> bld</div>
+        <div class="effect"><span class="effectAmount">X</span> bli</div>
+        <div class="effect"><span class="effectAmount">X</span> cor</div>
+        <div class="effect"><span class="effectAmount">X</span> dst</div>
+        <div class="effect"><span class="effectAmount">X</span> foc</div>
+        <div class="effect"><span class="effectAmount">X</span> reg</div>
+        <div class="effect"><span class="effectAmount">X</span> stn</div>
       </div>
+      
+      <div class="effectsList" id="playerEffects">
+        <div class="effect"><span class="effectAmount">X</span> bld</div>
+        <div class="effect"><span class="effectAmount">X</span> bli</div>
+        <div class="effect"><span class="effectAmount">X</span> cor</div>
+        <div class="effect"><span class="effectAmount">X</span> dst</div>
+        <div class="effect"><span class="effectAmount">X</span> foc</div>
+        <div class="effect"><span class="effectAmount">X</span> reg</div>
+        <div class="effect"><span class="effectAmount">X</span> stn</div>
+      </div>
+      
+      <div id="effectHelp">-x hp/turn</div>
 
       <div id="stats">
         <div class="stat">
@@ -143,7 +91,7 @@
 
       <div id="spoilsMenu" class="hidden">
         <div id="spoilsClose" class="closeButton">X</div>
-        <p>victory!</p>
+        <p id="spoilsTitle"></p>
         <p class="victoryText" id="xpCount">+X xp</p>
         <p class="victoryText victoryItem">+item</p>
         <p class="victoryText victoryItem">+item</p>
@@ -158,18 +106,19 @@
             <div class="attackTitle">swing</div>
             <p><span class="attackStat acc"></span> hit</p>
             <p><span class="attackStat dmg"></span> dmg</p>
+            <p>cr <span class="attackStat eff">+2</span> dmg</p>
           </div>
           <div id="slash" class="attackButton">
             <div class="attackTitle">slash</div>
             <p><span class="attackStat acc"></span> hit</p>
             <p><span class="attackStat dmg"></span> dmg</p>
-            <p>crit <span class="attackStat eff">1</span> stn</p>
+            <p>cr <span class="attackStat eff">1</span> stn</p>
           </div>
           <div id="stab" class="attackButton">
             <div class="attackTitle">stab</div>
             <p><span class="attackStat acc"></span> hit</p>
             <p><span class="attackStat dmg"></span> dmg</p>
-            <p>crit <span class="attackStat eff">1</span> bld</p>
+            <p>cr <span class="attackStat eff">1</span> bld</p>
           </div>
         </div>
       </div>
@@ -196,30 +145,31 @@
           <div id="stashFlex">
             <div id="iceCubes" class="itemIcon itemClickable">
               <p class="itemTitle">ice cube <span class="itemCount">x1</span></p>
-              <img class="itemImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/ice_cube.png?raw=true">
+              <img class="itemImg" alt="Ice cubes" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/ice_cube.png?raw=true">
               <p class="itemText">+2 hp</p>
               <p class="itemText">does not end turn</p>
               <p class="itemDesc">crunch crunch crunch crunch</p>
             </div>
             <div id="lemonade" class="itemIcon itemClickable">
               <p class="itemTitle">lemonade <span class="itemCount">x1</span></p>
-              <img class="itemImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/lemonade.png?raw=true">
+              <img class="itemImg" alt="Lemonade" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/lemonade.png?raw=true">
               <p class="itemText">+6 hp</p>
               <p class="itemText"><br><br><p>
               <p class="itemDesc">cool and refreshing</p>
             </div>
             <div id="lemonPie" class="itemIcon itemClickable">
               <p class="itemTitle">lemon pie <span class="itemCount">x1</span></p>
-              <img class="itemImg" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/lemon_pie.png?raw=true">
+              <img class="itemImg" alt="Lemon pie" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/lemon_pie.png?raw=true">
               <p class="itemText">full hp</p>
-              <p class="itemText"><br><br><p>
+              <p class="itemText">+3 reg<br><br></p>
               <p class="itemDesc">pie are squared</p>
             </div>
           </div>
         </div>
       </div>
       <div id="scramWarning" class="warning hidden">
-        <div class="warningFlex">
+        <p id="scramChanceDisplay"><span id="scramChance">X%</span> chance</p>
+        <div id="scramWarningFlex" class="warningFlex">
           <div id="scramYes" class="warningOption scramWarningOption">scram!</div>
           <div id="scramNo" class="warningOption scramWarningOption">nvm</div>
         </div>
@@ -228,16 +178,15 @@
     
     <div id="testing">
       <div>
-        <button id="testSpawnAnt">Kill ant</button>
+        <button id="testSpawnAnt">Debug</button>
         <button id="testDamage">-2 health</button>
         <button id="testXP">+10 XP</button>
       </div>
       <div id="enemyStatsTesting" style="color: white;">Woh</div>
     </div>
     
-    <script src="../fight/fight.js"></script>
+    <script src="./fight.js"></script>
     
   </body>
 
 </html>
-
