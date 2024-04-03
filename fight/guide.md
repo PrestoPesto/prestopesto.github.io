@@ -39,6 +39,8 @@ Loses X turns
 
 # Items
 
+## Buffs
+
 ##### Ice Cubes
 
 Heal 2 hp, does not end turn
@@ -49,10 +51,29 @@ Heal 2 hp, does not end turn
 Heal 6 hp
 `cool and refreshing`
 
-##### Lemon Meringue Pie
+##### Lemon Pie
 
 Heal to full hp
 `a delicious feast`
+
+##### Popcorn Popper
+
+Both player and ant heal 5 hp
+`with butter!`
+
+##### Adderall
+
+3 foc
+`full of adhd`
+
+##### Cold Soup
+
+1 cor, 7 reg
+Gives Empty Can
+`might be beef, might be chicken, might be worms`
+
+
+## Weapons
 
 ##### Bouncy Ball
 
@@ -60,35 +81,10 @@ Heal to full hp
 40% chance to not be consumed or end the turn, 10% chance to hit you in the face for 4 damage
 `droopy likes ricochet`
 
-##### Can of Cold Soup
-
-1 cor, 7 reg
-Gives Empty Can
-`might be beef, might be chicken, might be worms`
-
 ##### Empty Can
 
 75% hit, 1 damage, 1 stn, does not end turn
 `go on, kick it`
-
-##### Magic 8 ball
-
-Displays a message, either randomly or based on the enemy's next move
-* ant will attack!
-* ant will defend!
-* ant will heal!
-* reply hazy, try again
-* very doubtful
-* signs point to no
-* error 404
-* help me
-
-`forbidden in vorinism`
-
-##### Popcorn Popper
-
-Both player and ant heal 5 hp
-`with butter!`
 
 ##### Pocket Sand
 
@@ -105,12 +101,24 @@ Both player and ant heal 5 hp
 80% hit, 2 bld
 `is britain canon`
 
-##### Adderall
 
-3 foc
-`full of adhd`
+## Misc
 
-##### Mysterious Bubbling Potion
+##### Magic 8 ball
+
+Displays a message, either randomly or based on the enemy's next move
+* ant will attack!
+* ant will defend!
+* ant will heal!
+* reply hazy, try again
+* very doubtful
+* signs point to no
+* error 404
+* help me
+
+`forbidden in vorinism`
+
+##### Mysterious Potion
 
 Random effects write later I'm tired
 
@@ -124,7 +132,7 @@ Image of a shitty knockoff Frisk plush flashes on screeen, does not end turn
 50/50 chance that either the player or ant gets 2 bli
 `do these batteries work?`
 
-##### Tampon
+##### Dry Ramen
 
 Cures bld
-`hygiene!`
+`i can fix anything!`
