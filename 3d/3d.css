@@ -29,6 +29,36 @@ body {
   transform: perspective(13em) rotateX(40deg) translateY(-19280px);
 }
 
+#borders {
+  z-index: 0;
+  margin: auto;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-color: magenta;
+  width: 780px;
+  height: 20000px;
+  top: 90%;
+  transform-origin: top center;
+  transform: perspective(13em) rotateX(40deg) translateY(-19280px);
+}
+
+#ouch {
+  z-index: 2;
+  margin: auto;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-color: black;
+  border-top: 24px solid cyan;
+  border-bottom: 24px solid cyan;
+  width: 720px;
+  height: calc(240px * 11);
+  top: 90%;
+  transform-origin: top center;
+  transform: perspective(13em) rotateX(40deg) translateY(-19280px);
+}
+
 /* .wall {
   margin: auto;
   left: 0;
