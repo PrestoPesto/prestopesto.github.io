@@ -53,7 +53,7 @@ Heal 6 hp
 
 ##### Lemon Pie
 
-Heal to full hp
+Heal to full hp, 4 reg
 `a delicious feast`
 
 ##### Popcorn Popper
@@ -73,14 +73,12 @@ Cures bld
 
 ##### Cold Soup
 
-1 cor, 7 reg
-Gives Empty Can
+1 cor, 7 reg, gives Empty Can
 `might be beef, might be chicken, might be worms`
 
 ##### Sushi Platter
 
-Heal 10 hp
-Gives 2 Kelp Bandages
+Heal 10 hp, gives 2 Kelp Bandages
 `roly poly fish heads`
 
 ##### Kelp Bandage
