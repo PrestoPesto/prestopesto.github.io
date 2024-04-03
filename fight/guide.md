@@ -39,7 +39,7 @@ Loses X turns
 
 # Items
 
-## Buffs
+### Buffs
 
 ##### Ice Cubes
 
@@ -66,14 +66,32 @@ Both player and ant heal 5 hp
 3 foc
 `full of adhd`
 
+##### Dry Ramen
+
+Cures bld
+`i can fix anything!`
+
 ##### Cold Soup
 
 1 cor, 7 reg
 Gives Empty Can
 `might be beef, might be chicken, might be worms`
 
+##### Sushi Platter
 
-## Weapons
+Heal 10 hp
+Gives 2 Kelp Bandages
+`roly poly fish heads`
+
+##### Kelp Bandage
+
+Heal 1 hp
+Cures bld
+Does not end turn
+`roly poly fish heads`
+
+
+### Weapons
 
 ##### Bouncy Ball
 
@@ -102,7 +120,7 @@ Gives Empty Can
 `is britain canon`
 
 
-## Misc
+### Misc
 
 ##### Magic 8 ball
 
@@ -131,8 +149,3 @@ Image of a shitty knockoff Frisk plush flashes on screeen, does not end turn
 
 50/50 chance that either the player or ant gets 2 bli
 `do these batteries work?`
-
-##### Dry Ramen
-
-Cures bld
-`i can fix anything!`
