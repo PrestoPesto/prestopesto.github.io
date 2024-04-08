@@ -44,7 +44,7 @@ Loses X turns
 ##### Ice Cubes
 
 Heal 2 hp, does not end turn
-`crunch`
+`crunch crunch crunch crunch`
 
 ##### Lemonade
 
@@ -105,34 +105,20 @@ Does not end turn
 ##### Pocket Sand
 
 70% hit, 3 bli
-`briefcase!`
+`as opposed to pocket loam`
 
-##### Legally Distinct Eyepad
+##### Legally Distinct eyePad
 
 80% hit, 3 dst
 `kids these days`
 
 ##### Shiv
 
-80% hit, 2 bld
-`is britain canon`
+80% hit, 4 bld
+`is britain canon?`
 
 
 ### Misc
-
-##### Magic 8 ball
-
-Displays a message, either randomly or based on the enemy's next move
-* ant will attack!
-* ant will defend!
-* ant will heal!
-* reply hazy, try again
-* very doubtful
-* signs point to no
-* error 404
-* help me
-
-`forbidden in vorinism`
 
 ##### Mysterious Potion
 
