@@ -120,16 +120,29 @@ Does not end turn
 
 ### Misc
 
+##### Broken Flashlight
+
+50/50 chance that either the player or ant gets 2 bli
+`do these batteries work?`
+
 ##### Mysterious Potion
 
 Random effects write later I'm tired
+
+##### 8Ball
+
+Random message with a screen glitch effect
+* help me
+* let me out
+* i'm trapped
+* it's cold
+* free me
+* i'm scared
+* they lied
+
+`see the future!`
 
 ##### This Fucking Thing
 
 Image of a shitty knockoff Frisk plush flashes on screeen, does not end turn
 `this fucking thing`
-
-##### Broken Flashlight
-
-50/50 chance that either the player or ant gets 2 bli
-`do these batteries work?`
