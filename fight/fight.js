@@ -56,7 +56,10 @@ let stashMenu = document.getElementById("stashMenu");
 let stashCloseButton = document.getElementById("stashClose");
 let itemButtons = document.getElementsByClassName("itemIcon");
 let itemCountDisplays = document.getElementsByClassName("itemCount");
-let itemCounts = [5, 3, 2];
+/* ice cube, lemonade, lemon pie, popcorn popper, adderall, ramen, soup, sushi, kelp
+ball, can, sand, eyepad, shiv
+broken flashlight, mysterious potion, 8ball, this fucking thing */
+let itemCounts = [5, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2];
 
 let scramWarningButton = document.getElementById("scramWarning");
 let scramYes = document.getElementById("scramYes");
@@ -205,6 +208,7 @@ function removeEnemy(kill) {
   antStats.classList.remove("menuOpenAnim");
   void antStats.offsetWidth;
   antStats.classList.add("menuCloseAnim");
+  stashClose(false);
   setTimeout(function() {
     antStats.classList.add("hidden");
   }, 300);
@@ -265,6 +269,7 @@ function showEffect(who, i) {
   } else {
     effectAmounts[i].innerHTML = antEffects[i];
   }
+  updateEffects();
 }
 
 function updateEffects() {
@@ -302,7 +307,6 @@ function spawnEnemy() {
     antStats.classList.remove("menuCloseAnim");
     void antStats.offsetWidth;
     antStats.classList.add("menuOpenAnim");
-    enemyStatsTesting.innerHTML = antHealth;
     generateInfo();
     ant.style.animation = "antSpawn calc(1.5s * var(--animSpeed)) ease-in-out forwards";
     let antTypeRNG;
@@ -383,7 +387,20 @@ function antTurn() {
     } else {
       setTimeout(function() {
         if (Math.random() <= 0.7) {
-          updateHealth(3);
+          ant.style.animation = "antStrike calc(0.3s * var(--animSpeed)) ease forwards";
+          setTimeout(function() {
+            updateHealth(3);
+          }, 100 * animSpeed);
+          setTimeout(function() {
+            void ant.offsetWidth;
+            ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
+          }, 300 * animSpeed);
+        } else {
+          ant.style.animation = "antMiss calc(0.3s * var(--animSpeed)) ease forwards";
+          setTimeout(function() {
+            void ant.offsetWidth;
+            ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
+          }, 300 * animSpeed);
         }
         announceText("your turn!", "white");
         setTimeout(function() { 
@@ -452,11 +469,11 @@ function updateAttackStats() {
   dmgDisplay[2].innerHTML = 2 + damage + "";
 }
 
-let accuracy = 40;
+let accuracy = 0;
 let damage = 0;
-let critChance = 100;
+let critChance = 33;
 
-function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
+function attack(hitChance, hitDamage, hitEffect, effectAmount, canCrit, critDep, hitType, endsTurn) {
   menuDisable.classList.remove("hidden");
   strikeClose(false);
   let hitRNG = Math.floor(Math.random() * 100) + 1;
@@ -472,24 +489,34 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
         } else {
           updateAntHealth(hitDamage)
         }
-        enemyStatsTesting.innerHTML = antHealth + " Crit!";
         screenshake(3);
         audio.src = sounds[2];
         audio.play();
       } else {
         updateAntHealth(hitDamage);
-        enemyStatsTesting.innerHTML = antHealth;
         screenshake(0.5);
         audio.src = sounds[0];
         audio.play();
       }
       if ((crit && critDep) || !critDep) {
         if (hitEffect == "bld") {
-          antEffects[0]++;
+          antEffects[0] += effectAmount;
           showEffect(1, 0);
         }
+        if (hitEffect == "bli") {
+          antEffects[1] += effectAmount;
+          showEffect(1, 1);
+        }
+        if (hitEffect == "dst") {
+          antEffects[2] += effectAmount;
+          showEffect(1, 2);
+        }
+        if (hitEffect == "sck") {
+          antEffects[5] += effectAmount;
+          showEffect(1, 5);
+        }
         if (hitEffect == "stn") {
-          antEffects[6]++;
+          antEffects[6] += effectAmount;
           showEffect(1, 6);
         }
       }
@@ -502,9 +529,14 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
       } else {
         removeEnemy(true);
       }
-    }  else {
+    } else {
       audio.src = sounds[3];
       audio.play();
+      ant.style.animation = "antDodge calc(0.4s * var(--animSpeed)) ease forwards";
+      setTimeout(function() {
+        void ant.offsetWidth;
+        ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
+      }, 400 * animSpeed);
     }
     attackEffects.classList.remove("hidden");
       void attackEffects.offsetWidth;
@@ -524,7 +556,11 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
       setTimeout(function() {
         attackEffects.style.animation = "none";
         attackEffects.classList.add("hidden");
-        endTurn();
+        if (endsTurn) {
+          endTurn();
+        } else {
+          menuDisable.classList.add("hidden");
+        }
       }, 270 * animSpeed);
   }, 200 * animSpeed);
 }
@@ -532,7 +568,8 @@ function attack(hitChance, hitDamage, hitEffect, canCrit, critDep, hitType) {
 function bleed(who) {
   if (who == 1) {
     updateAntHealth(antEffects[0]);
-    enemyStatsTesting.innerHTML = antHealth;
+    antEffects[0]--;
+    updateEffects();
     screenshake(0.5);
     audio.src = sounds[1];
     audio.play();
@@ -544,9 +581,9 @@ function regen(who) {
     if (playerEffects[5] > 0) {
       updateHealth(-1 * playerEffects[5]);
       playerEffects[5]--;
-      effectAmountsDisplay[5].innerHTML = playerEffects[5] + "";
     }
   }
+  updateEffects();
 }
 
 swing.onclick = function() {
@@ -554,9 +591,11 @@ swing.onclick = function() {
     80 + accuracy,
     4 + damage,
     "crush!",
+    0,
     true,
     false,
-    "swing"
+    "swing",
+    true
   );
 }
 slash.onclick = function() {
@@ -564,9 +603,11 @@ slash.onclick = function() {
     60 + accuracy,
     5 + damage,
     "stn",
+    1,
     true,
     true,
-    "slash"
+    "slash",
+    true
   );
 }
 stab.onclick = function() {
@@ -574,9 +615,11 @@ stab.onclick = function() {
     70 + accuracy,
     2 + damage,
     "bld",
+    2,
     true,
     true,
-    "stab"
+    "stab",
+    true
   );
 }
 
@@ -683,13 +726,91 @@ function updateItemCounts() {
       itemButtons[i].classList.remove("hidden");
     }
   }
-  for (let i = 0; i < 2; i++) {
-    if (currentHealth == maxHealth) {
-      itemButtons[i].classList.remove("itemClickable");
-      itemButtons[i].classList.add("itemDisabled");
-    } else {
-      itemButtons[i].classList.remove("itemDisabled");
-      itemButtons[i].classList.add("itemClickable");
+  if (currentHealth == maxHealth) {
+    itemButtons[0].classList.remove("itemClickable");
+    itemButtons[0].classList.add("itemDisabled");
+    itemButtons[1].classList.remove("itemClickable");
+    itemButtons[1].classList.add("itemDisabled");
+    itemButtons[3].classList.remove("itemClickable");
+    itemButtons[3].classList.add("itemDisabled");
+  } else {
+    itemButtons[0].classList.remove("itemDisabled");
+    itemButtons[0].classList.add("itemClickable");
+    itemButtons[1].classList.remove("itemDisabled");
+    itemButtons[1].classList.add("itemClickable");
+    itemButtons[3].classList.remove("itemDisabled");
+    itemButtons[3].classList.add("itemClickable");
+    itemButtons[8].classList.remove("itemDisabled");
+    itemButtons[8].classList.add("itemClickable");
+  }
+  if (playerEffects[0] == 0) {
+    itemButtons[5].classList.remove("itemClickable");
+    itemButtons[5].classList.add("itemDisabled");
+  } else {
+    itemButtons[5].classList.remove("itemDisabled");
+    itemButtons[5].classList.add("itemClickable");
+  }
+  if (currentHealth == maxHealth && playerEffects[0] == 0) {
+    itemButtons[8].classList.remove("itemClickable");
+    itemButtons[8].classList.add("itemDisabled");
+  } else {
+    itemButtons[8].classList.remove("itemDisabled");
+    itemButtons[8].classList.add("itemClickable");
+  }
+  
+  if (buffsCheck.checked) {
+    showCheckedItems(0, 9, true);
+  } else {
+    showCheckedItems(0, 9, false);
+  }
+  if (weaponsCheck.checked) {
+    showCheckedItems(9, 14, true);
+  } else {
+    showCheckedItems(9, 14, false);
+  }
+  if (miscCheck.checked) {
+    showCheckedItems(14, 17, true);
+  } else {
+    showCheckedItems(14, 17, false);
+  }
+}
+
+const buffsCheck = document.getElementById("buffsCheck");
+const weaponsCheck = document.getElementById("weaponsCheck");
+const miscCheck = document.getElementById("miscCheck");
+
+buffsCheck.onchange = function() {
+  if (buffsCheck.checked) {
+    showCheckedItems(0, 9, true);
+  } else {
+    showCheckedItems(0, 9, false);
+  }
+}
+weaponsCheck.onchange = function() {
+  if (weaponsCheck.checked) {
+    showCheckedItems(9, 14, true);
+  } else {
+    showCheckedItems(9, 14, false);
+  }
+}
+miscCheck.onchange = function() {
+  if (miscCheck.checked) {
+    showCheckedItems(14, 17, true);
+  } else {
+    showCheckedItems(14, 17, false);
+  }
+}
+
+function showCheckedItems(min, max, checked) {
+  if (checked) {
+    for (let i = min; i < max; i++) {
+      if (itemCounts[i] > 0) {
+        itemButtons[i].classList.remove("hidden");
+      }
+    }
+  } else {
+    for (let i = min; i < max; i++) {
+      itemButtons[i].classList.add("hidden");
     }
   }
 }
@@ -713,8 +834,15 @@ function useItem(itemNum, endsTurn) {
     setTimeout(function() {
       stashMenu.classList.add("hidden");
     }, 300);
-    endTurn();
+    if (antHealth > 0) {
+      endTurn();
+    }
   }
+}
+
+function giveItem(itemNum, amount) {
+  itemCounts[itemNum] += amount;
+  updateItemCounts();
 }
 
 //Ice cube
@@ -735,14 +863,136 @@ itemButtons[1].onclick = function() {
 itemButtons[2].onclick = function() {
   if (currentHealth != maxHealth) {
     updateHealth(-1000000);
-    useItem(2, true);
   }
-  antEffectsList.classList.remove("hidden");
-  effectIcons[5].classList.remove("hidden");
-  playerEffectsList.classList.remove("hidden");
-  effectIcons[5].style.scale = 1;
-  playerEffects[5] += 3;
-  effectAmountsDisplay[5].innerHTML = playerEffects[5] + "";
+  useItem(2, true);
+  playerEffects[4] += 4;
+  showEffect(0, 4);
+}
+//Popcorn
+itemButtons[3].onclick = function() {
+  updateHealth(-5);
+  updateAntHealth(-5);
+  useItem(3, true);
+}
+//Adderall
+itemButtons[4].onclick = function() {
+  playerEffects[5] += 4;
+  useItem(4, false);
+}
+//Ramen
+itemButtons[5].onclick = function() {
+  if (playerEffects[0] > 0) {
+    playerEffects[0] = 0;
+    updateEffects();
+    useItem(5, false);
+  }
+}
+//Soup
+itemButtons[6].onclick = function() {
+  playerEffects[4] += 7;
+  showEffect(0, 4);
+  playerEffects[5] += 1;
+  showEffect(0, 5);
+  updateEffects();
+  useItem(6, true);
+}
+//Sushi
+itemButtons[7].onclick = function() {
+  updateHealth(-10);
+  giveItem(8, 2);
+  useItem(7, true);
+}
+//Kelp
+itemButtons[8].onclick = function() {
+  if (playerEffects[0] > 0 || currentHealth != maxHealth) {
+    playerEffects[0] = 0;
+    updateEffects();
+    updateHealth(-1);
+    useItem(8, false);
+  }
+}
+
+//(hitChance, hitDamage, hitEffect, effectAmount, canCrit, critDep, hitType)
+
+//Ball
+let ballChance = 75;
+itemButtons[9].onclick = function() {
+  attack(
+    100,
+    2 + damage,
+    "none",
+    0,
+    false,
+    false,
+    "strike",
+    false
+  );
+  if ((Math.random() * 100) >= ballChance) {
+    useItem(9, false);
+    ballChance = 75;
+    document.getElementById("ballChanceDisplay").innerHTML = ballChance + "%";
+  } else {
+    useItem(9, false);
+    giveItem(9, 1);
+    ballChance -= 5;
+    document.getElementById("ballChanceDisplay").innerHTML = ballChance + "%";
+  }
+}
+//Can
+itemButtons[10].onclick = function() {
+  attack(
+    80 + acc,
+    1 + damage,
+    "stn",
+    1,
+    false,
+    false,
+    "strike",
+    false
+  );
+  useItem(10, false)
+}
+//Sand
+itemButtons[11].onclick = function() {
+  attack(
+    70 + acc,
+    0,
+    "bli",
+    3,
+    false,
+    false,
+    "strike",
+    false
+  );
+  useItem(11, true)
+}
+//Eyepad
+itemButtons[12].onclick = function() {
+  attack(
+    80 + acc,
+    0,
+    "dst",
+    3,
+    false,
+    false,
+    "strike",
+    false
+  );
+  useItem(12, true)
+}
+//Shiv
+itemButtons[13].onclick = function() {
+  attack(
+    80 + acc,
+    0,
+    "bld",
+    4,
+    false,
+    false,
+    "stab",
+    false
+  );
+  useItem(13, true)
 }
 
 let scramChance = 60 + accuracy;
@@ -794,6 +1044,66 @@ scramButton.onclick = function() {scramWarning();}
 scramYes.onclick = function() {scram();}
 scramNo.onclick = function() {scramWarningClose(true);}
 
+let textHelp = document.getElementById("textHelp");
+let textHelpLines = document.getElementsByClassName("textHelpLine");
+
+for (let i = 0; i < textHelpLines.length; i++) {
+  textHelpLines[i].addEventListener("mousemove", function(e) {
+    textHelp.style.scale = 1;
+    textHelp.style.left = (e.clientX - background.offsetLeft) + "px";
+    textHelp.style.top = (e.clientY - background.offsetTop) + "px";
+  });
+  
+  textHelpLines[i].addEventListener("mouseout", function(e) {
+    textHelp.style.scale = 0;
+  });
+}
+let bldHelp = document.getElementsByClassName("bldHelp");
+for (let i = 0; i < bldHelp.length; i++) {
+  bldHelp[i].addEventListener("mousemove", function(e) {
+    textHelp.innerHTML = "<span style='color: cyan'>bleeding</span><br>-X hp/turn, X-1"
+  });}
+let bliHelp = document.getElementsByClassName("bliHelp");
+for (let i = 0; i < bliHelp.length; i++) {
+  bliHelp[i].addEventListener("mousemove", function(e) {
+    textHelp.innerHTML = "<span style='color: cyan'>blinded</span><br>-70% hit chance"
+  });}
+let dstHelp = document.getElementsByClassName("dstHelp");
+for (let i = 0; i < dstHelp.length; i++) {
+  dstHelp[i].addEventListener("mousemove", function(e) {
+    textHelp.innerHTML = "<span style='color: cyan'>distracted</span><br>-30% hit chance"
+  });}
+let focHelp = document.getElementsByClassName("focHelp");
+for (let i = 0; i < focHelp.length; i++) {
+  focHelp[i].addEventListener("mousemove", function(e) {
+    textHelp.innerHTML = "<span style='color: cyan'>focused</span><br>+30% hit chance"
+  });}
+let regHelp = document.getElementsByClassName("regHelp");
+for (let i = 0; i < regHelp.length; i++) {
+  regHelp[i].addEventListener("mousemove", function(e) {
+    textHelp.innerHTML = "<span style='color: cyan'>regen</span><br>+X hp/turn, X-1"
+  });}
+let sckHelp = document.getElementsByClassName("sckHelp");
+for (let i = 0; i < sckHelp.length; i++) {
+  sckHelp[i].addEventListener("mousemove", function(e) {
+    textHelp.innerHTML = "<span style='color: cyan'>sickened</span><br>-50% max hp"
+  });}
+let stnHelp = document.getElementsByClassName("stnHelp");
+for (let i = 0; i < stnHelp.length; i++) {
+  stnHelp[i].addEventListener("mousemove", function(e) {
+    textHelp.innerHTML = "<span style='color: cyan'>stunned</span><br>skip X turns"
+  });}
+let fastHelp = document.getElementsByClassName("fastHelp");
+for (let i = 0; i < fastHelp.length; i++) {
+  fastHelp[i].addEventListener("mousemove", function(e) {
+    textHelp.innerHTML = "<span style='color: cyan'>fast</span><br>does not end turn"
+  });}
+let sushiHelp = document.getElementsByClassName("sushiHelp");
+for (let i = 0; i < sushiHelp.length; i++) {
+  sushiHelp[i].addEventListener("mousemove", function(e) {
+    textHelp.innerHTML = "<span style='color: cyan'>kelp bandage</span><br>+1 hp, cures bld, fast"
+  });}
+
 function generateInfo() {
   antName = nameList[Math.floor(Math.random() * nameList.length)];
   favFood = foodList[Math.floor(Math.random() * foodList.length)];
@@ -809,9 +1119,6 @@ function generateInfo() {
   wonders = wondersList[Math.floor(Math.random() * wondersList.length)];
   favNumber = Math.floor(Math.random() * 1000);
 }
-
-let enemyStatsTesting = document.getElementById("enemyStatsTesting");
-enemyStatsTesting.innerHTML = antHealth;
 
 let antName;
 let favFood;
@@ -1151,8 +1458,3 @@ let wondersList = [
   "why it's hunted",
   "nothing at all"
 ]
-
-
-document.getElementById("testSpawnAnt").onclick = function() {removeEnemy(true);}
-document.getElementById("testDamage").onclick = function() {updateHealth(2);}
-document.getElementById("testXP").onclick = function() {updateLevel(10);}
