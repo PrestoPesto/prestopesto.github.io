@@ -8,6 +8,10 @@ body {
   background-color: black;
   font-family: "IBM Plex Mono", monospace;
   font-weight: 400;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .hidden {
@@ -275,6 +279,21 @@ body {
   to {transform: translate(0, 0) scaleX(0.98) scaleY(1.02) rotate(0);}
 }
 
+@keyframes antDodge {
+  40% {transform: scale(0.7)}
+  100% {transform: translate(0, 0) scaleX(0.98) scaleY(1.02) rotate(0);}
+}
+
+@keyframes antStrike {
+  40% {transform: translate(0, 15%) scale(1.2);}
+  100% {transform: translate(0, 0) scaleX(0.98) scaleY(1.02) rotate(0);}
+}
+
+@keyframes antMiss {
+  40% {transform: translate(0, 15%) scale(0.8);}
+  100% {transform: translate(0, 0) scaleX(0.98) scaleY(1.02) rotate(0);}
+}
+
 .effectAmount {
   color: cyan;
 }
@@ -309,7 +328,15 @@ body {
 
 #antEffects {
   position: absolute;
-  top: 8%;
+  top: 8.4%;
+}
+
+#playerEffects {
+  margin: auto;
+  left: 0;
+  right: 0;
+  position: absolute;
+  bottom: 24.5%;
 }
 
 .effect {
@@ -317,23 +344,30 @@ body {
   font-size: min(1.5vw, 15px);
   text-align: center;
   color: white;
-  text-decoration: underline;
   width: 0;
+  scale: 0;
+  z-index: 30;
+}
+
+#textHelp {
+  border: 1px solid white;
+  position: absolute;
+  padding: 0.7% 1% 0.7% 1%;
+  background-color: black;
+  color: white;
+  z-index: 50;
+  text-align: center;
+  font-size: min(1.5vw, 15px);
+  pointer-events: none;
+  transition: scale 0.2s ease;
   scale: 0;
 }
 
-#effectHelp {
-  scale: 0;
-  border: 1px solid white;
-  width: 20%;
-  position: absolute;
-  padding: 1% 0 1% 0;
-  bottom: 27%;
-  background-color: black;
-  color: white;
-  z-index: 3;
-  text-align: center;
-  font-size: min(1.5vw, 15px);
+.textHelpLine {
+  display: inline-block;
+  z-index: 50;
+  text-decoration: underline dotted;
+  cursor: help;
 }
 
 #antHealth {
@@ -409,7 +443,7 @@ body {
   width: 60%;
   position: absolute;
   padding: 0 0 1.5% 0;
-  bottom: 27%;
+  bottom: 32%;
   background-color: black;
   color: white;
   z-index: 3;
@@ -574,7 +608,7 @@ body {
   width: 60%;
   position: absolute;
   padding: 0 10px 0 10px;
-  bottom: 27%;
+  bottom: 32%;
   background-color: black;
   color: white;
   font-size: min(1.8vw, 16px);
@@ -589,10 +623,47 @@ body {
   width: 60%;
   position: absolute;
   padding: 0 1.5% 0.8% 1.5%;
-  bottom: 27%;
+  bottom: 32%;
   background-color: black;
   color: white;
   z-index: 3;
+}
+
+#stashChecksMenu {
+  display: flex;
+  font-size: min(1.8vw, 16px);
+  position: absolute;
+  width: 100%;
+  top: 1%;
+}
+
+.stashCheck input {
+  display: none;
+}
+
+.stashCheck {
+  display: block;
+  position: relative;
+  margin-top: 2%;
+  margin-left: 8%;
+  margin-right: 2%;
+}
+
+.stashCheckBox {
+  position: absolute;
+  top: 0.25em;
+  left: -1.6em;
+  height: 1em;
+  width: 1em;
+  background-color: black;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 0.2em solid black;
+  box-shadow: 0 0 0 1px yellow;
+}
+
+.stashCheck input:checked ~ .stashCheckBox {
+  background-color: yellow;
 }
 
 #stashScroll {
@@ -643,7 +714,7 @@ body {
   min-height: 12em;
   font-size: min(1.67vw, 14px);
   text-align: center;
-  transition: translate 0.2s ease, height 0.2s ease, box-shadow 0.2s ease, margin-top 0.2s ease, scale 0.2s ease, color 0s;
+  transition: translate 0.2s ease, height 0.2s ease, box-shadow 0.2s ease, margin-top 0.2s ease, scale 0.2s ease, width 0.2s ease, color 0s;
   background: black;
   line-height: 0.8em;
   padding: 0 1% 2% 1%;
