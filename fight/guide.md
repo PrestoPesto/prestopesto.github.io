@@ -162,26 +162,26 @@ Ants have stamina, with the maximum equal to their level. They gain 0.5 stamina 
 ### Yellow
 
 * 0.3 stamina
- * Melee
- * 4 damage
+  * Melee
+  * 4 damage
 * 0.6 stamina
- * Melee
- * 6 damage
- * Crit: 2 dst
+  * Melee
+  * 6 damage
+  * Crit: 2 dst
 * 1 stamina
- * Melee
- * 7 damage
- * 1 stn
+  * Melee
+  * 7 damage
+  * 1 stn
 * 1.5 stamina
- * Melee
- * 15 damage
- * 1 stn
+  * Melee
+  * 15 damage
+  * 1 stn
 
 ### Magenta
 
 * 0.3 stamina
- * Spell
- * 3 bld
+  * Spell
+  * 3 bld
 * 0.6 stamina
- * Spell
- * 
+  * Spell
+  * 
