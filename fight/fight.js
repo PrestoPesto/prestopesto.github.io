@@ -37,7 +37,7 @@ let critDisplay = document.getElementById("critChance");
 let accDisplay = document.getElementsByClassName("acc");
 let dmgDisplay = document.getElementsByClassName("dmg");
 let effDisplay = document.getElementsByClassName("eff");
-let attackEffects = document.getElementById("attackEffects");
+let attackEffects = document.getElementsByClassName("attackEffects");
 
 let antEffectsList = document.getElementById("antEffects");
 let playerEffectsList = document.getElementById("playerEffects");
@@ -75,9 +75,14 @@ let playerEffects = [0, 0, 0, 0, 0, 0, 0];
 
 let antColor;
 let antLevel = 1;
+let antAcc = 0;
 let antMaxHealth;
 let antHealth;
 let antEffects = [0, 0, 0, 0, 0, 0, 0];
+let antStamina = 0;
+let antCaution = 0;
+let antPlanning = 0;
+let antGoal;
 
 let settings = document.getElementById("settings");
 let settingsOpen = document.getElementById("settingsOpen");
@@ -87,7 +92,7 @@ let settingsIsOpen = false;
 settingsOpen.onclick = function() {
   if (settingsIsOpen) {
     settings.style.animation = "none";
-    settings.style.translate = "-87% 0";
+    settings.style.translate = "-101% 0";
     settingsIsOpen = false;
     settingsArrow.innerHTML = ">";
   } else {
@@ -115,6 +120,101 @@ volumeSlider.oninput = function() {
   volume = this.value;
   audio.volume = volume;
   volumeDisplay.innerHTML = "x" + (Math.round(volume * 100) / 100).toFixed(2);
+}
+
+let musicSlider = document.getElementById("musicSlider");
+let musicDisplay = document.getElementById("musicDisplay");
+let musicVolume = 0.7;
+musicSlider.oninput = function() {
+  musicVolume = this.value;
+  //audio.volume = volume;
+  musicDisplay.innerHTML = "x" + (Math.round(music * 100) / 100).toFixed(2);
+}
+
+let saturationSlider = document.getElementById("saturationSlider");
+let saturationDisplay = document.getElementById("saturationDisplay");
+let saturation = 1;
+saturationSlider.oninput = function() {
+  saturation = this.value;
+  background.style.filter = "saturate(" + saturation * 100 + "%) blur(" + (blur * 5) + "px)";
+  saturationDisplay.innerHTML = "x" + (Math.round(saturation * 100) / 100).toFixed(2);
+}
+
+let blurSlider = document.getElementById("blurSlider");
+let blurDisplay = document.getElementById("blurDisplay");
+let blur = 0;
+blurSlider.oninput = function() {
+  blur = 1 - this.value;
+  background.style.filter = "saturate(" + (saturation * 100) + "%) blur(" + (blur * 5) + "px)";
+  blurDisplay.innerHTML = "x" + (Math.round(this.value * 100) / 100).toFixed(2);
+}
+
+let transSlider = document.getElementById("transSlider");
+let transDisplay = document.getElementById("transDisplay");
+let transFlag = document.getElementById("transFlag");
+let transAmount = 0;
+let transMirrored = 1;
+transSlider.oninput = function() {
+  transAmount = this.value;
+  if (transAmount < 0.2) {
+    transFlag.classList.add("hidden");
+  } else {
+    transFlag.classList.remove("hidden");
+  }
+  updateTransFlag();
+  transDisplay.innerHTML = "x" + (Math.round(transAmount * 100) / 100).toFixed(2);
+}
+function updateTransFlag() {
+  void transFlag.offsetWidth;
+  if (antColor == 0) {
+    transMirrored = -1;
+    transFlag.style.left = "53%";
+    transFlag.style.top = "13%";
+  } else if (antColor == 1) {
+    transMirrored = 1;
+    transFlag.style.left = "45%";
+    transFlag.style.top = "12%";
+  } else if (antColor == 2) {
+    transMirrored = 1;
+    transFlag.style.left = "52%";
+    transFlag.style.top = "8%";
+  }
+  transFlag.style.scale = (transMirrored * transAmount) + " " + transAmount;
+}
+
+let bumpSlider = document.getElementById("bumpSlider");
+let bumpDisplay = document.getElementById("bumpDisplay");
+let bump = 0;
+let bumpText = "x0";
+bumpSlider.oninput = function() {
+  bump = this.value;
+  switch (bump) {
+    case 0:
+      bumpText = "x0";
+      break;
+    case 1:
+      bumpText = "x1";
+      break;
+    case 2:
+      bumpText = "x12";
+      break;
+    case 3:
+      bumpText = "x50";
+      break;
+    case 4:
+      bumpText = "x76";
+      break;
+    case 5:
+      bumpText = "x100";
+      break;
+    case 6:
+      bumpText = "x1000";
+      break;
+    default:
+      bumpText = "x0"
+      break;
+  }
+  bumpDisplay.innerHTML = bumpText;
 }
 
 /* const antHit = new Audio("./assets/sounds/ant_hit.wav");
@@ -299,7 +399,11 @@ function spawnEnemy() {
   let nameColor;
   let nameText;
   void ant.offsetWidth;
+  antStamina = 0;
+  document.getElementById("antStaminaTesting").innerHTML = antStamina;
+  
   setTimeout(function() { //I don't know why it breaks without this
+    getAntGoal();
     antMaxHealth = Math.floor(6 * antLevel);
     antHealth = antMaxHealth;
     updateAntHealth(0);
@@ -321,13 +425,17 @@ function spawnEnemy() {
       nameColor = "cyan";
       nameText = "antC attacks!"
       studyClass.innerHTML = "class: <span style='color: cyan'>cyan</span>";
+      
+      antCaution = Math.abs(Math.random() + Math.random() + 1) / 3;
     } else if (antTypeRNG == 1) {
-      //antColor = 1;
+      antColor = 1;
       ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
       //ant.style.backgroundImage = "url(./assets/antM.png)";
       nameColor = "magenta";
       nameText = "antM attacks!"
       studyClass.innerHTML = "class: <span style='color: magenta'>magenta</span>";
+      
+      antCaution = Math.abs(Math.random() + Math.random()) / 2;
     } else if (antTypeRNG == 2) {
       antColor = 2;
       ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
@@ -335,16 +443,35 @@ function spawnEnemy() {
       nameColor = "yellow";
       nameText = "antY attacks!"
       studyClass.innerHTML = "class: <span style='color: yellow'>yellow</span>";
+    
+      antCaution = Math.abs(Math.random() + Math.random()) / 3;
     }
+    antPlanning = Math.abs(Math.random() + Math.random()) / 2;
+    
+    updateTransFlag();
+    
     setTimeout(function() { 
       announceText(nameText, nameColor);
     }, 900 * animSpeed);
-  }, 0);
+  }, 0); //Again IDK but it works so who cares
   setTimeout(function() {
     ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
     buttonDisable.classList.add("hidden");
     openButtons();
   }, 1500 * animSpeed);
+}
+
+function getAntGoal() {
+  let goalNum = Math.max(0, Math.min(1, Math.random() + (antPlanning - 0.5)));
+  if (goalNum > 0.65) {
+    antGoal = 4;
+  } else if (goalNum > 0.4) {
+    antGoal = 3;
+  } else if (goalNum > 0.2) {
+    antGoal = 2;
+  } else {
+    antGoal = 1;
+  }
 }
  
 function endTurn() {
@@ -362,6 +489,7 @@ function checkEffects(val) {
 
 function antTurn() {
   announceText("ant's turn!", "white");
+  updateStamina(0.5);
   setTimeout(function() {
     if (antEffects[0] > 0) {
       bleed(1, 1);
@@ -386,22 +514,11 @@ function antTurn() {
       }, 1400 * animSpeed);
     } else {
       setTimeout(function() {
-        if (Math.random() <= 0.7) {
-          ant.style.animation = "antStrike calc(0.3s * var(--animSpeed)) ease forwards";
-          setTimeout(function() {
-            updateHealth(3);
-          }, 100 * animSpeed);
-          setTimeout(function() {
-            void ant.offsetWidth;
-            ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
-          }, 300 * animSpeed);
-        } else {
-          ant.style.animation = "antMiss calc(0.3s * var(--animSpeed)) ease forwards";
-          setTimeout(function() {
-            void ant.offsetWidth;
-            ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
-          }, 300 * animSpeed);
-        }
+        
+        antMelee(0, 2, "none");
+        
+        if (Math.random)
+        
         announceText("your turn!", "white");
         setTimeout(function() { 
           playerTurn();
@@ -409,6 +526,39 @@ function antTurn() {
       }, 1400 * animSpeed);
     }
   }, 700 * animSpeed);
+}
+
+function updateStamina(amount) {
+  antStamina += amount;
+  if (antStamina > antLevel) {
+    antStamina = antLevel;
+  }
+  document.getElementById("antStaminaTesting").innerHTML = antStamina;
+}
+
+function antHeal() {
+  updateStamina(1);
+  updateAntHealth(0 - (antMaxHealth * 0.2));
+}
+
+function antMelee(stamCost, hitDamage, hitEffect) {
+  updateStamina(0 - stamCost);
+  if (Math.random() <= (0.65 + antAcc)) {
+    ant.style.animation = "antStrike calc(0.3s * var(--animSpeed)) ease forwards";
+    setTimeout(function() {
+      updateHealth(hitDamage);
+    }, 100 * animSpeed);
+    setTimeout(function() {
+      void ant.offsetWidth;
+      ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
+    }, 300 * animSpeed);
+  } else {
+    ant.style.animation = "antMiss calc(0.3s * var(--animSpeed)) ease forwards";
+    setTimeout(function() {
+      void ant.offsetWidth;
+      ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
+    }, 300 * animSpeed);
+  }
 }
 
 function playerTurn() {
@@ -487,7 +637,7 @@ function attack(hitChance, hitDamage, hitEffect, effectAmount, canCrit, critDep,
         if (hitEffect == "crush!") {
           updateAntHealth(Math.floor(hitDamage * 1.5));
         } else {
-          updateAntHealth(hitDamage)
+          updateAntHealth(hitDamage);
         }
         screenshake(3);
         audio.src = sounds[2];
@@ -538,31 +688,37 @@ function attack(hitChance, hitDamage, hitEffect, effectAmount, canCrit, critDep,
         ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
       }, 400 * animSpeed);
     }
-    attackEffects.classList.remove("hidden");
-      void attackEffects.offsetWidth;
-      if (hitType == "slash") {
-        attackEffects.style.backgroundImage = 'url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true")';
-        //attackEffects.style.backgroundImage = 'url("./assets/slash.png")';
-        attackEffects.style.animation = "slash calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
-      } else if (hitType == "stab") {
-        attackEffects.style.backgroundImage = 'url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/stab.png?raw=true")';
-        //attackEffects.style.backgroundImage = 'url("./assets/stab.png")';
-        attackEffects.style.animation = "stab calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
+    if (hitType == "slash") {
+      playEffect(1);
+    } else if (hitType == "stab") {
+      playEffect(2);
+    } else {
+      playEffect(0);
+    }
+    setTimeout(function() {
+      if (endsTurn) {
+        endTurn();
       } else {
-        attackEffects.style.backgroundImage = 'url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true")';
-        //attackEffects.style.backgroundImage = 'url("./assets/swing.png")';
-        attackEffects.style.animation = "swing calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
+        menuDisable.classList.add("hidden");
       }
-      setTimeout(function() {
-        attackEffects.style.animation = "none";
-        attackEffects.classList.add("hidden");
-        if (endsTurn) {
-          endTurn();
-        } else {
-          menuDisable.classList.add("hidden");
-        }
-      }, 270 * animSpeed);
-  }, 200 * animSpeed);
+    }, 270 * animSpeed);
+  }, 300 * animSpeed);
+}
+
+function playEffect(i) {
+  void attackEffects[i].offsetWidth;
+  attackEffects[i].classList.remove("hidden");
+  if (i == 0) {
+    attackEffects[0].style.animation = "swing calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
+  } else if (i == 1) {
+    attackEffects[1].style.animation = "slash calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
+  } else if (i == 2) {
+    attackEffects[2].style.animation = "stab calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
+  }
+  setTimeout(function() {
+    attackEffects[i].style.animation = "none";
+    attackEffects[i].classList.add("hidden");
+  }, 270 * animSpeed);
 }
 
 function bleed(who) {
@@ -1117,7 +1273,7 @@ function generateInfo() {
   fears = fearsList[Math.floor(Math.random() * fearsList.length)];
   excited = excitedList[Math.floor(Math.random() * excitedList.length)];
   wonders = wondersList[Math.floor(Math.random() * wondersList.length)];
-  favNumber = Math.floor(Math.random() * 1000);
+  favNumber = Math.floor(Math.abs((Math.random() * 500) + (Math.random() * -500)));
 }
 
 let antName;
