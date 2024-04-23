@@ -17,12 +17,33 @@
         </div>
         <p class="settingsDesc">sfx volume <span id="volumeDisplay">x0.75</span></p>
         <input id="volumeSlider" class="settingsSlider" type="range" step="0.05" min="0" max="1" value="0.7">
+        
+        <p class="settingsDesc">music volume <span id="musicDisplay">x0.75</span></p>
+        <input id="musicSlider" class="settingsSlider" type="range" step="0.05" min="0" max="1" value="0.7">
+        
         <p class="settingsDesc">animation speed <span id="gameSpeedDisplay">x1.00</span></p>
         <input id="gameSpeedSlider" class="settingsSlider" type="range" step="0.25" min="0.25" max="3" value="1">
+        
+        <p class="settingsDesc">saturation <span id="saturationDisplay">x1.00</span></p>
+        <input id="saturationSlider" class="settingsSlider" type="range" step="0.05" min="0" max="1.5" value="1">
+        
+        <p class="settingsDesc">focus <span id="blurDisplay">x1.00</span></p>
+        <input id="blurSlider" class="settingsSlider" type="range" step="0.05" min="0" max="1" value="1">
+        
+        <p class="settingsDesc">politics <span id="transDisplay">x0.00</span></p>
+        <input id="transSlider" class="settingsSlider" type="range" step="0.05" min="0" max="1" value="0">
+        
+        <p class="settingsDesc">bumpscosity <span id="bumpDisplay">x0.00</span></p>
+        <input id="bumpSlider" class="settingsSlider" type="range" step="1" min="0" max="6" value="0">
       </div>
       <div id="enemyText" class="hidden"></div>
-      <div id="ant"></div>
-      <div id="attackEffects" class="hidden"></div>
+      <div id="ant">
+        <img id="transFlag" class="hidden" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/trans_flag.png?raw=true">
+      </div>
+      
+      <div id="swingEff" class="attackEffects hidden"></div>
+      <div id="slashEff" class="attackEffects hidden"></div>
+      <div id="stabEff" class="attackEffects hidden"></div>
       
       <div id="antStats" class="stat">
         <div id="antHealth" class="statText">
@@ -280,8 +301,8 @@
       </div>
     </div>
     
+    <p id="antStaminaTesting" style="color: white;">woa</p>
     <script src="../fight/fight.js"></script>
-    
   </body>
 
 </html>
