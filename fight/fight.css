@@ -36,7 +36,7 @@ body {
   z-index: -1;
   position: absolute;
   content: "";
-  background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/background.png?raw=true");
+  background-image: url("../fight/assets/background.png");
   /* background-image: url("./assets/background.png"); */
   width: 110%;
   height: 100%;
@@ -537,17 +537,17 @@ body {
 #swingEff {
   position: absolute;
   /* background-image: url("./assets/swing.png"); */
-  background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true");
+  background-image: url("../fight/assets/swing.png");
 }
 #slashEff {
   position: absolute;
   /* background-image: url("./assets/slash.png"); */
-  background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true");
+  background-image: url("../fight/assets/slash.png");
 }
 #stabEff {
   position: absolute;
   /* background-image: url("./assets/stab.png"); */
-  background-image: url("https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/stab.png?raw=true");
+  background-image: url("../fight/assets/stab.png");
 }
 
 @keyframes swing {

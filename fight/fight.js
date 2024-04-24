@@ -118,7 +118,7 @@ let volumeDisplay = document.getElementById("volumeDisplay");
 let volume = 0.7;
 volumeSlider.oninput = function() {
   volume = this.value;
-  audio.volume = volume;
+  audio.volume = volume * 0.75;
   volumeDisplay.innerHTML = "x" + (Math.round(volume * 100) / 100).toFixed(2);
 }
 
@@ -217,19 +217,25 @@ bumpSlider.oninput = function() {
   bumpDisplay.innerHTML = bumpText;
 }
 
-/* const antHit = new Audio("./assets/sounds/ant_hit.wav");
-const antBleed = new Audio("./assets/sounds/ant_bleed.wav");
-const antCrit = new Audio("./assets/sounds/ant_crit.wav");
-const antMiss = new Audio("./assets/sounds/ant_miss.wav"); */
-
 let audio = new Audio();
 let sounds = [
-  "./assets/sounds/ant_hit.wav", 
-  "./assets/sounds/ant_bleed.wav", 
-  "./assets/sounds/ant_crit.wav", 
-  "./assets/sounds/ant_miss.wav"
+  "../fight/assets/sounds/ant_hit.wav", 
+  "../fight/assets/sounds/ant_bleed.wav", 
+  "../fight/assets/sounds/ant_crit.wav", 
+  "../fight/assets/sounds/ant_miss.wav"
 ]
 audio.volume = volume;
+
+//Music
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
+const audioElement = document.querySelector('audio');
+const track = audioCtx.createMediaElementSource(audioElement);
+
+audioElement.play();
+
+track.connect(audioCtx.destination);
 
 updateHealth(0);
 updateLevel(0);
@@ -238,13 +244,13 @@ closeButtons();
 
 function loadImages() {
   let images = [
-    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/background.png?raw=true",
-    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/swing.png?raw=true",
-    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/slash.png?raw=true",
-    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/stab.png?raw=true",
-    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true",
-    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true",
-    "https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true"
+    "../fight/assets/background.png",
+    "../fight/assets/swing.png",
+    "../fight/assets/slash.png",
+    "../fight/assets/stab.png",
+    "../fight/assets/antC.png",
+    "../fight/assets/antM.png",
+    "../fight/assets/antY.png"
   ]
   /* let images = [
     "./assets/background.png",
@@ -420,7 +426,7 @@ function spawnEnemy() {
     
     if (antTypeRNG == 0) { 
       antColor = 0;
-      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antC.png?raw=true)";
+      ant.style.backgroundImage = "url(../fight/assets/antC.png)";
       //ant.style.backgroundImage = "url(./assets/antC.png)";
       nameColor = "cyan";
       nameText = "antC attacks!"
@@ -429,7 +435,7 @@ function spawnEnemy() {
       antCaution = Math.abs(Math.random() + Math.random() + 1) / 3;
     } else if (antTypeRNG == 1) {
       antColor = 1;
-      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antM.png?raw=true)";
+      ant.style.backgroundImage = "url(../fight/assets/antM.png)";
       //ant.style.backgroundImage = "url(./assets/antM.png)";
       nameColor = "magenta";
       nameText = "antM attacks!"
@@ -438,7 +444,7 @@ function spawnEnemy() {
       antCaution = Math.abs(Math.random() + Math.random()) / 2;
     } else if (antTypeRNG == 2) {
       antColor = 2;
-      ant.style.backgroundImage = "url(https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/antY.png?raw=true)";
+      ant.style.backgroundImage = "url(../fight/assets/antY.png)";
       //ant.style.backgroundImage = "url(./assets/antY.png)";
       nameColor = "yellow";
       nameText = "antY attacks!"
@@ -639,7 +645,7 @@ function attack(hitChance, hitDamage, hitEffect, effectAmount, canCrit, critDep,
         } else {
           updateAntHealth(hitDamage);
         }
-        screenshake(3);
+        screenshake(5);
         audio.src = sounds[2];
         audio.play();
       } else {

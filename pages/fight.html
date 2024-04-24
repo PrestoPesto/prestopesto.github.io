@@ -10,6 +10,12 @@
   </head>
 
   <body>
+    <audio id="baseTrack" src="../fight/assets/sounds/music/base.mp3"></audio>
+    <!-- <audio id="swingTrack" src="../fight/assets/sounds/music/swing.mp3"></audio>
+    <audio id="slashTrack" src="../fight/assets/sounds/music/slash.mp3"></audio>
+    <audio id="stabTrack" src="../fight/assets/sounds/music/stab.mp3"></audio>
+    <audio id="attackTrack" src="../fight/assets/sounds/music/attack.mp3"></audio> -->
+
     <div id="background">
       <div id="settings">
         <div id="settingsOpen">
@@ -38,7 +44,7 @@
       </div>
       <div id="enemyText" class="hidden"></div>
       <div id="ant">
-        <img id="transFlag" class="hidden" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/trans_flag.png?raw=true">
+        <img id="transFlag" class="hidden" src="../fight/assets/trans_flag.png">
       </div>
       
       <div id="swingEff" class="attackEffects hidden"></div>
@@ -189,63 +195,63 @@
           <div id="stashFlex">
             <div id="iceCubes" class="itemIcon itemClickable">
               <p class="itemTitle">ice cube <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Ice cubes" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/ice_cube.png?raw=true">
+              <img class="itemImg" alt="Ice cubes" src="../fight/assets/items/ice_cube.png">
               <p class="itemText">+2 hp</p>
               <p class="itemText"><span class="textHelpLine fastHelp">fast</span><br></p>
               <p class="itemDesc">crunch crunch crunch crunch</p>
             </div>
             <div id="lemonade" class="itemIcon itemClickable">
               <p class="itemTitle">lemonade <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Lemonade" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/lemonade.png?raw=true">
+              <img class="itemImg" alt="Lemonade" src="../fight/assets/items/lemonade.png">
               <p class="itemText">+6 hp</p>
               <p class="itemText"><br><p>
               <p class="itemDesc">cool and refreshing</p>
             </div>
             <div id="lemonPie" class="itemIcon itemClickable">
               <p class="itemTitle">lemon pie <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Lemon pie" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/lemon_pie.png?raw=true">
+              <img class="itemImg" alt="Lemon pie" src="../fight/assets/items/lemon_pie.png">
               <p class="itemText">full hp</p>
               <p class="itemText">+3 <span class="textHelpLine regHelp">reg</span><br></p>
               <p class="itemDesc">pie are squared</p>
             </div>
             <div id="popcorn" class="itemIcon itemClickable">
               <p class="itemTitle">popcorn popper <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Popcorn" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/popcorn.png?raw=true">
+              <img class="itemImg" alt="Popcorn" src="../fight/assets/items/popcorn.png">
               <p class="itemText">all +5 hp</p>
               <p class="itemText"><br></p>
               <p class="itemDesc">liters of butter</p>
             </div>
             <div id="adderall" class="itemIcon itemClickable">
               <p class="itemTitle">adderall <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Adderall" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/adderall.png?raw=true">
+              <img class="itemImg" alt="Adderall" src="../fight/assets/items/adderall.png">
               <p class="itemText">+3 <span class="textHelpLine focHelp">foc</span></p>
               <p class="itemText"><span class="textHelpLine fastHelp">fast</span></p>
               <p class="itemDesc">what the dev probably needed</p>
             </div>
             <div id="ramen" class="itemIcon itemClickable">
               <p class="itemTitle">dry ramen <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Ramen" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/dry_ramen.png?raw=true">
+              <img class="itemImg" alt="Ramen" src="../fight/assets/items/dry_ramen.png">
               <p class="itemText">cures <span class="textHelpLine bldHelp">bld</span></p>
               <p class="itemText"><span class="textHelpLine fastHelp">fast</span></p>
               <p class="itemDesc">can it fix my life?</p>
             </div>
             <div id="soup" class="itemIcon itemClickable">
               <p class="itemTitle">cold soup <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Soup" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/cold_soup.png?raw=true">
+              <img class="itemImg" alt="Soup" src="../fight/assets/items/cold_soup.png">
               <p class="itemText">+1 <span class="textHelpLine sckHelp">sck</span></p>
               <p class="itemText">+7 <span class="textHelpLine regHelp">reg</span><br></p>
               <p class="itemDesc">chicken? beef? ...worms?</p>
             </div>
             <div id="sushi" class="itemIcon itemClickable">
               <p class="itemTitle">sushi platter <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Sushi" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/sushi_platter.png?raw=true">
+              <img class="itemImg" alt="Sushi" src="../fight/assets/items/sushi_platter.png">
               <p class="itemText">+10 hp</p>
               <p class="itemText">+2 <span class="textHelpLine sushiHelp">kelp</span> <span class="textHelpLine sushiHelp">bandages</span></p>
               <p class="itemDesc">roly poly fish heads</p>
             </div>
             <div id="kelpBandage" class="itemIcon itemClickable">
               <p class="itemTitle">kelp bandage <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Kelp bandage" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/kelp_bandage.png?raw=true">
+              <img class="itemImg" alt="Kelp bandage" src="../fight/assets/items/kelp_bandage.png">
               <p class="itemText">+1 hp</p>
               <p class="itemText">cures <span class="textHelpLine bldHelp">bld</span></p>
               <p class="itemText"><span class="textHelpLine fastHelp">fast</span></p>
@@ -253,7 +259,7 @@
             </div>
             <div id="ball" class="itemIcon itemClickable">
               <p class="itemTitle">bouncy ball <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Bouncy ball" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/ball.png?raw=true">
+              <img class="itemImg" alt="Bouncy ball" src="../fight/assets/items/ball.png">
               <p class="itemText"><span class="attackStat">100%</span> hit</p>
               <p class="itemText"><span class="attackStat dmg">2</span> dmg</p>
               <p class="itemText"><span id="ballChanceDisplay" class="attackStat">75%</span> return</p>
@@ -261,7 +267,7 @@
             </div>
             <div id="can" class="itemIcon itemClickable">
               <p class="itemTitle">empty can <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Bouncy ball" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/empty_can.png?raw=true">
+              <img class="itemImg" alt="Bouncy ball" src="../fight/assets/items/empty_can.png">
               <p class="itemText"><span class="attackStat acc">80%</span> hit</p>
               <p class="itemText"><span class="attackStat dmg">1</span> dmg</p>
               <p class="itemText"><span class="attackStat">1</span> <span class="textHelpLine stnHelp">stn</span></p>
@@ -270,21 +276,21 @@
             </div>
             <div id="sand" class="itemIcon itemClickable">
               <p class="itemTitle">pocket sand <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Bouncy ball" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/sand.png?raw=true">
+              <img class="itemImg" alt="Bouncy ball" src="../fight/assets/items/sand.png">
               <p class="itemText"><span class="attackStat acc">70%</span> hit</p>
               <p class="itemText"><span class="attackStat">3</span> <span class="textHelpLine bliHelp">bli</span><br></p>
               <p class="itemDesc">as opposed to pocket loam</p>
             </div>
             <div id="eyepad" class="itemIcon itemClickable">
               <p class="itemTitle">eyepad <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Eyepad" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/eyepad.png?raw=true">
+              <img class="itemImg" alt="Eyepad" src="../fight/assets/items/eyepad.png">
               <p class="itemText"><span class="attackStat acc">80%</span> hit</p>
               <p class="itemText"><span class="attackStat">3</span> <span class="textHelpLine dstHelp">dst</span><br></p>
               <p class="itemDesc">kids these days</p>
             </div>
             <div id="shiv" class="itemIcon itemClickable">
               <p class="itemTitle">shiv <span class="itemCount">x1</span></p>
-              <img class="itemImg" alt="Eyepad" src="https://github.com/PrestoPesto/prestopesto.github.io/blob/main/fight/assets/items/shiv.png?raw=true">
+              <img class="itemImg" alt="Eyepad" src="../fight/assets/items/shiv.png">
               <p class="itemText"><span class="attackStat acc">80%</span> hit</p>
               <p class="itemText"><span class="attackStat">4</span> <span class="textHelpLine bldHelp">bld</span><br></p>
               <p class="itemDesc">is britain canon?</p>
