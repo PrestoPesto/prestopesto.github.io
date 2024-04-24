@@ -189,29 +189,29 @@ let bumpText = "x0";
 bumpSlider.oninput = function() {
   bump = this.value;
   switch (bump) {
-    case 0:
-      bumpText = "x0";
+    case "0":
+      bumpText = "x0.00";
       break;
-    case 1:
-      bumpText = "x1";
+    case "1":
+      bumpText = "x1.00";
       break;
-    case 2:
-      bumpText = "x12";
+    case "2":
+      bumpText = "x12.0";
       break;
-    case 3:
-      bumpText = "x50";
+    case "3":
+      bumpText = "x50.0";
       break;
-    case 4:
-      bumpText = "x76";
+    case "4":
+      bumpText = "x76.0";
       break;
-    case 5:
-      bumpText = "x100";
+    case "5":
+      bumpText = "x100.0";
       break;
-    case 6:
-      bumpText = "x1000";
+    case "6":
+      bumpText = "x1000.0";
       break;
     default:
-      bumpText = "x0"
+      bumpText = "x0.00"
       break;
   }
   bumpDisplay.innerHTML = bumpText;
@@ -252,15 +252,6 @@ function loadImages() {
     "../fight/assets/antM.png",
     "../fight/assets/antY.png"
   ]
-  /* let images = [
-    "./assets/background.png",
-    "./assets/swing.png",
-    "./assets/slash.png",
-    "./assets/stab.png",
-    "./assets/antC.png",
-    "./assets/antM.png",
-    "./assets/antY.png"
-  ] */
   for (let i = 0; i < images.length; i++) {
     new Image().src = images[i];
   }
@@ -272,7 +263,7 @@ function updateHealth(dmg) {
   if (dmg > 0) {
     screenshake(1);
   }
-  currentHealth -= dmg;
+  currentHealth -= Math.floor(dmg);
   
   //Just for testing
   if (currentHealth <= 0) {
@@ -301,7 +292,7 @@ function updateLevel(xpChange) {
 }
 
 function updateAntHealth(dmg) {
-  antHealth -= dmg;
+  antHealth -= Math.floor(dmg);
   
   if (antHealth > antMaxHealth) {
     antHealth = antMaxHealth;
@@ -420,7 +411,7 @@ function spawnEnemy() {
     generateInfo();
     ant.style.animation = "antSpawn calc(1.5s * var(--animSpeed)) ease-in-out forwards";
     let antTypeRNG;
-    do {
+    /* do {
       antTypeRNG = Math.floor(Math.random() * 3);
     } while (antTypeRNG == antColor);
     
@@ -442,7 +433,7 @@ function spawnEnemy() {
       studyClass.innerHTML = "class: <span style='color: magenta'>magenta</span>";
       
       antCaution = Math.abs(Math.random() + Math.random()) / 2;
-    } else if (antTypeRNG == 2) {
+    } else if (antTypeRNG == 2) { */
       antColor = 2;
       ant.style.backgroundImage = "url(../fight/assets/antY.png)";
       //ant.style.backgroundImage = "url(./assets/antY.png)";
@@ -451,7 +442,7 @@ function spawnEnemy() {
       studyClass.innerHTML = "class: <span style='color: yellow'>yellow</span>";
     
       antCaution = Math.abs(Math.random() + Math.random()) / 3;
-    }
+    //}
     antPlanning = Math.abs(Math.random() + Math.random()) / 2;
     
     updateTransFlag();
@@ -469,14 +460,15 @@ function spawnEnemy() {
 
 function getAntGoal() {
   let goalNum = Math.max(0, Math.min(1, Math.random() + (antPlanning - 0.5)));
-  if (goalNum > 0.65) {
-    antGoal = 4;
+  //Yes they're strings shut up
+  if (goalNum > 0.65 && antLevel >= 1.5) {
+    antGoal = "4";
   } else if (goalNum > 0.4) {
-    antGoal = 3;
+    antGoal = "3";
   } else if (goalNum > 0.2) {
-    antGoal = 2;
+    antGoal = "2";
   } else {
-    antGoal = 1;
+    antGoal = "1";
   }
 }
  
@@ -495,7 +487,7 @@ function checkEffects(val) {
 
 function antTurn() {
   announceText("ant's turn!", "white");
-  updateStamina(0.5);
+  updateStamina(5);
   setTimeout(function() {
     if (antEffects[0] > 0) {
       bleed(1, 1);
@@ -521,9 +513,8 @@ function antTurn() {
     } else {
       setTimeout(function() {
         
-        antMelee(0, 2, "none");
-        
-        if (Math.random)
+        //antAction("strike1");
+        //antMelee(3, 4, "crush!", true);
         
         announceText("your turn!", "white");
         setTimeout(function() { 
@@ -536,23 +527,47 @@ function antTurn() {
 
 function updateStamina(amount) {
   antStamina += amount;
-  if (antStamina > antLevel) {
-    antStamina = antLevel;
+  if (antStamina > (antLevel * 10)) {
+    antStamina = antLevel * 10;
   }
   document.getElementById("antStaminaTesting").innerHTML = antStamina;
 }
 
-function antHeal() {
-  updateStamina(1);
-  updateAntHealth(0 - (antMaxHealth * 0.2));
+function antAI() {
+  if (cautionCheck()) {
+    //
+  } else if (planningCheck()) {
+    //
+  } else {
+    //
+  }
+}
+function cautionCheck() {
+  if ((Math.random() + Math.random()) / 2 > antCaution) {
+    return false;
+  }
+  return true;
+}
+function planningCheck() {
+  if ((Math.random() + Math.random()) / 2 > antPlanning) {
+    return false;
+  }
+  return true;
 }
 
-function antMelee(stamCost, hitDamage, hitEffect) {
+let antCritChance = 0.33;
+function antMelee(stamCost, hitDamage, hitEffect, critDep) {
   updateStamina(0 - stamCost);
   if (Math.random() <= (0.65 + antAcc)) {
     ant.style.animation = "antStrike calc(0.3s * var(--animSpeed)) ease forwards";
     setTimeout(function() {
-      updateHealth(hitDamage);
+      /* if ((Math.random() < antCritChance) || !critDep) {
+        if (hitEffect == "crush!") {
+          updateHealth(Math.floor(hitDamage * 1.5));
+        }
+      } else { */
+        updateHealth(hitDamage);
+      //}
     }, 100 * animSpeed);
     setTimeout(function() {
       void ant.offsetWidth;
@@ -564,6 +579,66 @@ function antMelee(stamCost, hitDamage, hitEffect) {
       void ant.offsetWidth;
       ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
     }, 300 * animSpeed);
+  }
+}
+
+function antSpell(stamCost, hitEffect) {
+  updateStamina(0 - stamCost);
+}
+
+function antAction(choice) {
+  switch (choice) {
+    case "strike4":
+      switch (antColor) {
+        case 0: //Cyan
+          break;
+        case 1: //Magenta
+          break;
+        case 2: //Yellow
+          antMelee(15, 14, "stn", false);
+          break;
+      }
+      break;
+    case "strike3":
+      switch (antColor) {
+        case 0: //Cyan
+          break;
+        case 1: //Magenta
+          break;
+        case 2: //Yellow
+          antMelee(10, 8, "stn", true);
+          break;
+      }
+      break;
+    case "strike2":
+      switch (antColor) {
+        case 0: //Cyan
+          break;
+        case 1: //Magenta
+          break;
+        case 2: //Yellow
+          antMelee(6, 6, "dst", true);
+          break;
+      }
+      break;
+    case "strike1":
+      switch (antColor) {
+        case 0: //Cyan
+          break;
+        case 1: //Magenta
+          break;
+        case 2: //Yellow
+          antMelee(3, 4, "crush!", true);
+          break;
+      }
+      break;
+    case "heal":
+      updateStamina(-10);
+      updateAntHealth(0 - (antMaxHealth * 0.2));
+      break;
+    case "basic":
+      antMelee(0, 2, "crush!", true);
+      break;
   }
 }
 
@@ -740,9 +815,9 @@ function bleed(who) {
 
 function regen(who) {
   if (who == 0) {
-    if (playerEffects[5] > 0) {
-      updateHealth(-1 * playerEffects[5]);
-      playerEffects[5]--;
+    if (playerEffects[4] > 0) {
+      updateHealth(-1 * playerEffects[4]);
+      playerEffects[4]--;
     }
   }
   updateEffects();
