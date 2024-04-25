@@ -458,18 +458,24 @@ function spawnEnemy() {
   }, 1500 * animSpeed);
 }
 
+let antGoalStam;
 function getAntGoal() {
-  let goalNum = Math.max(0, Math.min(1, Math.random() + (antPlanning - 0.5)));
+  let goalNum = Math.max(0, Math.min(1, Math.random() + (antPlanning - 0.1)));
   //Yes they're strings shut up
-  if (goalNum > 0.65 && antLevel >= 1.5) {
+  if (goalNum > 0.65 && antLevel >= 2) {
     antGoal = "4";
+    antGoalStam = 20;
   } else if (goalNum > 0.4) {
     antGoal = "3";
+    antGoalStam = 10;
   } else if (goalNum > 0.2) {
     antGoal = "2";
+    antGoalStam = 6;
   } else {
     antGoal = "1";
+    antGoalStam = 3;
   }
+  document.getElementById("antGoalTesting").innerHTML = antGoal;
 }
  
 function endTurn() {
@@ -481,6 +487,8 @@ function endTurn() {
   }
 }
 
+//Y'ever have absolutely no idea when you wrote a function
+//Because I do not remember this one
 function checkEffects(val) {
   return val == 0;
 }
@@ -515,6 +523,7 @@ function antTurn() {
         
         //antAction("strike1");
         //antMelee(3, 4, "crush!", true);
+        antAI();
         
         announceText("your turn!", "white");
         setTimeout(function() { 
@@ -534,12 +543,31 @@ function updateStamina(amount) {
 }
 
 function antAI() {
-  if (cautionCheck()) {
-    //
-  } else if (planningCheck()) {
-    //
+  if (cautionCheck() && antStamina >= 10 && antHealth <= (antMaxHealth / 3)) {
+    if (antColor == 1) {
+      antAction("regen");
+    } else {
+      antAction("heal");
+    }
+  } else if (antColor == 1 && cautionCheck() && antStamina >= 6 && antHealth <= (antMaxHealth / 3)) {
+    antAction("heal");
+  } else if (antStamina >= antGoalStam) {
+      antAction("strike" + antGoal);
+      getAntGoal();
+  } else if (planningCheck() || antStamina < 3) {
+    antAction("basic");
   } else {
-    //
+    if (antStamina >= 20) {
+      antAction("strike4");
+    } else if (antStamina >= 10 && Math.random() > 0.3) {
+      antAction("strike3");
+    } else if (antStamina >= 6 && Math.random() > 0.3) {
+      antAction("strike2");
+    } else if (antStamina >= 3 && Math.random() > 0.3) {
+      antAction("strike1");
+    } else {
+      antAction("basic");
+    }
   }
 }
 function cautionCheck() {
@@ -556,18 +584,40 @@ function planningCheck() {
 }
 
 let antCritChance = 0.33;
-function antMelee(stamCost, hitDamage, hitEffect, critDep) {
+function antMelee(stamCost, hitDamage, hitEffect, effectAmount) {
   updateStamina(0 - stamCost);
-  if (Math.random() <= (0.65 + antAcc)) {
+  if (Math.random() <= (0.7 + antAcc)) {
     ant.style.animation = "antStrike calc(0.3s * var(--animSpeed)) ease forwards";
     setTimeout(function() {
-      /* if ((Math.random() < antCritChance) || !critDep) {
-        if (hitEffect == "crush!") {
-          updateHealth(Math.floor(hitDamage * 1.5));
-        }
-      } else { */
+      let crit = false;
+      if ((Math.random() < antCritChance)) {
+        crit = true;
+      }
+      if (crit && hitEffect == "crush!") {
+        updateHealth(Math.floor(hitDamage * 1.5));
+      } else {
         updateHealth(hitDamage);
-      //}
+      }
+      if (hitEffect == "bld") {
+        playerEffects[0] += effectAmount;
+        showEffect(0, 0);
+      }
+      if (hitEffect == "bli") {
+        playerEffects[1] += effectAmount;
+        showEffect(0, 1);
+      }
+      if (hitEffect == "dst") {
+        playerEffects[2] += effectAmount;
+        showEffect(0, 2);
+      }
+      if (hitEffect == "sck") {
+        playerEffects[5] += effectAmount;
+        showEffect(0, 5);
+      }
+      if (hitEffect == "stn") {
+        playerEffects[6] += effectAmount;
+        showEffect(0, 6);
+      }
     }, 100 * animSpeed);
     setTimeout(function() {
       void ant.offsetWidth;
@@ -595,7 +645,7 @@ function antAction(choice) {
         case 1: //Magenta
           break;
         case 2: //Yellow
-          antMelee(15, 14, "stn", false);
+          antMelee(20, 14, "stn", 1);
           break;
       }
       break;
@@ -606,7 +656,7 @@ function antAction(choice) {
         case 1: //Magenta
           break;
         case 2: //Yellow
-          antMelee(10, 8, "stn", true);
+          antMelee(10, 8, "stn", 1);
           break;
       }
       break;
@@ -617,7 +667,7 @@ function antAction(choice) {
         case 1: //Magenta
           break;
         case 2: //Yellow
-          antMelee(6, 6, "dst", true);
+          antMelee(6, 6, "dst", 1);
           break;
       }
       break;
@@ -628,16 +678,40 @@ function antAction(choice) {
         case 1: //Magenta
           break;
         case 2: //Yellow
-          antMelee(3, 4, "crush!", true);
+          antMelee(3, 4, "crush!", 0);
           break;
       }
       break;
     case "heal":
-      updateStamina(-10);
-      updateAntHealth(0 - (antMaxHealth * 0.2));
+      ant.style.animation = "antHeal calc(0.5s * var(--animSpeed)) ease forwards";
+      setTimeout(function() {
+        if (antColor == 1) {
+          updateStamina(-6);
+        } else {
+          updateStamina(-10);
+        }
+        updateAntHealth(0 - (antMaxHealth * 0.2));
+      }, 100 * animSpeed);
+      setTimeout(function() {
+        void ant.offsetWidth;
+        ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
+      }, 500 * animSpeed);
       break;
     case "basic":
-      antMelee(0, 2, "crush!", true);
+      antMelee(0, 2, "crush!");
+      break;
+    case "regen":
+      ant.style.animation = "antHeal calc(0.5s * var(--animSpeed)) ease forwards";
+      setTimeout(function() {
+        updateStamina(-10);
+        updateAntHealth(0 - (antMaxHealth * 0.1));
+        antEffects[4] += 4;
+        showEffect(1, 6);
+      }, 100 * animSpeed);
+      setTimeout(function() {
+        void ant.offsetWidth;
+        ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
+      }, 500 * animSpeed);
       break;
   }
 }
