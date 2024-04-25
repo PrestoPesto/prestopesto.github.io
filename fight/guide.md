@@ -10,11 +10,6 @@ Takes X damage each turn until cured
 `bli`
 -70% accuracy for X turns
 
-##### Corrupted
-
-`cor`
-Max health halved for X turns, does not re-heal on end
-
 ##### Distracted
 
 `dst`
@@ -34,6 +29,11 @@ Heal X health each turn, X reduced by 1 at start of turn, until X is 0
 
 `stn`
 Loses X turns
+
+##### Sickened
+
+`sck`
+Max health halved for X turns, does not re-heal on end
 
 
 
