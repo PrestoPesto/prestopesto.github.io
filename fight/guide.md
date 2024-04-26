@@ -25,15 +25,15 @@ Takes X damage each turn until cured
 `reg`
 Heal X health each turn, X reduced by 1 at start of turn, until X is 0
 
-##### Stunned
-
-`stn`
-Loses X turns
-
 ##### Sickened
 
 `sck`
 Max health halved for X turns, does not re-heal on end
+
+##### Stunned
+
+`stn`
+Loses X turns
 
 
 
