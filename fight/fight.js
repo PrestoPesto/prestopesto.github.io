@@ -7,6 +7,8 @@ let healthText = document.getElementById("healthText");
 let healthBar = document.getElementById("healthBar");
 let levelText = document.getElementById("levelText");
 let levelBar = document.getElementById("levelBar");
+let sickBar = document.getElementById("sickBar");
+let antSickBar = document.getElementById("antSickBar");
 
 let antStats = document.getElementById("antStats");
 let antHealthBar = document.getElementById("antHealthBar");
@@ -38,6 +40,9 @@ let accDisplay = document.getElementsByClassName("acc");
 let dmgDisplay = document.getElementsByClassName("dmg");
 let effDisplay = document.getElementsByClassName("eff");
 let attackEffects = document.getElementsByClassName("attackEffects");
+let accuracy = 0;
+let damage = 1;
+let critChance = 40;
 
 let antEffectsList = document.getElementById("antEffects");
 let playerEffectsList = document.getElementById("playerEffects");
@@ -83,6 +88,13 @@ let antStamina = 0;
 let antCaution = 0;
 let antPlanning = 0;
 let antGoal;
+let antCritChance = 40;
+let antDmg = 1;
+
+let sickMaxHealth = Math.floor(maxHealth / 2);
+let sickAntMaxHealth = Math.floor(antMaxHealth / 2);
+let tempMaxHealth = maxHealth;
+let tempAntMaxHealth = antMaxHealth;
 
 let settings = document.getElementById("settings");
 let settingsOpen = document.getElementById("settingsOpen");
@@ -227,7 +239,7 @@ let sounds = [
 audio.volume = volume;
 
 //Music
-const AudioContext = window.AudioContext || window.webkitAudioContext;
+/* const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 
 const audioElement = document.querySelector('audio');
@@ -235,7 +247,7 @@ const track = audioCtx.createMediaElementSource(audioElement);
 
 audioElement.play();
 
-track.connect(audioCtx.destination);
+track.connect(audioCtx.destination); */
 
 updateHealth(0);
 updateLevel(0);
@@ -274,21 +286,25 @@ function updateHealth(dmg) {
     currentHealth = maxHealth;
   }
   healthText.innerHTML = "hp " + currentHealth + "/" + maxHealth;
-  healthBar.style.width = (currentHealth / maxHealth) * 100 + "%";
+  healthBar.style.width = (currentHealth / tempMaxHealth) * 100 + "%";
 }
 
 function updateLevel(xpChange) {
   let xpNeeded = Math.floor(10 * Math.pow(1.2, level));
   xp += xpChange;
+  playerEffects = [0, 0, 0, 0, 0, 0];
+  updateEffects();
   if (xp >= xpNeeded) {
     level++;
     maxHealth++;
+    tempMaxHealth = maxHealth;
     updateHealth(-1);
     xp -= xpNeeded;
     xpNeeded = Math.floor(10 * Math.pow(1.3, level));
   }
   levelText.innerHTML = "lvl " + level + " (" + xp + "/" + xpNeeded + ")";
   levelBar.style.width = (xp / xpNeeded) * 100 + "%";
+  sickMaxHealth = Math.floor(maxHealth / 2);
 }
 
 function updateAntHealth(dmg) {
@@ -356,17 +372,19 @@ function spoilsClose() {
 }
 
 function showEffect(who, i) {
+  let iconNum = i;
   if (who == 0) {
-    i += 7;
+    iconNum += 7;
   }
-  effectIcons[i].style.scale = "1";
-  effectIcons[i].style.width = "7%";
+  effectIcons[iconNum].style.scale = "1";
+  effectIcons[iconNum].style.width = "7%";
   if (who ==  0) {
-    effectAmounts[i].innerHTML = playerEffects[i - 7];
+    effectAmounts[iconNum].innerHTML = playerEffects[i];
   } else {
-    effectAmounts[i].innerHTML = antEffects[i];
+    effectAmounts[iconNum].innerHTML = antEffects[i];
   }
   updateEffects();
+  updateAttackStats();
 }
 
 function updateEffects() {
@@ -379,6 +397,15 @@ function updateEffects() {
     if (playerEffects[i] < 1) {
       hideEffect(0, i);
     }
+  }
+  if (playerEffects[5] > 0) {
+    maxHealth = sickMaxHealth;
+    sickBar.style.width = "50%";
+    updateHealth(0);
+  } else {
+    maxHealth = tempMaxHealth;
+    sickBar.style.width = 0;
+    updateHealth(0);
   }
 }
 
@@ -403,6 +430,7 @@ function spawnEnemy() {
     getAntGoal();
     antMaxHealth = Math.floor(6 * antLevel);
     antHealth = antMaxHealth;
+    sickAntMaxHealth = Math.floor(antMaxHealth / 2);
     updateAntHealth(0);
     antStats.classList.remove("hidden");
     antStats.classList.remove("menuCloseAnim");
@@ -410,8 +438,8 @@ function spawnEnemy() {
     antStats.classList.add("menuOpenAnim");
     generateInfo();
     ant.style.animation = "antSpawn calc(1.5s * var(--animSpeed)) ease-in-out forwards";
-    let antTypeRNG;
-    /* do {
+    /* let antTypeRNG;
+    do {
       antTypeRNG = Math.floor(Math.random() * 3);
     } while (antTypeRNG == antColor);
     
@@ -424,7 +452,7 @@ function spawnEnemy() {
       studyClass.innerHTML = "class: <span style='color: cyan'>cyan</span>";
       
       antCaution = Math.abs(Math.random() + Math.random() + 1) / 3;
-    } else if (antTypeRNG == 1) {
+    } else if (antTypeRNG == 1) { */
       antColor = 1;
       ant.style.backgroundImage = "url(../fight/assets/antM.png)";
       //ant.style.backgroundImage = "url(./assets/antM.png)";
@@ -433,7 +461,7 @@ function spawnEnemy() {
       studyClass.innerHTML = "class: <span style='color: magenta'>magenta</span>";
       
       antCaution = Math.abs(Math.random() + Math.random()) / 2;
-    } else if (antTypeRNG == 2) { */
+    /* } else if (antTypeRNG == 2) {
       antColor = 2;
       ant.style.backgroundImage = "url(../fight/assets/antY.png)";
       //ant.style.backgroundImage = "url(./assets/antY.png)";
@@ -442,7 +470,7 @@ function spawnEnemy() {
       studyClass.innerHTML = "class: <span style='color: yellow'>yellow</span>";
     
       antCaution = Math.abs(Math.random() + Math.random()) / 3;
-    //}
+   } */
     antPlanning = Math.abs(Math.random() + Math.random()) / 2;
     
     updateTransFlag();
@@ -450,7 +478,7 @@ function spawnEnemy() {
     setTimeout(function() { 
       announceText(nameText, nameColor);
     }, 900 * animSpeed);
-  }, 0); //Again IDK but it works so who cares
+  }, 0);
   setTimeout(function() {
     ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
     buttonDisable.classList.add("hidden");
@@ -480,17 +508,16 @@ function getAntGoal() {
  
 function endTurn() {
   if (antHealth > 0) {
+    for (let i = 0; i < playerEffects.length; i++) {
+      if (playerEffects[i] > 0) {
+        playerEffects[i]--;
+      }
+    }
+    updateEffects();
     setTimeout(function() {
-      updateEffects();
       antTurn();
     }, 600 * animSpeed);
   }
-}
-
-//Y'ever have absolutely no idea when you wrote a function
-//Because I do not remember this one
-function checkEffects(val) {
-  return val == 0;
 }
 
 function antTurn() {
@@ -520,9 +547,6 @@ function antTurn() {
       }, 1400 * animSpeed);
     } else {
       setTimeout(function() {
-        
-        //antAction("strike1");
-        //antMelee(3, 4, "crush!", true);
         antAI();
         
         announceText("your turn!", "white");
@@ -554,6 +578,8 @@ function antAI() {
   } else if (antStamina >= antGoalStam) {
       antAction("strike" + antGoal);
       getAntGoal();
+  } else if (antEffects[3] > 0 && antStamina > 3) {
+    antAction("strike1"); 
   } else if (planningCheck() || antStamina < 3) {
     antAction("basic");
   } else {
@@ -583,40 +609,21 @@ function planningCheck() {
   return true;
 }
 
-let antCritChance = 0.33;
-function antMelee(stamCost, hitDamage, hitEffect, effectAmount) {
+function antMelee(stamCost, hitDamage, effectNum, effectAmount) {
   updateStamina(0 - stamCost);
   if (Math.random() <= (0.7 + antAcc)) {
     ant.style.animation = "antStrike calc(0.3s * var(--animSpeed)) ease forwards";
     setTimeout(function() {
       let crit = false;
-      if ((Math.random() < antCritChance)) {
+      if (Math.random() < (antCritChance / 100)) {
         crit = true;
       }
+      playerEffects[effectNum] += effectAmount;
+      showEffect(0, effectNum);
       if (crit && hitEffect == "crush!") {
-        updateHealth(Math.floor(hitDamage * 1.5));
+        updateHealth(Math.floor(hitDamage * 1.5 * antDmg));
       } else {
-        updateHealth(hitDamage);
-      }
-      if (hitEffect == "bld") {
-        playerEffects[0] += effectAmount;
-        showEffect(0, 0);
-      }
-      if (hitEffect == "bli") {
-        playerEffects[1] += effectAmount;
-        showEffect(0, 1);
-      }
-      if (hitEffect == "dst") {
-        playerEffects[2] += effectAmount;
-        showEffect(0, 2);
-      }
-      if (hitEffect == "sck") {
-        playerEffects[5] += effectAmount;
-        showEffect(0, 5);
-      }
-      if (hitEffect == "stn") {
-        playerEffects[6] += effectAmount;
-        showEffect(0, 6);
+        updateHealth(Math.floor(hitDamage * antDmg));
       }
     }, 100 * animSpeed);
     setTimeout(function() {
@@ -632,8 +639,22 @@ function antMelee(stamCost, hitDamage, hitEffect, effectAmount) {
   }
 }
 
-function antSpell(stamCost, hitEffect) {
+function antSpell(stamCost, effectNum, effectAmount) {
   updateStamina(0 - stamCost);
+  ant.style.animation = "antSpell calc(0.7s * var(--animSpeed)) ease forwards";
+  setTimeout(function() {
+    void ant.offsetWidth;
+    ant.style.animation = "antWiggle 2.3s ease-in-out infinite";
+  }, 700 * animSpeed);
+  setTimeout(function() {
+    if (effectNum == 3 || effectNum == 4) {
+      antEffects[effectNum] += effectAmount;
+      showEffect(1, effectNum);
+    } else {
+      playerEffects[effectNum] += effectAmount;
+      showEffect(0, effectNum);
+    }
+  }, 100);
 }
 
 function antAction(choice) {
@@ -643,9 +664,10 @@ function antAction(choice) {
         case 0: //Cyan
           break;
         case 1: //Magenta
+          antMelee(20, 10, 5, 1);
           break;
         case 2: //Yellow
-          antMelee(20, 14, "stn", 1);
+          antMelee(20, 14, 6, 1);
           break;
       }
       break;
@@ -654,9 +676,10 @@ function antAction(choice) {
         case 0: //Cyan
           break;
         case 1: //Magenta
+          antSpell(10, 5, 1);
           break;
         case 2: //Yellow
-          antMelee(10, 8, "stn", 1);
+          antMelee(10, 8, 6, 1);
           break;
       }
       break;
@@ -665,17 +688,24 @@ function antAction(choice) {
         case 0: //Cyan
           break;
         case 1: //Magenta
+          antSpell(6, 1, 1);
           break;
         case 2: //Yellow
-          antMelee(6, 6, "dst", 1);
+          antMelee(6, 6, 2, 1);
           break;
       }
       break;
     case "strike1":
       switch (antColor) {
         case 0: //Cyan
+          antMelee(3, 3, "crush!", 0);
           break;
         case 1: //Magenta
+          if (antEffects[3] > 0 && Math.random() > (antEffects[3] * 0.3)) {
+            antMelee(3, 4, 2, 1);
+          } else {
+            antSpell(3, 3, 1);
+          }
           break;
         case 2: //Yellow
           antMelee(3, 4, "crush!", 0);
@@ -717,8 +747,16 @@ function antAction(choice) {
 }
 
 function playerTurn() {
-  openButtons();
   regen(0);
+  if (playerEffects[6] > 0) {
+    setTimeout(function() {
+      playerEffects[6]--;
+      updateEffects();
+      endTurn();
+    }, 200 * animSpeed);
+  } else {
+    openButtons();
+  }
 }
 
 function announceText(aText, aColor) {
@@ -765,18 +803,20 @@ function closeButtons() {
 
 function updateAttackStats() {
   critDisplay.innerHTML = critChance + "%";
-  accDisplay[0].innerHTML = 80 + accuracy + "%";
-  accDisplay[1].innerHTML = 60 + accuracy + "%";
-  accDisplay[2].innerHTML = 70 + accuracy + "%";
+  accDisplay[0].innerHTML = Math.max(100, 80 + accuracy) + "%";
+  accDisplay[1].innerHTML = Math.max(100, 60 + accuracy) + "%";
+  accDisplay[2].innerHTML = Math.max(100, 70 + accuracy) + "%";
+  accDisplay[3].innerHTML = Math.max(100, 80 + accuracy) + "%";
+  accDisplay[4].innerHTML = Math.max(100, 70 + accuracy) + "%";
+  accDisplay[5].innerHTML = Math.max(100, 80 + accuracy) + "%";
+  accDisplay[6].innerHTML = Math.max(100, 80 + accuracy) + "%";
   
-  dmgDisplay[0].innerHTML = 4 + damage + "";
-  dmgDisplay[1].innerHTML = 5 + damage + "";
-  dmgDisplay[2].innerHTML = 2 + damage + "";
+  dmgDisplay[0].innerHTML = Math.floor(4 * damage) + "";
+  dmgDisplay[1].innerHTML = Math.floor(5 * damage) + "";
+  dmgDisplay[2].innerHTML = Math.floor(2 * damage) + "";
+  dmgDisplay[3].innerHTML = Math.floor(2 * damage) + "";
+  dmgDisplay[4].innerHTML = Math.floor(1 * damage) + "";
 }
-
-let accuracy = 0;
-let damage = 0;
-let critChance = 33;
 
 function attack(hitChance, hitDamage, hitEffect, effectAmount, canCrit, critDep, hitType, endsTurn) {
   menuDisable.classList.remove("hidden");
@@ -790,15 +830,15 @@ function attack(hitChance, hitDamage, hitEffect, effectAmount, canCrit, critDep,
     if (hitChance >= hitRNG) {
       if (crit) {
         if (hitEffect == "crush!") {
-          updateAntHealth(Math.floor(hitDamage * 1.5));
+          updateAntHealth(Math.floor(hitDamage * 1.5 * damage));
         } else {
-          updateAntHealth(hitDamage);
+          updateAntHealth(Math.floor(hitDamage * damage));
         }
         screenshake(5);
         audio.src = sounds[2];
         audio.play();
       } else {
-        updateAntHealth(hitDamage);
+        updateAntHealth(Math.floor(hitDamage * damage));
         screenshake(0.5);
         audio.src = sounds[0];
         audio.play();
@@ -900,7 +940,7 @@ function regen(who) {
 swing.onclick = function() {
   attack(
     80 + accuracy,
-    4 + damage,
+    4,
     "crush!",
     0,
     true,
@@ -912,7 +952,7 @@ swing.onclick = function() {
 slash.onclick = function() {
   attack(
     60 + accuracy,
-    5 + damage,
+    5,
     "stn",
     1,
     true,
@@ -924,7 +964,7 @@ slash.onclick = function() {
 stab.onclick = function() {
   attack(
     70 + accuracy,
-    2 + damage,
+    2,
     "bld",
     2,
     true,
@@ -1202,7 +1242,7 @@ itemButtons[5].onclick = function() {
 itemButtons[6].onclick = function() {
   playerEffects[4] += 7;
   showEffect(0, 4);
-  playerEffects[5] += 1;
+  playerEffects[5] += 2;
   showEffect(0, 5);
   updateEffects();
   useItem(6, true);
@@ -1377,7 +1417,7 @@ for (let i = 0; i < bldHelp.length; i++) {
 let bliHelp = document.getElementsByClassName("bliHelp");
 for (let i = 0; i < bliHelp.length; i++) {
   bliHelp[i].addEventListener("mousemove", function(e) {
-    textHelp.innerHTML = "<span style='color: cyan'>blinded</span><br>-70% hit chance"
+    textHelp.innerHTML = "<span style='color: cyan'>blinded</span><br>-50% attack damage"
   });}
 let dstHelp = document.getElementsByClassName("dstHelp");
 for (let i = 0; i < dstHelp.length; i++) {
