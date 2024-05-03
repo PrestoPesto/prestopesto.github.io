@@ -224,6 +224,7 @@ body {
   border: 1px solid white;
   padding: 2px;
   background: black;
+  position: relative;
 }
 
 .statBar {
@@ -233,7 +234,7 @@ body {
 }
 
 .statText {
-  width: calc(22% - 4px);
+  width: 100%;
   position: absolute;
   font-size: min(1.5vw, 15px);
   color: white;
@@ -242,6 +243,17 @@ body {
 
 #health {
   text-align: right;
+}
+
+.sickBar {
+  right: 2px;
+  border-left: 3px solid black;
+  width: 0;
+  position: absolute;
+  height: calc(100% - 4px);
+  top: 2px;
+  background: repeating-linear-gradient(-45deg, magenta 0, magenta 2px, transparent 2px, transparent 4px);
+  background-color: black;
 }
 
 #enemyText {
@@ -319,6 +331,15 @@ body {
   25% {transform: scaleX(0.9) scaleY(1.1) translate(0, 10%)}
   50% {transform: scaleX(1) scaleY(1) translate(0, 0)}
   75% {transform: scaleX(0.9) scaleY(1.1) translate(0, 10%)}
+  100% {transform: scaleX(0.98) scaleY(1.02) translate(0, 0) rotate(0);}
+}
+
+@keyframes antSpell {
+  0% {transform: scaleX(1) scaleY(1) translate(0, 0)}
+  20% {transform: scale(1.05) translate(-10%, 0)}
+  40% {transform: scale(1.05) translate(10%, 0)}
+  60% {transform: scale(1.05) translate(-10%, 0)}
+  80% {transform: scale(1.05) translate(10%, 0)}
   100% {transform: scaleX(0.98) scaleY(1.02) translate(0, 0) rotate(0);}
 }
 
@@ -829,26 +850,4 @@ body {
 #studyClose:hover {
   translate: 0 -0.15em;
   box-shadow: 0 0.15em 0 0 cyan;
-}
-
-
-
-
-#testing {
-  z-index: -100;
-  position: absolute; 
-  max-width: 800px;
-  width: 80%;
-  margin: auto;
-  position: absolute;
-  padding-top: calc(min(60%, 600px) + 10px);
-  left: 0;
-  right: 0;
-  overflow: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  flex-flow: center;
-  justify-content: center;
-  align-content: flex-start;
-  gap: 3px 30px;
 }
