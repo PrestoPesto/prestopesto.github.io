@@ -8,7 +8,7 @@ Takes X damage each turn until cured
 ##### Blinded
 
 `bli`
--70% accuracy for X turns
+-50% attack damage for X turns
 
 ##### Distracted
 
