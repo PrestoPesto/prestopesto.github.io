@@ -438,39 +438,36 @@ function spawnEnemy() {
     antStats.classList.add("menuOpenAnim");
     generateInfo();
     ant.style.animation = "antSpawn calc(1.5s * var(--animSpeed)) ease-in-out forwards";
-    /* let antTypeRNG;
+    let antTypeRNG;
     do {
       antTypeRNG = Math.floor(Math.random() * 3);
     } while (antTypeRNG == antColor);
     
     if (antTypeRNG == 0) { 
-      antColor = 0;
+      antColor = 2;
       ant.style.backgroundImage = "url(../fight/assets/antC.png)";
-      //ant.style.backgroundImage = "url(./assets/antC.png)";
       nameColor = "cyan";
       nameText = "antC attacks!"
       studyClass.innerHTML = "class: <span style='color: cyan'>cyan</span>";
       
       antCaution = Math.abs(Math.random() + Math.random() + 1) / 3;
-    } else if (antTypeRNG == 1) { */
+    } else if (antTypeRNG == 1) {
       antColor = 1;
       ant.style.backgroundImage = "url(../fight/assets/antM.png)";
-      //ant.style.backgroundImage = "url(./assets/antM.png)";
       nameColor = "magenta";
       nameText = "antM attacks!"
       studyClass.innerHTML = "class: <span style='color: magenta'>magenta</span>";
       
       antCaution = Math.abs(Math.random() + Math.random()) / 2;
-    /* } else if (antTypeRNG == 2) {
+    } else if (antTypeRNG == 2) {
       antColor = 2;
       ant.style.backgroundImage = "url(../fight/assets/antY.png)";
-      //ant.style.backgroundImage = "url(./assets/antY.png)";
       nameColor = "yellow";
       nameText = "antY attacks!"
       studyClass.innerHTML = "class: <span style='color: yellow'>yellow</span>";
     
       antCaution = Math.abs(Math.random() + Math.random()) / 3;
-   } */
+   }
     antPlanning = Math.abs(Math.random() + Math.random()) / 2;
     
     updateTransFlag();
