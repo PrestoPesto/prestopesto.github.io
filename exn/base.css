@@ -1,0 +1,9 @@
+:root {
+  --main-color: #f2eeec;
+  --main-color-bottom: #f3e3db;
+}
+
+.window {
+  background: linear-gradient(var(--main-color), var(--main-color-bottom) 100%);
+  padding: 10px;
+}

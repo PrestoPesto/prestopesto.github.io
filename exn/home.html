@@ -7,147 +7,20 @@
     <title>/home</title>
     <meta name="viewport" content="width=device-width; initial-scale=1.0;">
     <link rel="shortcut icon" type="image/png" href="./assets/favicon.png"/>
-
-    <!-- Too lazy to make a separate file tbh -->
-    <style>
-
-      body {
-        background-color: black;
-        margin: 0;
-        margin: 40%;
-      }
-      
-      .cube {
-        perspective-origin: 5em -8em;
-        perspective: 600px;
-        transform-style: preserve-3d;
-      }
-
-      .face {
-        display: block;
-        position: absolute;
-        width: 10em;
-        height: 10em;
-        backface-visibility: visible;
-        background-size: contain;
-      }
-      .mouth {
-        display: block;
-        position: absolute;
-        backface-visibility: visible;
-        transform-style: preserve-3d;
-        animation: mouthTop 5s ease-in-out infinite;
-      }
-      .mouthTop {
-        animation: mouthTop 5s ease-in-out infinite;
-      }
-      @keyframes mouthTop {
-        0%, 100% {transform: translateY(0)}
-        50% {transform: translateY(-4em)}
-      }
-      .mouthBottom {
-        animation: mouthBottom 5s ease-in-out infinite;
-      }
-      @keyframes mouthBottom {
-        0%, 100% {transform: translateY(5em)}
-        50% {transform: translateY(10em)}
-      }
-
-      @keyframes spinny {
-        from {transform: rotateY(0) translateZ(5em)}
-        to {transform: rotateY(360deg) translateZ(5em)}
-      }
-      @keyframes spinnyTop {
-        from {transform: rotateY(0) rotateX(90deg) translateZ(5em)}
-        to {transform: rotateY(360deg) rotateX(90deg) translateZ(5em)}
-      }
-      @keyframes spinnyBottom {
-        from {transform: translateY(-5em)  rotateY(0) rotateX(-90deg) translateZ(5em)}
-        to {transform: translateY(-5em)  rotateY(360deg) rotateX(-90deg) translateZ(5em)}
-      }
-
-      .top {
-        background-color: white;
-        animation: spinnyTop 10s linear infinite;
-        background-image: url("../misc/shitposts/panopticon/pantop.png");
-      }
-      .bottom {
-        background-color: #606060;
-        animation: spinnyBottom 10s linear infinite;
-        background-image: url("../misc/shitposts/panopticon/panbottom.png");
-      }
-
-      .sideTop {
-        height: 5.2em;
-        background-size: 100%;
-      }
-      .sideBottom {
-        height: 4.8em;
-        background-size: 100%;
-        background-position-y: 100%;
-      }
-
-      .right {
-        animation: spinny 10s linear infinite -2.5s,
-          shading 10s linear infinite -8.5s;
-          background-image: url("../misc/shitposts/panopticon/pan4.png");
-      }
-      .left {
-        animation: spinny 10s linear infinite -7.5s,
-          shading 10s linear infinite -3.5s;
-          background-image: url("../misc/shitposts/panopticon/pan2.png");
-      }
-      .back {
-        transform: rotateY(180deg) translateZ(5em);
-        animation: spinny 10s linear infinite -5s,
-          shading 10s linear infinite -1s;
-          background-image: url("../misc/shitposts/panopticon/pan3.png");
-      }
-      .front {
-        transform: rotateY(180deg) translateZ(5em);
-        animation: spinny 10s linear infinite,
-          shading 10s linear infinite -6s;
-        background-image: url("../misc/shitposts/panopticon/pan1.png");
-      }
-
-      .yellowGuy {
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-image: url("../misc/shitposts/sisyphus.webp");
-        background-position: 50%;
-        animation: yellowGuyMove 5s ease-in-out infinite;
-      }
-      @keyframes yellowGuyMove {
-        0%, 100% {transform: translateY(0em) scale(1)}
-        50% {transform: translateY(5em) scale(1.3)}
-      }
-
-    </style>
+    <link rel="stylesheet" href="./base.css">
   </head>
 
   <body>
-    <div class="cube">
-        
-        <div class="mouth mouthTop">
-          <div class="face top"></div>
-          <div class="face sideTop right"></div>
-          <div class="face sideTop left"></div>
-          <div class="face sideTop back"></div>
-          <div class="face sideTop front"></div>
-        </div>
-
-        <div class="mouth mouthBottom">
-          <div class="face sideBottom right"></div>
-          <div class="face sideBottom left"></div>
-          <div class="face sideBottom back"></div>
-          <div class="face sideBottom front"></div>
-          <div class="face bottom"></div>
-        </div>
-
-        <div class="face yellowGuy"></div>
-        
+    <div class="window">
+      <div class="windowHeader">Waow</div>
+      <img src="../assets/placeholder_ant.png" width="200px">
     </div>
-    
+
+    <div id="header">
+      <div class="headerButton" id="hubHeaderButton"></div>
+      <div class="headerButton" id="settingsHeaderButton"></div>
+    </div>
+    <script src="./base.js"></script>
   </body>
- 
+
 </html>

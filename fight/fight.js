@@ -606,6 +606,8 @@ function planningCheck() {
   return true;
 }
 
+//MWAH
+
 function antMelee(stamCost, hitDamage, effectNum, effectAmount) {
   updateStamina(0 - stamCost);
   if (Math.random() <= (0.7 + antAcc)) {
@@ -900,12 +902,16 @@ function attack(hitChance, hitDamage, hitEffect, effectAmount, canCrit, critDep,
 function playEffect(i) {
   void attackEffects[i].offsetWidth;
   attackEffects[i].classList.remove("hidden");
-  if (i == 0) {
-    attackEffects[0].style.animation = "swing calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
-  } else if (i == 1) {
-    attackEffects[1].style.animation = "slash calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
-  } else if (i == 2) {
-    attackEffects[2].style.animation = "stab calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
+  switch (i) {
+    case 0:
+      attackEffects[0].style.animation = "swing calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
+      break;
+    case 1:
+      attackEffects[1].style.animation = "slash calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
+      break;
+    case 2:
+      attackEffects[2].style.animation = "stab calc(0.4s * calc(var(--animSpeed) / 2)) ease-out forwards";
+      break;
   }
   setTimeout(function() {
     attackEffects[i].style.animation = "none";
