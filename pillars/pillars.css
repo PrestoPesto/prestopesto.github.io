@@ -1,0 +1,184 @@
+:root {
+  /* --color-bg: #fabf51;
+  --color-top: #ba3e63;
+  --color-l: #a2354e;
+  --color-d: #812a43;
+  --color-bg: #dffaee;
+  --color-l: #f4fefa;
+  --color-d: #dcfcf7;
+  --color-border: #252434; */
+
+  --color-bg: #030109;
+  --color-l: #161818;
+  --color-d: #121217;
+  --color-border: #ffe9ec;
+  --color-glow: #ff71d9;
+
+  --wall-gradient: linear-gradient(to top, var(--color-l) 30%, var(--color-d) 100%);
+  --border: 0.5px solid var(--color-border);
+  --glow: 0 0 2px 1px var(--color-glow);
+
+  --width: 5em;
+  --height: 5em;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+}
+
+#boardContainer {
+  display: block;
+  perspective: 600px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  transform-style: preserve-3d;
+  font-size: 100px;
+  z-index: -10;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#board {
+  display: block;
+  background-image: repeating-conic-gradient(var(--color-l) 0% 25%, var(--color-d) 0% 50%);
+  background-position: 0 0, 1em 1em;
+  background-size: 2em 2em;
+  width: var(--width);
+  height: var(--height);
+  position: absolute;
+  transform: rotateX(70deg);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+#floor {
+  background: var(--color-d);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform: translateZ(-0.5px);
+}
+
+.pillar {
+  position: absolute;
+  transform-style: preserve-3d;
+  transform: rotateX(90deg) translateZ(-0.5em);
+}
+
+#board, #floor, .wall, .wall::before, .wall::after, .roof, .roof::before, .roof::after {
+  box-sizing: border-box;
+  outline: var(--border);
+  box-shadow: var(--glow); 
+}
+
+.wall {
+  background-size: cover;
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  display: block;
+  width: 1em;
+  height: 0.3em;
+  position: absolute;
+  background: var(--wall-gradient);
+}
+.wall::before {
+  content: "";
+  position: absolute;
+  width: 0.8em;
+  height: 1.3em;
+  background: var(--wall-gradient);
+}
+.wall::after {
+  content: "";
+  position: absolute;
+  width: 0.6em;
+  height: 1.4em;
+  background: var(--wall-gradient);
+}
+
+.roof {
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  display: block;
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  transform: translateY(-0.2em) rotateX(90deg);
+  background: var(--color-l);
+}
+.roof::before {
+  background: var(--color-l);
+  content: "";
+  position: absolute;
+  width: 0.8em;
+  height: 0.8em;
+  transform: translateX(0.1em) translateY(0.1em) translateZ(-1em);
+}
+.roof::after {
+  background: var(--color-l);
+  content: "";
+  position: absolute;
+  width: 0.6em;
+  height: 0.6em;
+  transform: translateX(0.2em) translateY(0.2em) translateZ(-1.1em);
+}
+
+.wallF {
+  transform: translateZ(-0.5em);
+}
+.wallB {
+  transform: translateZ(0.5em);
+}
+.wallL {
+  transform: rotateY(90deg) translateZ(0.5em);
+}
+.wallR {
+  transform: rotateY(90deg) translateZ(-0.5em);
+}
+
+.wallF::before {
+  transform: translateZ(0.1em) translateX(0.1em);
+}
+.wallB::before {
+  transform: translateZ(-0.1em) translateX(0.1em);
+}
+.wallL::before {
+  transform: translateZ(-0.1em) translateX(0.1em);
+}
+.wallR::before {
+  transform: translateZ(0.1em) translateX(0.1em);
+}
+
+.wallF::after {
+  transform: translateZ(0.2em) translateX(0.2em);
+}
+.wallB::after {
+  transform: translateZ(-0.2em) translateX(0.2em);
+}
+.wallL::after {
+  transform: translateZ(-0.2em) translateX(0.2em);
+}
+.wallR::after {
+  transform: translateZ(0.2em) translateX(0.2em);
+}
+
+.beam {
+  position: absolute;
+  width: 0.2em;
+  background-color: white;
+  left: 0.4em;
+  transform: translateZ(0.6em);
+  top: 0.5em;
+  bottom: 0.5em;
+}
