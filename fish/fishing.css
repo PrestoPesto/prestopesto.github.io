@@ -1,0 +1,60 @@
+:root {
+  --ocean: #0c64a5;
+  --ocean-dark: #095da2;
+
+  --cellSize: 50px;
+  image-rendering: pixelated;
+}
+
+body {
+  background-color: #181818;
+  font-family:'Trebuchet MS', sans-serif;
+  color: white;
+  margin: 0;
+  overflow: hidden;
+}
+
+#info {
+  position: absolute;
+  z-index: 3;
+  background-color: black;
+  color: white;
+}
+
+#ocean {
+  position: absolute;
+  width: calc(var(--cellSize) * 36);
+  height: calc(var(--cellSize) * 24);
+  background-color: var(--ocean);
+  /* background-image:  repeating-linear-gradient(45deg, var(--ocean-dark) 25%, transparent 25%, transparent 75%, var(--ocean-dark) 75%, var(--ocean-dark)), repeating-linear-gradient(45deg, var(--ocean-dark) 25%, transparent 25%, transparent 75%, var(--ocean-dark) 75%, var(--ocean-dark));
+  background-position: 0 0, var(--cellSize) var(--cellSize) ;
+  background-size: calc(var(--cellSize) * 2) calc(var(--cellSize) * 2); */
+  background: url(../assets/placeholder_ant.png);
+  background-size: 100% 100%;
+  transform-origin: 50% 50%;
+}
+
+#splash {
+  border: 3px solid #FFFFFF70;
+  border-radius: 50%;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: none;
+}
+
+#hover {
+  position: absolute;
+  background-color: blue;
+  opacity: 0.6;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: var(--cellSize);
+  height: var(--cellSize);
+}
+
+input {
+  z-index: 3;
+  position: relative;
+}

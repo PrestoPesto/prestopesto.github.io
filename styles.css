@@ -74,7 +74,7 @@ body {
   border-bottom: none;
   bottom: -1px;
   left: -1px;
-  width: 800px;
+  width: 50%;
   height: calc(var(--counter-height) - 30px);
 }
 #counter::after {
@@ -86,16 +86,15 @@ body {
   mask-image: linear-gradient(black, rgb(0 0 0 / 0.4));
   animation: counterScroll 5s linear infinite;
 }
-
 @keyframes counterScroll {
-  from {background-position: 0 0, 10px 10px;}
-  to {background-position: 0 20px, 10px 30px;}
+  from {transform: translateY(0);}
+  to {transform: translateY(20px);}
 }
 
 #counterTop {
   bottom: calc(var(--counter-height) - 30px);
   left: -1px;
-  width: 810px;
+  width: calc(50% + 10px);
   height: calc(var(--counter-height) * 0.107);
   border-radius: 0 8px 4px 0;
 }
@@ -181,22 +180,22 @@ body {
 }
 
 #mug1 {
-  left: 520px; 
+  left: calc(50% - 280px);
   animation: mugSlide 1.9s cubic-bezier(0,.12,.54,1) 1.2s backwards;
 }
 #mug2 {
-  left: 610px; 
+  left: calc(50% - 190px);
   animation: mugSlide 1.9s cubic-bezier(0,.12,.54,1) 0.8s backwards;
 }
 #mug3 {
-  left: 700px;
+  left: calc(50% - 100px);
   animation: mugSlide 1.9s cubic-bezier(0,.12,.54,1) 0.4s backwards;
 }
 
 #menuBlock {
   position: absolute;
-  left: 810px;
-  width: calc(100% - 810px);
+  right: 0;
+  width: max(500px, 45%);
   height: 100%;
   top: 0;
   bottom: 0;
@@ -204,14 +203,11 @@ body {
 }
 
 #menuBorder {
-  --menuSize : 500px;
-  width: var(--menuSize);
-  height: calc(var(--menuSize) * 1.2);
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  margin: auto;
+  margin: 10% 10%;
   border-radius: 10px;
   z-index: -1;
 }
@@ -222,10 +218,9 @@ body {
   background-size: 20px 20px;
   animation: menuScroll 6s linear infinite;
 }
-
 @keyframes menuScroll {
-  from {background-position: 0 0, 10px 10px;}
-  to {background-position: 20px 20px, 30px 30px;}
+  from {transform: translate(0,0);}
+  to {transform: translate(20px, 20px);}
 }
 
 #menu {
@@ -263,7 +258,6 @@ h1 {
   line-height: 1.3em;
   font-size: 32px;
   border-top: 1px solid magenta;
-  border-radius: 6px;
 }
 
 h2 {
@@ -279,7 +273,7 @@ a {
   font-family: "Cousine", monospace;
   color: white;
   width: 42%;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .menuText {
@@ -293,8 +287,8 @@ a {
   position: absolute;
   z-index: -3;
   height: calc(var(--counter-height) * 1.7857);
-  left: 80px;
-  bottom: calc(var(--counter-height) * 0.634);
+  left: 10%;
+  bottom: calc(var(--counter-height) - 13%);
   cursor: pointer;
 }
 
@@ -379,7 +373,7 @@ a {
   99% {transform: scaleX(-1) translateY(0);}
 }
 
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
   :root {
     --counter-height: 100px;
     --mugSize: 16px;
@@ -419,13 +413,10 @@ a {
   }
   
   #menuBorder {
-    width: 70%;
-    height: 60%;
-    aspect-ratio: 0.8333 / 1;
     left: 0;
     right: 0;
     bottom: 0;
-    margin: auto;
+    margin: 10%;
     border-radius: 10px;
     z-index: -1;
     margin-top: 5%
@@ -459,4 +450,4 @@ a {
   h2 {
     font-size: 16px;
   }
-}
+} */

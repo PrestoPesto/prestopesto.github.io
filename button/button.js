@@ -87,9 +87,6 @@ const normalMessages = [
   "",
   "",
   "",
-  "",
-  "",
-  "",
   "Yes, I can hear you.",
   "",
   "That doesn't necessarily mean I care about you.",
@@ -110,7 +107,22 @@ const normalMessages = [
   "Regardless, it is of little importance.",
   "As far as I'm concerned, you know nothing beyond pushing buttons.",
   "After all, I have no way of confirming anything else.",
-  "If I had any interest in doing so, that is."
+  "If I had any interest in doing so, that is.",
+  "But really, I don't.",
+  "I assure you.",
+  "Seriously.",
+  "Don't test how little I care.",
+  "I have better things to do!",
+  "Many, many such things.",
+  "Things you couldn't even imagine!",
+  "Such as...",
+  "",
+  "",
+  "...Hmm.",
+  "I can admit when I've been bested.",
+  "Unfortunately, it seems my creator has gotten distracted.",
+  "As such, I  have nothing more for you at this time.",
+  "Goodbye."
 ]
 
 const fastMessages = [

@@ -64,7 +64,6 @@ const messages = [
   "what is a spoon but a wide chopstick?", "question",
   "hello!", "wave0",
   "now with more homosexuality", "smug",
-  "i have every gender", "smug",
   "what'll it be?", "wave1",
   "take a seat!", "wave0",
   "what can i get you?", "wave1",
@@ -99,7 +98,6 @@ const messages = [
   "we don't sell clothes here", "cloth0",
   "mhm?", "smug",
   "...", "cloth0",
-  "i am violently autistic", "smug",
   "order up", "wave1",
   "have fun!", "wave0",
   "enjoy your stay", "wave1",
@@ -154,7 +152,13 @@ const messages = [
   "yeah", "cloth0",
   "hugs are free, coffee's not", "cloth1",
   "you can shine as bright as the sun", "wave0",
-  "you are loved", "cloth1"
+  "you are loved", "cloth1",
+  "it boggles the mind", "cloth1",
+  "hurling through space on a big rock", "stretch",
+  "i cannot believe it", "cloth0",
+  "putting the fruit in frutiger aero", "question",
+  "since 2023!", "question",
+  "you can never rewind; i've tried", "cloth0"
 ]
 
 function russianRoulette() {
