@@ -17,6 +17,7 @@ html {
 
 body {
   width: 100%;
+  height: 100%;
 }
 
 #background {
@@ -239,7 +240,7 @@ body {
   align-content: flex-start;
   gap: 3px 30px;
   position: absolute;
-  overflow: hidden;
+  overflow: scroll;
   background: black;
   border: 1px solid white;
 }
@@ -288,7 +289,7 @@ a {
   z-index: -3;
   height: calc(var(--counter-height) * 1.7857);
   left: 10%;
-  bottom: calc(var(--counter-height) - 13%);
+  bottom: calc(calc(var(--counter-height) - 30px) - 7%);
   cursor: pointer;
 }
 
