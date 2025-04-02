@@ -373,10 +373,10 @@ a {
   99% {transform: scaleX(-1) translateY(0);}
 }
 
-/* @media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   :root {
-    --counter-height: 100px;
-    --mugSize: 16px;
+    --counter-height: 20%;
+    --mugSize: 22px;
   }
 
   #counter {
@@ -415,7 +415,7 @@ a {
   #menuBorder {
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 40%;
     margin: 10%;
     border-radius: 10px;
     z-index: -1;
@@ -431,8 +431,8 @@ a {
   }
 
   #speech {
-    bottom: calc(var(--counter-height) * 2);
-    left: 200px;
+    bottom: calc(var(--counter-height) * 2.1);
+    left: 46%;
     font-size: 13px;
     line-height: 24px;
     max-width: 200px;
@@ -450,4 +450,4 @@ a {
   h2 {
     font-size: 16px;
   }
-} */
+}
